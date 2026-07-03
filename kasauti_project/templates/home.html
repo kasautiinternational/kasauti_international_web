@@ -1,0 +1,769 @@
+<!-- Hero Section -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<!-- ===================================================
+     Animated Background Canvas (Geometric Shapes - DTF/CMYK theme)
+     =================================================== -->
+<!-- <canvas id="bgShapeCanvas"></canvas> -->
+<section class="hero-outer">
+    <!-- CMYK ink decoration (transparent PNG — only the coloured swirls show over the cream background) -->
+    <div class="container-fluid hero-cmyk-decor">
+        <div class="row">
+            <div class="col-lg-6 hero-section d-flex align-items-center ">
+                <div class="hero-content">
+                    <h5 class="text-uppercase welcome-text"><span
+                            class="ink-dots"><span></span><span></span><span></span><span></span></span>welcome to
+                        <span>KASAUTI INTERNATIONAL</span></h5>
+
+                    <div class="animated-text">
+                        Your Trusted DTF SUPPLIES Partner in India <br> <span class="animation"></span>
+                    </div>
+                    <p class="importer">★ GLOBAL QUALITY. INDIAN TRUST ★</p>
+                    <p class="phegraph"><span class="tag">Imported. Tested. Trusted.</span><br>
+                        Industrial-Grade <span>DTF Ink, DTF Rolls & DTF Powder stocked in Noida</span> and supplied across India at
+                        direct importer pricing.<span> No middlemen, consistent quality, and fast dispatch for professional</span>
+                        printing businesses.</p>
+                    <div>
+                        <ul class="items list-unstyled d-flex flex-row gap-3 flex-wrap">
+                            <li><i class="fa-solid fa-circle-check"></i> High-Quality DTF Printing</li>
+                            <li><i class="fa-solid fa-circle-check"></i> High-Quality DTF INK & POWDER</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Durable and Long-Lasting Product's</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Competitive Pricing</li>
+                        </ul>
+                    </div>
+                    <div class="hero-buttons gap-3 d-flex flex-row">
+                        <a href="{% url 'contact'%}" class="btn btn-primary">Contact Us</a>
+                        <a href="{% url 'services' %}" class="btn btn-secondary">Our Services</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Right: Product Showcase Carousel (3D coverflow · auto-scroll) -->
+            <div class="col-lg-5 mt-5 mt-lg-0 d-flex align-items-center justify-content-center">
+                <div class="hero-carousel" id="heroCarousel">
+                    <div class="hc-stage">
+                        <button class="hc-arrow hc-prev" type="button" aria-label="Previous product">&#8249;</button>
+
+                        <div class="hc-track" id="hcTrack">
+                            <a href="{% url 'product' %}" class="hc-card" data-cat="DTF Film Rolls" data-sub="Easy-Peel Technology">
+                                <img src="{% static 'image/roll.jpg' %}" alt="DTF film rolls with easy-peel technology">
+                                <span class="hc-tag">Rolls</span>
+                            </a>
+                            <a href="{% url 'product' %}" class="hc-card" data-cat="Cyan DTF Ink" data-sub="High-Density · TP5603 C">
+                                <img src="{% static 'image/ink(c).png' %}" alt="Cyan DTF ink bottle">
+                                <span class="hc-tag">Ink · C</span>
+                            </a>
+                            <a href="{% url 'product' %}" class="hc-card" data-cat="Magenta DTF Ink" data-sub="High-Density · TP5603 M">
+                                <img src="{% static 'image/ink(m).png' %}" alt="Magenta DTF ink bottle">
+                                <span class="hc-tag">Ink · M</span>
+                            </a>
+                            <a href="{% url 'product' %}" class="hc-card" data-cat="Yellow DTF Ink" data-sub="High-Density · TP5603 Y">
+                                <img src="{% static 'image/ink(y).png' %}" alt="Yellow DTF ink bottle">
+                                <span class="hc-tag">Ink · Y</span>
+                            </a>
+                            <a href="{% url 'product' %}" class="hc-card" data-cat="Black DTF Ink" data-sub="High-Density · TP5603 K">
+                                <img src="{% static 'image/ink(k).png' %}" alt="Black key DTF ink bottle">
+                                <span class="hc-tag">Ink · K</span>
+                            </a>
+                            <a href="{% url 'product' %}" class="hc-card" data-cat="TPU Melt Powder" data-sub="Hot-Melt Adhesive">
+                                <img src="{% static 'image/25KG_POWDER.pNg' %}" alt="TPU hot-melt DTF adhesive powder">
+                                <span class="hc-tag">Powder</span>
+                            </a>
+                        </div>
+
+                        <button class="hc-arrow hc-next" type="button" aria-label="Next product">&#8250;</button>
+                    </div>
+
+                    <div class="hc-meta">
+                        <span class="hc-meta-cat" id="hcCat">DTF Film Rolls</span>
+                        <span class="hc-meta-sub" id="hcSub">Easy-Peel Technology</span>
+                    </div>
+
+                    <div class="hc-dots" id="hcDots"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =====================================================
+         Why Choose Us — 4 feature strip
+         ===================================================== -->
+    <section class="why-section" aria-label="Why choose Kasauti International">
+        <div class="container">
+            <div class="why-grid">
+                <div class="why-card why-cyan">
+                    <div class="why-icon"><i class="fa-solid fa-tags"></i></div>
+                    <h4>Factory-Direct Pricing</h4>
+                    <p>No middlemen. Sold directly so margin stays in your business, not lost to markups.</p>
+                </div>
+                <div class="why-card why-magenta">
+                    <div class="why-icon"><i class="fa-solid fa-flask-vial"></i></div>
+                    <h4>QC Tested Every Batch</h4>
+                    <p>Viscosity, colour density &amp; wash-fastness verified before any order leaves our facility.</p>
+                </div>
+                <div class="why-card why-yellow">
+                    <div class="why-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h4>24-Hour Dispatch</h4>
+                    <p>Orders confirmed before 4pm dispatch the same business day from our Noida warehouse.</p>
+                </div>
+                <div class="why-card why-violet">
+                    <div class="why-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                    <h4>Full GST Invoicing</h4>
+                    <p>Proper tax invoices on every order — claim your input credit, run a clean business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         Core Products Section
+         ===================================================== -->
+    <section class="core-products-section" aria-label="3 Core Products">
+        <div class="container">
+            <div class="core-products-head">
+                <span class="core-products-kicker"><span
+                        class="ink-dots"><span></span><span></span><span></span><span></span></span>3 Core
+                    Products</span>
+                <h2>DTF Ink • Roll • Powder</h2>
+                <p>Best-selling supplies with exclusive 3D hover cards.</p>
+            </div>
+
+            <div class="core-products-grid">
+                <a href="{% url 'product' %}" class="core-product-card" data-accent="cyan"
+                    style="--accent: #06b6d4; --accent-soft: rgba(6,182,212,0.12);">
+                    <div class="cp-sheen"></div>
+                    <span class="cp-badge">Best Seller</span>
+                    <div class="cp-img">
+                        <img src="{% static 'image/ink.jpg' %}" alt="DTF Ink" />
+                    </div>
+                    <div class="cp-body">
+                        <h3>DTF Ink</h3>
+                        <p>Rich color output with stable mixing for consistent prints.</p>
+                    </div>
+                    <div class="cp-footer">
+                        <span><i class="fa-solid fa-droplet"></i> Rich Color</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </div>
+                </a>
+
+                <a href="{% url 'product' %}" class="core-product-card" data-accent="magenta"
+                    style="--accent: #e0529c; --accent-soft: rgba(224,82,156,0.12);">
+                    <div class="cp-sheen"></div>
+                    <span class="cp-badge cp-badge-magenta">High Volume</span>
+                    <div class="cp-img">
+                        <img src="{% static 'image/roll.jpg' %}" alt="DTF Roll" />
+                    </div>
+                    <div class="cp-body">
+                        <h3>DTF Roll</h3>
+                        <p>Reliable roll handling—smooth workflow for production.</p>
+                    </div>
+                    <div class="cp-footer">
+                        <span><i class="fa-solid fa-wind"></i> Smooth Flow</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </div>
+                </a>
+
+                <a href="{% url 'product' %}" class="core-product-card" data-accent="yellow"
+                    style="--accent: #eab308; --accent-soft: rgba(234,179,8,0.12);">
+                    <div class="cp-sheen"></div>
+                    <span class="cp-badge cp-badge-yellow">Pro Grade</span>
+                    <div class="cp-img">
+                        <img src="{% static 'image/powder.jpg' %}" alt="DTF Powder" />
+                    </div>
+                    <div class="cp-body">
+                        <h3>DTF Powder</h3>
+                        <p>Even coating + consistent transfer results.</p>
+                    </div>
+                    <div class="cp-footer">
+                        <span><i class="fa-solid fa-gem"></i> Even Coat</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         Interactive Calculator Section (DTF Savings)
+         ===================================================== -->
+    <section class="calc-section" aria-label="Interactive savings calculator">
+        <div class="container">
+            <div class="calc-head">
+                <span class="calc-kicker"><span
+                        class="ink-dots"><span></span><span></span><span></span><span></span></span>Interactive
+                    Calculator</span>
+                <h2>How much will you save when you choose Kasauti</h2>
+                <p>Below estimator: Typical supplier cost vs Kasauti cost. Whatever you type is automatically updated.
+                </p>
+            </div>
+
+            <div class="calc3-wrap">
+
+                <!-- Three product-wise savings calculators -->
+                <div class="calc3-grid">
+
+                    <!-- DTF ROLLS -->
+                    <div class="calc3-card" data-calc="rolls" style="--c-accent:#e0529c;">
+                        <div class="calc3-head">
+                            <span class="calc3-icon"><i class="fa-solid fa-wind"></i></span>
+                            <div class="calc3-headtext">
+                                <h3>DTF Rolls</h3>
+                                <span class="calc3-tag">Savings vs other supplier</span>
+                            </div>
+                        </div>
+                        <div class="calc3-field">
+                            <label>Other supplier price / unit (₹)</label>
+                            <input type="number" min="0" step="1" class="c-other" value="3000">
+                        </div>
+                        <div class="calc3-field">
+                            <label>Kasauti price / unit (₹)</label>
+                            <input type="number" min="0" step="1" class="c-kasauti" value="2499">
+                        </div>
+                        <div class="calc3-field">
+                            <label>Monthly quantity</label>
+                            <input type="number" min="1" step="1" class="c-qty" value="100">
+                        </div>
+                        <div class="calc3-out">
+                            <div class="c-out-row"><span>You save / month</span><b class="c-save">₹0</b></div>
+                            <div class="c-bar"><span class="c-bar-fill"></span></div>
+                            <div class="c-pct">0% cheaper</div>
+                        </div>
+                    </div>
+
+                    <!-- DTF INK -->
+                    <div class="calc3-card" data-calc="ink" style="--c-accent:#06b6d4;">
+                        <div class="calc3-head">
+                            <span class="calc3-icon"><i class="fa-solid fa-droplet"></i></span>
+                            <div class="calc3-headtext">
+                                <h3>DTF Ink</h3>
+                                <span class="calc3-tag">Savings vs other supplier</span>
+                            </div>
+                        </div>
+                        <div class="calc3-field">
+                            <label>Other supplier price / unit (₹)</label>
+                            <input type="number" min="0" step="1" class="c-other" value="850">
+                        </div>
+                        <div class="calc3-field">
+                            <label>Kasauti price / unit (₹)</label>
+                            <input type="number" min="0" step="1" class="c-kasauti" value="749">
+                        </div>
+                        <div class="calc3-field">
+                            <label>Monthly quantity</label>
+                            <input type="number" min="1" step="1" class="c-qty" value="50">
+                        </div>
+                        <div class="calc3-out">
+                            <div class="c-out-row"><span>You save / month</span><b class="c-save">₹0</b></div>
+                            <div class="c-bar"><span class="c-bar-fill"></span></div>
+                            <div class="c-pct">0% cheaper</div>
+                        </div>
+                    </div>
+
+                    <!-- DTF POWDER -->
+                    <div class="calc3-card" data-calc="powder" style="--c-accent:#eab308;">
+                        <div class="calc3-head">
+                            <span class="calc3-icon"><i class="fa-solid fa-gem"></i></span>
+                            <div class="calc3-headtext">
+                                <h3>DTF Powder</h3>
+                                <span class="calc3-tag">Savings vs other supplier</span>
+                            </div>
+                        </div>
+                        <div class="calc3-field">
+                            <label>Other supplier price / unit (₹)</label>
+                            <input type="number" min="0" step="1" class="c-other" value="11000">
+                        </div>
+                        <div class="calc3-field">
+                            <label>Kasauti price / unit (₹)</label>
+                            <input type="number" min="0" step="1" class="c-kasauti" value="9999">
+                        </div>
+                        <div class="calc3-field">
+                            <label>Monthly quantity (kg)</label>
+                            <input type="number" min="1" step="1" class="c-qty" value="25">
+                        </div>
+                        <div class="calc3-out">
+                            <div class="c-out-row"><span>You save / month</span><b class="c-save">₹0</b></div>
+                            <div class="c-bar"><span class="c-bar-fill"></span></div>
+                            <div class="c-pct">0% cheaper</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Combined total -->
+                <div class="calc3-total">
+                    <span><i class="fa-solid fa-piggy-bank"></i> Total estimated monthly savings with Kasauti</span>
+                    <b id="calcTotal">₹0</b>
+                </div>
+
+                <!-- WhatsApp catalog request -->
+                <div class="calc3-wa">
+                    <div class="wa-text">
+                        <h3><i class="fa-brands fa-whatsapp"></i> Want more details &amp; catalogs?</h3>
+                        <p>If you need more information, product catalogs, or pricing details, simply share your WhatsApp number. Our team will send you the latest product catalog, price list, and complete product information directly to your WhatsApp for quick and easy access.</p>
+                    </div>
+                    <form class="wa-form" id="catalogForm" novalidate>
+                        <div class="wa-input">
+                            <span class="wa-cc">+91</span>
+                            <input type="tel" id="catalogNumber" inputmode="numeric" autocomplete="tel"
+                                placeholder="Enter your WhatsApp number">
+                        </div>
+                        <button type="submit" class="wa-submit" id="catalogSubmit">
+                            <i class="fa-brands fa-whatsapp"></i> Send me details
+                        </button>
+                    </form>
+                    <div class="wa-msg" id="catalogMsg" role="status" aria-live="polite"></div>
+                </div>
+
+                <p class="calc-note mt-3">Note: This is an estimator. Final quote depends on the exact product &amp; batch.</p>
+            </div>
+
+            <script>
+                // Endpoint + CSRF for the WhatsApp catalog request (read by home.js)
+                window.KASAUTI_CATALOG = {
+                    url: "{% url 'catalog_request' %}",
+                    csrf: "{{ csrf_token }}"
+                };
+            </script>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         Stats Counter — CMYK ink-press metrics
+         ===================================================== -->
+    <section class="stats-section" aria-label="Company statistics">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card stat-cyan">
+                    <div class="stat-icon"><i class="fa-solid fa-droplet"></i></div>
+                    <div class="stat-number" data-count="3000">0</div>
+                    <div class="stat-suffix">+</div>
+                    <div class="stat-label">Bulk Orders Dispatched</div>
+                </div>
+                <div class="stat-card stat-magenta">
+                    <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                    <div class="stat-number" data-count="250">0</div>
+                    <div class="stat-suffix">+</div>
+                    <div class="stat-label">Print Businesses Served</div>
+                </div>
+                <div class="stat-card stat-yellow">
+                    <div class="stat-icon"><i class="fa-solid fa-industry"></i></div>
+                    <div class="stat-number" data-count="20">0</div>
+                    <div class="stat-suffix">+</div>
+                    <div class="stat-label">States Covered Pan-India</div>
+                </div>
+                <div class="stat-card stat-violet">
+                    <div class="stat-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                    <div class="stat-number" data-count="99">0</div>
+                    <div class="stat-suffix">%</div>
+                    <div class="stat-label">Batch Quality Consistency</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         Comparison Table — Kasauti vs Typical Supplier
+         ===================================================== -->
+    <section class="compare-section" aria-label="Kasauti versus typical supplier comparison">
+        <div class="container">
+            <div class="compare-head">
+                <span class="compare-kicker"><span
+                        class="ink-dots"><span></span><span></span><span></span><span></span></span>Kasauti vs Typical
+                    Supplier</span>
+                <h2>Why Print Businesses Are Switching</h2>
+                <p>See the difference side by side. We created this after seeing how inconsistent supplies affected print quality, productivity, and business growth for many printers.</p>
+            </div>
+
+            <div class="compare-table-wrap">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th class="compare-row-label">What Matters</th>
+                            <th class="compare-typical">Typical Supplier</th>
+                            <th class="compare-kasauti">Kasauti <span class="rec-badge">Recommended</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="compare-row-label">Pricing</td>
+                            <td class="compare-typical">Marked up — 2–3 middleman hops</td>
+                            <td class="compare-kasauti"><i class="fa-solid fa-circle-check"></i> Wholesale-friendly,
+                                direct rates</td>
+                        </tr>
+                        <tr>
+                            <td class="compare-row-label">Quality Testing</td>
+                            <td class="compare-typical">Untested — "trust the brand"</td>
+                            <td class="compare-kasauti"><i class="fa-solid fa-circle-check"></i> Batch checks before
+                                dispatch</td>
+                        </tr>
+                        <tr>
+                            <td class="compare-row-label">Batch Consistency</td>
+                            <td class="compare-typical">Varies batch to batch</td>
+                            <td class="compare-kasauti"><i class="fa-solid fa-circle-check"></i> Stable mixing,
+                                repeatable output</td>
+                        </tr>
+                        <tr>
+                            <td class="compare-row-label">Bulk Availability</td>
+                            <td class="compare-typical">Limited / on request only</td>
+                            <td class="compare-kasauti"><i class="fa-solid fa-circle-check"></i> Always stocked for bulk
+                                orders</td>
+                        </tr>
+                        <tr>
+                            <td class="compare-row-label">After-Sale Support</td>
+                            <td class="compare-typical">"It's not our problem"</td>
+                            <td class="compare-kasauti"><i class="fa-solid fa-circle-check"></i> Direct WhatsApp + setup
+                                guidance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="compare-cta">
+                <a class="btn btn-primary" href="{% url 'contact' %}">Switch to Kasauti</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         How DTF Works — 4-step process
+         ===================================================== -->
+    <section class="process-section" aria-label="How DTF printing works">
+        <div class="container">
+            <div class="process-head">
+                <span class="process-kicker"><span
+                        class="ink-dots"><span></span><span></span><span></span><span></span></span>How DTF Works</span>
+                <h2>The 4-Step Process Behind Every Print</h2>
+                <p>DTF (Direct to Film) enables high-quality printing on almost any fabric, in any color. At the heart of every successful print are these three essential raw materials.</p>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-step process-cyan">
+                    <div class="process-num">1</div>
+                    <h4>Print</h4>
+                    <p>Your design is printed on DTF Roll Film using premium DTF Ink (CMYK + White) for vibrant, high-quality results.</p>
+                </div>
+                <div class="process-step process-magenta">
+                    <div class="process-num">2</div>
+                    <h4>Apply</h4>
+                    <p>Apply an even layer of DTF Powder to the wet ink before the ink dries.</p>
+                </div>
+                <div class="process-step process-yellow">
+                    <div class="process-num">3</div>
+                    <h4>Cure</h4>
+                    <p>Pass the film through an industrial DTF oven, where the powder bonds securely with the ink layer.</p>
+                </div>
+                <div class="process-step process-violet">
+                    <div class="process-num">4</div>
+                    <h4>Heat Press</h4>
+                    <p>Heat press the transfer onto the fabric, peel off the film, and your vibrant, wash-resistant print is ready.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         Verified Reviews Section
+         ===================================================== -->
+    <section class="reviews-section" aria-label="Verified Reviews">
+        <div class="container">
+            <div class="reviews-head">
+                <span class="reviews-kicker"><span
+                        class="ink-dots"><span></span><span></span><span></span><span></span></span>Verified
+                    Reviews</span>
+                <h2>Customers’ real feedback</h2>
+                <p>Real businesses, real results — Our Customers, In Their Own Words.</p>
+            </div>
+
+            <div class="reviews-carousel" id="reviewsCarousel">
+                <button class="rc-nav prev" type="button" aria-label="previous review">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <div class="rc-viewport">
+                    <div class="rc-track" id="reviewTrack">
+                        {% for review in reviews %}
+                        <article class="rc-card" aria-label="review by {{ review.name }}">
+                            <div class="r-stars">{{ review.stars }}</div>
+                            <div class="r-text">{{ review.message }}</div>
+                            <div class="r-meta"><b>{{ review.name }}</b>{% if review.role %} • {{ review.role }}{% endif %}</div>
+                        </article>
+                        {% empty %}
+                        <article class="rc-card" aria-label="review 1">
+                            <div class="r-stars">★★★★★</div>
+                            <div class="r-text">Powder aur ink ka output bahut consistent hai—bulk me bhi results stable
+                                mile.</div>
+                            <div class="r-meta"><b>Ravi K.</b> • Print Studio</div>
+                        </article>
+                        <article class="rc-card" aria-label="review 2">
+                            <div class="r-stars">★★★★★</div>
+                            <div class="r-text">Roll quality smooth hai aur dispatch fast—production rukti nahi.</div>
+                            <div class="r-meta"><b>Meenakshi S.</b> • DTF Business</div>
+                        </article>
+                        <article class="rc-card" aria-label="review 3">
+                            <div class="r-stars">★★★★★</div>
+                            <div class="r-text">Transfer results reliable. Color rich hai aur repeat order easily ho
+                                jata hai.</div>
+                            <div class="r-meta"><b>Vikram P.</b> • Garment Printing</div>
+                        </article>
+                        <article class="rc-card" aria-label="review 4">
+                            <div class="r-stars">★★★★★</div>
+                            <div class="r-text">Support quick. Setup guidance helpful—new batch me issue nahi aaya.
+                            </div>
+                            <div class="r-meta"><b>Shweta N.</b> • T-Shirt Works</div>
+                        </article>
+                        <article class="rc-card" aria-label="review 5">
+                            <div class="r-stars">★★★★★</div>
+                            <div class="r-text">Ink density bohot achhi hai, vibrant prints aate hain har baar.</div>
+                            <div class="r-meta"><b>Amit R.</b> • Custom Apparel</div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <button class="rc-nav next" type="button" aria-label="next review">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- =====================================================
+     Video Reels Section — Real Print Lines, Real Results
+     Standalone section: include reels-section.css in <head>
+     and reels-section.js before </body> (or at end of file).
+     Requires Font Awesome icons (already used site-wide):
+     https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css
+     ===================================================== -->
+<!-- home.css already loaded in this page header -->
+<section class="reels-section" aria-label="Customer video reviews">
+
+
+    <div class="container">
+        <div class="reels-head">
+            <span class="reels-kicker"><span class="kicker-dash"></span>DTF IN ACTION</span>
+            <h2>Real Print Lines & Real Customer's<br><span>Real Results</span></h2>
+            <p>Hear directly from our customers and watch how Kasauti DTF supplies perform on real production floors across India. Real feedback, real printing results, and real business experiences.</p>
+        </div>
+
+        <div class="reels-carousel" id="reelsCarousel">
+            <button class="reels-arrow reels-arrow-left" id="reelsPrev" type="button" aria-label="Previous video">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="reels-track-wrap">
+                <div class="reels-track" id="reelsTrack">
+                    {% for reel in reels %}
+                    <article class="reel-card reel-accent-{{ reel.accent }}" data-reel="{{ forloop.counter0 }}">
+                        <div class="reel-media">
+                            {% if reel.media_kind == 'file' %}
+                            <video class="reel-video" src="{{ reel.video_file.url }}" muted loop autoplay playsinline preload="auto"
+                                {% if reel.poster %}poster="{{ reel.poster.url }}"{% endif %}></video>
+                            {% elif reel.media_kind == 'youtube' or reel.media_kind == 'instagram' %}
+                            <iframe class="reel-embed" src="{{ reel.embed_url }}"
+                                allow="autoplay; encrypted-media; fullscreen" allowfullscreen loading="lazy"></iframe>
+                            {% elif reel.poster %}
+                            <div class="reel-poster" style="background-image: url('{{ reel.poster.url }}');"></div>
+                            {% else %}
+                            <div class="reel-shimmer"></div>
+                            <i class="fa-solid fa-circle-play reel-bg-icon"></i>
+                            {% endif %}
+                        </div>
+                        <span class="reel-caption">{{ reel.title }}{% if reel.subtitle %}<br><small>{{ reel.subtitle }}</small>{% endif %}</span>
+                    </article>
+                    {% empty %}
+                    <!-- Demo cards (shown until you add real reels from the admin panel) -->
+                    <article class="reel-card reel-accent-cyan" data-reel="0" data-kind="none" data-embed="">
+                        <div class="reel-media reel-media-intro">
+                            <div class="reel-intro-avatar">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="reel-intro-glow"></div>
+                        </div>
+                        <span class="reel-caption reel-caption-dark">Meet the Team<br><small>Kasauti International</small></span>
+                    </article>
+
+                    <article class="reel-card reel-accent-magenta" data-reel="1" data-kind="none" data-embed="">
+                        <div class="reel-media">
+                            <div class="reel-shimmer"></div>
+                            <i class="fa-solid fa-print reel-bg-icon"></i>
+                        </div>
+                        <span class="reel-caption">DTF Printing @100/mtr<br><small>~20 paisa sq. inch</small></span>
+                    </article>
+
+                    <article class="reel-card reel-accent-yellow" data-reel="2" data-kind="none" data-embed="">
+                        <div class="reel-media">
+                            <div class="reel-shimmer"></div>
+                            <i class="fa-solid fa-droplet reel-bg-icon"></i>
+                        </div>
+                        <span class="reel-caption">Ink Lay Test<br><small>Vibrant CMYK+W output</small></span>
+                    </article>
+
+                    <article class="reel-card reel-accent-violet" data-reel="3" data-kind="none" data-embed="">
+                        <div class="reel-media">
+                            <div class="reel-shimmer"></div>
+                            <i class="fa-solid fa-gem reel-bg-icon"></i>
+                        </div>
+                        <span class="reel-caption">Powder Coating<br><small>Even melt, no cracking</small></span>
+                    </article>
+
+                    <article class="reel-card reel-accent-cyan" data-reel="4" data-kind="none" data-embed="">
+                        <div class="reel-media">
+                            <div class="reel-shimmer"></div>
+                            <i class="fa-solid fa-wind reel-bg-icon"></i>
+                        </div>
+                        <span class="reel-caption">Film Roll Peel<br><small>Cold peel, zero residue</small></span>
+                    </article>
+
+                    <article class="reel-card reel-accent-magenta" data-reel="5" data-kind="none" data-embed="">
+                        <div class="reel-media">
+                            <div class="reel-shimmer"></div>
+                            <i class="fa-solid fa-shirt reel-bg-icon"></i>
+                        </div>
+                        <span class="reel-caption">Heat Press Finish<br><small>Wash-fast, soft hand-feel</small></span>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button class="reels-arrow reels-arrow-right" id="reelsNext" type="button" aria-label="Next video">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="reels-dots" id="reelsDots" aria-label="Video pagination"></div>
+    </div>
+</section>
+    <!-- =====================================================
+         Frequently Asked (FAQ) Section
+         ===================================================== -->
+    <section class="faq-section" aria-label="Frequently Asked Questions">
+        <div class="container">
+            <div class="faq-head">
+                <span class="faq-kicker"><span
+                        class="ink-dots"><span></span><span></span><span></span><span></span></span>Frequently
+                    Asked</span>
+                <h2>DTF Supplies Questions</h2>
+                <p>Everything about DTF Ink, Powder, Film Rolls, storage, and bulk supply is covered here. If you have any other questions, simply click the button.</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-panel" aria-label="FAQ Accordion">
+                    <div class="faq-item" data-qa="q1">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>1) What is the primary use of DTF Ink?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="faq-answer" aria-hidden="true">
+                            <div class="faq-answer-inner">
+                                DTF Ink is used to print designs onto DTF transfer film, which are then heat-pressed onto fabrics. It produces vibrant, durable, and wash-resistant prints on a wide range of materials, including cotton, polyester, blends, denim, and more.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-qa="q2">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>2) What is the role of TPU Melt Powder?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="faq-answer" aria-hidden="true">
+                            <div class="faq-answer-inner">
+                                TPU Melt Powder acts as the adhesive in the DTF printing process. It is applied to the wet ink on the transfer film and then cured in a DTF oven. During heat pressing, it melts and bonds the printed design securely to the fabric, ensuring strong adhesion, durability, and excellent wash resistance.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-qa="q3">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>3) Does the choice of DTF Film/Roll affect print quality?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="faq-answer" aria-hidden="true">
+                            <div class="faq-answer-inner">
+                                Yes. The quality of the DTF Film plays a significant role in the final print. A premium film ensures better ink absorption, sharper details, vibrant colors, smooth peeling, and consistent transfer results, while low-quality films can lead to poor adhesion, color inconsistency, or transfer defects.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-qa="q4">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>4) How do you maintain consistency in bulk supply?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="faq-answer" aria-hidden="true">
+                            <div class="faq-answer-inner">
+                                We maintain strict quality control, batch testing, and standardized manufacturing processes to ensure every shipment meets the same high standards. Our reliable inventory management and consistent production help deliver uniform quality, color accuracy, and performance across every bulk order.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-qa="q5">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>5) How should DTF Ink, Powder, and Film be stored?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="faq-answer" aria-hidden="true">
+                            <div class="faq-answer-inner">
+                                Store all products in sealed containers and keep them away from direct heat and sunlight. Protect DTF Powder from moisture and handle it in a clean, dry environment. Specific storage recommendations may vary depending on the product batch.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-qa="q6">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>6) Will I receive guidance if I'm using DTF products for the first time?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="faq-answer" aria-hidden="true">
+                            <div class="faq-answer-inner">
+                                Yes. If you're new to DTF printing, our team will provide basic guidance on product selection, usage, and best practices to help you get started with confidence and achieve the best possible results.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-side" aria-label="Ask your question">
+                    <div class="faq-side-card">
+                        <div class="faq-side-icon"><i class="fa-solid fa-message"></i></div>
+                        <h3>Have more questions?</h3>
+                        <p>Whether you have questions about DTF Ink, Powder, Film, or bulk supply, we're here to assist. Tell us your requirements, and we'll recommend the most suitable solution.</p>
+                        <a class="btn btn-primary faq-cta" href="{% url 'contact' %}">Ask Your Question</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         Final CTA Banner
+         ===================================================== -->
+    <section class="final-cta-section" aria-label="Get your bulk quote">
+        <div class="container">
+            <div class="final-cta-card">
+                <div class="final-cta-glow"></div>
+                <span class="final-cta-kicker"><span
+                        class="ink-dots"><span></span><span></span><span></span><span></span></span>Ready When You
+                    Are</span>
+                <h2>Stop Overpaying — Start Saving on Every Order</h2>
+                <p>Factory-friendly pricing on DTF Ink, Roll &amp; Powder. Batch-tested, dispatched fast, backed by
+                    real people who actually reply.</p>
+
+                <div class="final-cta-buttons">
+                    <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}"
+                        target="_blank" class="btn btn-primary final-cta-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Get Bulk Quote on WhatsApp
+                    </a>
+                    <a href="{% url 'product' %}" class="btn btn-secondary final-cta-browse">Browse All Products</a>
+                </div>
+
+                <div class="final-cta-badges">
+                    <span><i class="fa-solid fa-users"></i> Trusted by Print Businesses</span>
+                    <span><i class="fa-solid fa-truck-fast"></i> Fast Dispatch</span>
+                    <span><i class="fa-solid fa-file-invoice"></i> Full GST Invoice</span>
+                    <span><i class="fa-solid fa-headset"></i> Real Human Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script src="{% static 'js/home.js' %}"></script>
+<script src="{% static 'js/hero-carousel.js' %}"></script>
+{% endblock %}

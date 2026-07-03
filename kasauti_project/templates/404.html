@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+  /* ══════════════════════════════════════════════════════
+     404 — "MISPRINT" CONCEPT
+     DTF printing brand ke liye: 404 numerals CMYK
+     misregistration (offset ink layers) ke saath — jaise
+     print register se hat gaya ho. Page not found = misprint.
+     ══════════════════════════════════════════════════════ */
+
+  .nf-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 140px 20px 80px;
+    font-family: "Poppins", sans-serif;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 500px at 10% 0%, rgba(6, 182, 212, .06), transparent 55%),
+      radial-gradient(800px 460px at 90% 10%, rgba(224, 82, 156, .06), transparent 55%),
+      radial-gradient(700px 500px at 50% 100%, rgba(234, 179, 8, .05), transparent 55%),
+      #faf9f6;
+  }
+
+  /* ── Floating ink dots (CMYK) ── */
+  .nf-ink {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.35;
+    filter: blur(1px);
+    animation: nf-float 9s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .nf-ink.c { width: 18px; height: 18px; background: #06b6d4; top: 22%; left: 14%; animation-delay: 0s; }
+  .nf-ink.m { width: 12px; height: 12px; background: #e0529c; top: 30%; right: 16%; animation-delay: 2s; }
+  .nf-ink.y { width: 15px; height: 15px; background: #eab308; bottom: 24%; left: 20%; animation-delay: 4s; }
+  .nf-ink.k { width: 10px; height: 10px; background: #7c3aed; bottom: 30%; right: 22%; animation-delay: 6s; }
+
+  @keyframes nf-float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50%      { transform: translateY(-26px) translateX(10px); }
+  }
+
+  .nf-wrap {
+    text-align: center;
+    max-width: 640px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Kicker (site ka ink-dot pattern) ── */
+  .nf-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8a6a23;
+    margin-bottom: 6px;
+  }
+  .nf-kicker::before, .nf-kicker::after {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .nf-kicker::before { background: #06b6d4; box-shadow: 14px 0 0 #e0529c; margin-right: 14px; }
+  .nf-kicker::after  { background: #eab308; box-shadow: 14px 0 0 #7c3aed; margin-right: 14px; }
+
+  /* ── Giant 404 with CMYK misregistration ── */
+  .nf-404 {
+    position: relative;
+    font-size: clamp(110px, 24vw, 200px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 4px;
+    color: transparent;
+    background: linear-gradient(135deg, #c9973f, #f5d08a 60%, #c9973f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    display: inline-block;
+    animation: nf-register 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  /* Offset ink layers — cyan & magenta plates jo register me aa rahi hain */
+  .nf-404::before,
+  .nf-404::after {
+    content: "404";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+  }
+  .nf-404::before {
+    color: rgba(6, 182, 212, 0.45);
+    transform: translate(-7px, 5px);
+    animation: nf-plate-c 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .nf-404::after {
+    color: rgba(224, 82, 156, 0.45);
+    transform: translate(7px, -5px);
+    animation: nf-plate-m 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  /* Plates load par register ke kareeb aati hain (thoda offset reh jata hai) */
+  @keyframes nf-plate-c {
+    0%   { transform: translate(-16px, 12px); }
+    100% { transform: translate(-6px, 4px); }
+  }
+  @keyframes nf-plate-m {
+    0%   { transform: translate(16px, -12px); }
+    100% { transform: translate(6px, -4px); }
+  }
+  @keyframes nf-register {
+    0%   { letter-spacing: 10px; opacity: 0.6; }
+    100% { letter-spacing: 4px; opacity: 1; }
+  }
+
+  .nf-title {
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 800;
+    color: #0f172a;
+    margin: 10px 0 12px;
+  }
+  .nf-text {
+    font-size: 15px;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0 auto 30px;
+    max-width: 460px;
+  }
+
+  /* ── Buttons ── */
+  .nf-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .nf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    height: 50px;
+    padding: 0 30px;
+    border-radius: 10px;
+    font-size: 15.5px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    transition: 0.3s ease;
+    cursor: pointer;
+  }
+  .nf-btn-home {
+    background: linear-gradient(135deg, #c9973f, #f5d08a);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 10px 26px rgba(201, 151, 63, 0.28);
+  }
+  .nf-btn-home:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 14px 32px rgba(201, 151, 63, 0.35);
+    color: #ffffff;
+  }
+  .nf-btn-products {
+    background: #ffffff;
+    color: #0f172a;
+    border: 1.5px solid rgba(15, 23, 42, 0.12);
+  }
+  .nf-btn-products:hover {
+    border-color: rgba(6, 182, 212, 0.45);
+    background: rgba(6, 182, 212, 0.06);
+    color: #0e7490;
+    transform: translateY(-2px);
+  }
+
+  /* ── CMYK stripe under card ── */
+  .nf-stripe {
+    display: flex;
+    width: 180px;
+    height: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 36px auto 0;
+  }
+  .nf-stripe span { flex: 1; }
+  .nf-stripe span:nth-child(1) { background: #06b6d4; }
+  .nf-stripe span:nth-child(2) { background: #e0529c; }
+  .nf-stripe span:nth-child(3) { background: #eab308; }
+  .nf-stripe span:nth-child(4) { background: #7c3aed; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nf-ink { animation: none; }
+    .nf-404, .nf-404::before, .nf-404::after { animation: none; }
+    .nf-btn:hover { transform: none; }
+  }
+</style>
+
+<div class="nf-section">
+  <!-- Floating CMYK ink dots -->
+  <span class="nf-ink c"></span>
+  <span class="nf-ink m"></span>
+  <span class="nf-ink y"></span>
+  <span class="nf-ink k"></span>
+
+  <div class="nf-wrap">
+    <div class="nf-kicker">Page Not Found</div>
+
+    <div class="nf-404" aria-hidden="true">404</div>
+
+    <h1 class="nf-title">Oops! Ye page print nahi ho paya.</h1>
+    <p class="nf-text">
+      The page you're looking for doesn't exist, has been moved, or the link
+      is out of register. Don't worry — our press is still running.
+    </p>
+
+    <div class="nf-actions">
+      <a href="{% url 'home' %}" class="nf-btn nf-btn-home">
+        <i class="fa-solid fa-house"></i> Back to Home
+      </a>
+      <a href="{% url 'product' %}" class="nf-btn nf-btn-products">
+        <i class="fa-solid fa-box-open"></i> Browse Products
+      </a>
+    </div>
+
+    <div class="nf-stripe" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}"/>
+
+<section class="kas-root">
+    <!-- Left Sidebar -->
+    {% include 'partials/_product_sidebar.html' %}
+
+    <!-- Main content -->
+    <main class="kas-main">
+        <header class="kas-hero" style="--accent: {{ meta.accent }};">
+            <div class="hero-copy">
+                <nav class="crumbs" aria-label="Breadcrumb">
+                    {% for c in crumbs %}
+                        {% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        {% else %}<span>{{ c.label }}</span>{% endif %}
+                    {% endfor %}
+                </nav>
+                <h1>{{ product.title }}</h1>
+                <p>{{ meta.name }} • {{ meta.sub }}</p>
+            </div>
+
+            {% if user_logged_in %}
+            <div class="hero-actions">
+                <button class="btn ghost" id="btnClearCart" type="button" title="Clear cart">Clear Cart</button>
+                <button class="btn cart" id="btnOpenCart" type="button">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+            {% endif %}
+        </header>
+
+        <!-- Detail body -->
+        <section class="pd-wrap" style="--accent: {{ meta.accent }};">
+            <!-- Photo gallery: main photo on top, slide through the rest -->
+            <div class="pd-gallery" data-gallery>
+                <span class="pd-stripe" aria-hidden="true"></span>
+                <div class="pd-img-box{% if not product.in_stock %} is-oos{% endif %}">
+                    <div class="pd-gloss" aria-hidden="true"></div>
+                    {% if gallery_images %}
+                        {% for g in gallery_images %}
+                        <img class="pd-img{% if forloop.first %} is-active{% endif %}"
+                             data-slide="{{ forloop.counter0 }}"
+                             src="{{ g.url }}" alt="{{ g.alt }}"
+                             {% if not forloop.first %}loading="lazy"{% endif %}>
+                        {% endfor %}
+                    {% else %}
+                        <img class="pd-img is-active" src="{% static 'image/hero-img.png' %}" alt="{{ product.title }}">
+                    {% endif %}
+                    <span class="pd-badge"><i class="fa-solid {{ meta.icon }}"></i> {{ meta.name }}</span>
+                    {% if not product.in_stock %}<span class="oos-badge oos-badge-lg">Out of Stock</span>{% endif %}
+                    {% if gallery_images|length > 1 %}
+                    <button class="pd-nav prev" data-nav="prev" type="button" aria-label="Previous photo">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="pd-nav next" data-nav="next" type="button" aria-label="Next photo">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    {% endif %}
+                </div>
+
+                {% if gallery_images|length > 1 %}
+                <div class="pd-thumbs">
+                    {% for g in gallery_images %}
+                    <button class="pd-thumb{% if forloop.first %} is-active{% endif %}"
+                            data-thumb="{{ forloop.counter0 }}" type="button" aria-label="Photo {{ forloop.counter }}">
+                        <img src="{{ g.url }}" alt="{{ g.alt }}" loading="lazy">
+                    </button>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Info -->
+            <div class="pd-info">
+                <span class="pd-tag">{{ product.tag }}</span>
+                <h2 class="pd-title">{{ product.title }}</h2>
+                <p class="pd-desc">{{ product.description }}</p>
+
+                <ul class="pd-specs">
+                    <li><i class="fa-solid fa-box-open"></i>
+                        {% if product.in_stock %}In stock &amp; ready to dispatch{% else %}Currently out of stock{% endif %}
+                    </li>
+                    <li><i class="fa-solid fa-layer-group"></i> Category: {{ meta.name }}</li>
+                    <li><i class="fa-solid fa-flask"></i> Batch-tested quality</li>
+                    <li><i class="fa-solid fa-truck-fast"></i> Pan-India bulk dispatch</li>
+                </ul>
+
+                {% if user_logged_in %}
+                <!-- Logged in: price (updates as a size is selected) -->
+                <div class="pd-price-row">
+                    <div class="pd-price-wrap">
+                        <span class="pd-mrp" id="pdMrp"{% if not price_display.mrp %} hidden{% endif %}>₹{{ price_display.mrp|default_if_none:0|floatformat:0|intcomma }}</span>
+                        <span class="pd-now" id="pdNow">₹{{ price_display.sell|floatformat:0|intcomma }}</span>
+                        <span class="pd-off" id="pdOff"{% if not price_display.off %} hidden{% endif %}>{{ price_display.off }}% OFF</span>
+                    </div>
+                    <div class="pd-price-note">Inclusive pricing • GST added at checkout</div>
+                </div>
+
+                {% if product.in_stock %}
+                {% if sizes %}
+                <!-- Size selector — managed from the admin Product page; price updates per size -->
+                <div class="pd-size" id="pdSize" data-selected="{{ sizes.0.label }}">
+                    <div class="pd-size-head">
+                        <span class="pd-size-label">Select Size</span>
+                        <span class="pd-size-unit">(in inches)</span>
+                    </div>
+                    <div class="pd-size-grid" role="group" aria-label="Select size">
+                        {% for s in sizes %}
+                        <button class="pd-size-btn{% if forloop.first %} is-selected{% endif %}" type="button"
+                                data-size="{{ s.label }}"
+                                data-sell="{{ s.sell|floatformat:0 }}"
+                                data-mrp="{% if s.mrp %}{{ s.mrp|floatformat:0 }}{% endif %}"
+                                data-off="{{ s.off }}">{{ s.label }}</button>
+                        {% endfor %}
+                    </div>
+                    <p class="pd-size-hint" id="pdSizeHint" hidden>Please select a size first.</p>
+                </div>
+                {% endif %}
+                <!-- In stock: Add / Buy -->
+                <div class="pd-actions">
+                    <button class="btn add" type="button" data-action="add" data-id="{{ product.product_id }}">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                    <button class="btn buy" type="button" data-action="buy" data-id="{{ product.product_id }}">
+                        <i class="fa-solid fa-bolt"></i> Buy Now
+                    </button>
+                </div>
+                {% else %}
+                <!-- Out of stock: Notify Me instead of Add/Buy -->
+                <div class="pd-notify-box">
+                    <div class="pd-notify-head"><i class="fa-solid fa-box-open"></i> Out of Stock</div>
+                    <p class="pd-notify-copy">Yeh product abhi stock mein nahi hai. Notify karein — wapas aate hi aapko bata denge.</p>
+                    <button class="btn notify" type="button" id="btnNotify" data-id="{{ product.product_id }}">
+                        <i class="fa-solid fa-bell"></i> Notify Me
+                    </button>
+                    <div class="pd-notify-done" id="notifyDone" hidden>
+                        <i class="fa-solid fa-circle-check"></i> Done! We'll notify you when it's back.
+                    </div>
+                </div>
+                {% endif %}
+                {% else %}
+                <!-- Guest: price + buying locked until login/registration -->
+                <div class="login-gate">
+                    <div class="lg-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="lg-copy">
+                        <h3>Login to see price &amp; buy</h3>
+                        <p>Pricing, Add to Cart and Buy Now unlock once you log in or create a free account.</p>
+                    </div>
+                    <div class="lg-actions">
+                        <a class="btn buy" href="{{ login_url }}">
+                            <i class="fa-solid fa-right-to-bracket"></i> Login / Register
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- You may also like (same category first, then other products) -->
+        {% if related %}
+        <section class="pd-related">
+            <div class="pd-related-head">
+                <h3>You may also like</h3>
+                <a href="{% url 'product' %}" class="pd-related-all">View all products <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+            <div class="pl-grid">
+                {% for rp in related %}
+                <a class="pl-card" href="{{ rp.url }}" style="--accent: {{ rp.accent }};">
+                    <span class="pl-stripe" aria-hidden="true"></span>
+                    <div class="pl-media{% if not rp.p.in_stock %} is-oos{% endif %}">
+                        <div class="pl-gloss" aria-hidden="true"></div>
+                        {% if rp.p.image %}
+                        <img class="pl-img" src="{{ rp.p.image.url }}" alt="{{ rp.p.title }}" loading="lazy">
+                        {% else %}
+                        <img class="pl-img" src="{% static 'image/hero-img.png' %}" alt="{{ rp.p.title }}" loading="lazy">
+                        {% endif %}
+                        {% if not rp.p.in_stock %}<span class="oos-badge">Out of Stock</span>{% endif %}
+                    </div>
+                    <div class="pl-body">
+                        <span class="pl-tag">{{ rp.p.tag }}</span>
+                        <h3 class="pl-title">{{ rp.p.title }}</h3>
+                        {% if user_logged_in %}
+                            {% if rp.p.original_price and rp.p.original_price > rp.p.price %}
+                            <div class="pl-price">
+                                <s class="pl-mrp">₹{{ rp.p.original_price|floatformat:0|intcomma }}</s>
+                                <span class="pl-now">₹{{ rp.p.price|floatformat:0|intcomma }}</span>
+                            </div>
+                            {% else %}
+                            <div class="pl-price"><span class="pl-now">₹{{ rp.p.price|floatformat:0|intcomma }}</span></div>
+                            {% endif %}
+                        {% else %}
+                        <div class="pl-lock"><i class="fa-solid fa-lock"></i> Login to see price</div>
+                        {% endif %}
+                        <span class="pl-cta">View details <i class="fa-solid fa-arrow-right-long"></i></span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </main>
+
+    <!-- Cart Drawer -->
+    {% include 'partials/_cart_drawer.html' %}
+</section>
+
+{% include 'partials/_cart_config.html' %}
+<script src="{% static 'js/product.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+
+<section class="services-page">
+  <!-- Hero -->
+  <div class="services-hero">
+    <div class="container">
+      <div class="services-hero-grid">
+        <div class="services-hero-left">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Premium DTF Services • Ink • Powder • Rolls
+          </div>
+          <h1>
+            KASAUTI<br />
+            <span class="accent">Services</span>
+          </h1>
+          <p>
+            We deliver reliable DTF supplies backed by complete support, helping you achieve consistent results and handle bulk orders with confidence.
+          </p>
+
+          <ul class="services-bullets list-unstyled">
+            <li><i class="fa-solid fa-circle-check"></i> Bulk-ready pricing & dispatch</li>
+            <li><i class="fa-solid fa-shield-heart"></i> Quality checks for stability</li>
+            <li><i class="fa-solid fa-wand-magic-sparkles"></i> Setup guidance & usage support</li>
+            <li><i class="fa-solid fa-box"></i> Proper packaging for safe transit</li>
+          </ul>
+
+          <div class="services-hero-cta">
+            <a href="{% url 'contact' %}" class="btn btn-primary">Request Bulk Quote</a>
+            <a href="{% url 'product' %}" class="btn btn-outline-primary">Explore Supplies</a>
+          </div>
+        </div>
+
+        <div class="services-hero-right" aria-hidden="true">
+          <div class="services-3d-shell">
+            <div class="shell-glow"></div>
+            <div class="shell-image">
+              <img src="{% static 'image/all.png' %}" alt="DTF services" />
+            </div>
+            <div class="shell-cards">
+              <div class="shell-card sc-ink">
+                <i class="fa-solid fa-droplet"></i>
+                <div>
+                  <div class="sc-title">Ink Support</div>
+                  <div class="sc-sub">Rich & consistent output</div>
+                </div>
+              </div>
+              <div class="shell-card sc-powder">
+                <i class="fa-solid fa-gem"></i>
+                <div>
+                  <div class="sc-title">Powder Guidance</div>
+                  <div class="sc-sub">Even transfer & durability</div>
+                </div>
+              </div>
+              <div class="shell-card sc-roll">
+                <i class="fa-solid fa-wind"></i>
+                <div>
+                  <div class="sc-title">Roll Handling</div>
+                  <div class="sc-sub">Workflow ready supplies</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Grid -->
+  <div class="container services-section">
+    <div class="section-head">
+      <span class="section-kicker">What we do</span>
+      <h2>Complete DTF Services</h2>
+      <p>
+        Along with premium DTF supplies, we provide expert guidance, secure packaging, and dedicated after-sales support.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="icon"> <i class="fa-solid fa-bolt"></i> </div>
+        <h3>Bulk Supply & Pricing</h3>
+        <p>Competitive pricing and reliable dispatch support for bulk orders.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon"> <i class="fa-solid fa-shield-heart"></i> </div>
+        <h3>Quality Check</h3>
+        <p>Quality checks and controlled sourcing to ensure consistent product performance..</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon"> <i class="fa-solid fa-handshake"></i> </div>
+        <h3>Setup Guidance</h3>
+        <p>Expert tips on using DTF ink, powder, and rolls for a faster start and consistent results.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon"> <i class="fa-solid fa-truck-fast"></i> </div>
+        <h3>Packaging & Delivery</h3>
+        <p>Secure packaging to protect bulk shipments during transit.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon"> <i class="fa-solid fa-layer-group"></i> </div>
+        <h3>DTF Ink, Powder, Rolls</h3>
+        <p>Core supplies: DTF Ink, Powder (TPU Melt), and Roll/Film—production ready.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon"> <i class="fa-solid fa-rotate-right"></i> </div>
+        <h3>Repeat Order Support</h3>
+        <p>Quick support whenever you need it to maintain consistent performance.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="container howit">
+    <div class="section-head">
+      <span class="section-kicker">How it works</span>
+      <h2>From Requirement to Results</h2>
+      <p>Easy guidance for hassle-free bulk ordering and setup.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-no">1</div>
+        <div class="step-body">
+          <h3>Contact & Requirement</h3>
+          <p>Share your order volume, product requirements, and intended application.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">2</div>
+        <div class="step-body">
+          <h3>Right Supply Suggestion</h3>
+          <p>Expert guidance on selecting the right DTF ink, powder, rolls, and batches.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">3</div>
+        <div class="step-body">
+          <h3>Bulk Dispatch</h3>
+          <p>Safe packaging with timely delivery.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">4</div>
+        <div class="step-body">
+          <h3>Support & Repeat</h3>
+          <p>Quick support whenever you need it to maintain consistent performance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="container faq-block">
+    <div class="section-head">
+      <span class="section-kicker">FAQ</span>
+      <h2>DTF Services Questions</h2>
+      <p>Quick answers—contact us for detailed guidance.</p>
+    </div>
+
+    <div class="faq-layout">
+      <div class="faq-left">
+        <div class="faq-item" data-qa="s1">
+          <button class="faq-question" type="button">
+            <span>1) Quality checks and controlled sourcing ensure consistency.</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-answer" aria-hidden="true">
+            <div class="faq-answer-inner">
+              We follow stable sourcing, controlled handling, and basic quality checks to ensure consistent, repeatable results.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-qa="s2">
+          <button class="faq-question" type="button">
+            <span>2) Setup guidance is provided?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-answer" aria-hidden="true">
+            <div class="faq-answer-inner">
+              Yes. Practical tips and quick recommendations are provided for ink, powder, and roll usage.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-qa="s3">
+          <button class="faq-question" type="button">
+            <span>3) Is the packaging safe for transit?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-answer" aria-hidden="true">
+            <div class="faq-answer-inner">
+              Bulk orders are properly packed to minimize handling and transit risks.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-qa="s4">
+          <button class="faq-question" type="button">
+            <span>4) If there are issues with repeat orders, is help available?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-answer" aria-hidden="true">
+            <div class="faq-answer-inner">
+              Yes. We provide quick repeat support to help you avoid production delays.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-right">
+        <div class="faq-side-card">
+          <div class="faq-side-icon"><i class="fa-solid fa-message"></i></div>
+          <h3>Need exact guidance?</h3>
+          <p>
+            Share your requirement. We will reply with the right supplies and setup tips.
+          </p>
+          <a class="btn btn-primary faq-cta" href="{% url 'contact' %}">
+            WhatsApp / Contact Us
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA bottom -->
+  <div class="container cta-bottom">
+    <div class="cta-card">
+      <div class="cta-left">
+        <div class="cta-title">Ready for bulk savings?</div>
+        <div class="cta-sub">DTF Ink • Powder • Rolls — stable supply with Kasauti support.</div>
+      </div>
+      <div class="cta-right">
+        <a class="btn btn-primary" href="{% url 'contact' %}">
+          Get Bulk Quote
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a class="btn btn-outline-primary" href="{% url 'product' %}">Browse Supplies</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  // Simple FAQ accordion
+  document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.faq-item');
+
+    items.forEach(item => {
+      const btn = item.querySelector('.faq-question');
+      const ans = item.querySelector('.faq-answer');
+      const icon = btn ? btn.querySelector('i') : null;
+
+      if (ans) ans.style.maxHeight = '0px';
+
+      btn && btn.addEventListener('click', () => {
+        const isOpen = item.getAttribute('data-open') === 'true';
+
+        // close others (optional)
+        items.forEach(other => {
+          if (other === item) return;
+          other.setAttribute('data-open', 'false');
+          const oAns = other.querySelector('.faq-answer');
+          const oBtnIcon = other.querySelector('.faq-question i');
+          if (oAns) oAns.style.maxHeight = '0px';
+          if (oBtnIcon) {
+            oBtnIcon.classList.remove('fa-minus');
+            oBtnIcon.classList.add('fa-plus');
+          }
+          const oa = other.querySelector('.faq-answer');
+          if (oa) oa.setAttribute('aria-hidden', 'true');
+        });
+
+        const nextOpen = !isOpen;
+        item.setAttribute('data-open', String(nextOpen));
+
+        if (ans) {
+          ans.style.maxHeight = nextOpen ? ans.scrollHeight + 'px' : '0px';
+          ans.setAttribute('aria-hidden', nextOpen ? 'false' : 'true');
+        }
+
+        if (icon) {
+          icon.classList.toggle('fa-plus', !nextOpen);
+          icon.classList.toggle('fa-minus', nextOpen);
+        }
+      });
+
+      // init icon class
+      if (icon) {
+        icon.classList.add('fa-plus');
+      }
+    });
+  });
+</script>
+
+{% endblock %}
+

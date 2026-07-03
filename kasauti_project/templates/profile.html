@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<section class="profile-page">
+  <div class="container">
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <i class="fa-solid fa-circle-user"></i>
+      </div>
+      <div class="profile-info">
+        <h2>{{ user.get_full_name|default:user.username }}</h2>
+        <p class="profile-email"><i class="fa-solid fa-envelope me-2"></i>{{ user.email }}</p>
+        <p class="profile-joined"><i class="fa-solid fa-calendar me-2"></i>Joined {{ user.date_joined|date:"d M Y" }}</p>
+      </div>
+      <div class="profile-logout">
+        <a href="{% url 'logout' %}" class="btn-logout">
+          <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+        </a>
+      </div>
+    </div>
+
+    {% if messages %}
+    <div class="mt-3">
+      {% for msg in messages %}
+      <div class="alert alert-{% if msg.tags == 'error' %}danger{% else %}{{ msg.tags }}{% endif %} alert-dismissible fade show">
+        {{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row g-4 mt-2">
+
+      <!-- Edit Profile -->
+      <div class="col-lg-4">
+        <div class="profile-card">
+          <div class="profile-card-title">
+            <i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile
+          </div>
+          <form method="post" class="mt-3">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label">First Name</label>
+              {{ form.first_name }}
+              {% if form.first_name.errors %}<div class="text-danger small">{{ form.first_name.errors|join:", " }}</div>{% endif %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Last Name</label>
+              {{ form.last_name }}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              {{ form.email }}
+              {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors|join:", " }}</div>{% endif %}
+            </div>
+            <button type="submit" class="btn-save w-100">
+              <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+            </button>
+          </form>
+
+          <!-- Quick links -->
+          <div class="quick-links mt-4">
+            <a href="{% url 'product' %}" class="quick-link">
+              <i class="fa-solid fa-bag-shopping"></i> Shop Products
+            </a>
+            <a href="{% url 'contact' %}" class="quick-link">
+              <i class="fa-solid fa-headset"></i> Contact Support
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order History -->
+      <div class="col-lg-8">
+        <div class="profile-card">
+          <div class="profile-card-title">
+            <i class="fa-solid fa-box-open me-2"></i>My Orders
+            <span class="order-count">{{ orders.count }}</span>
+            <a href="{% url 'my_orders' %}" class="btn-view-orders">
+              <i class="fa-solid fa-eye me-1"></i>View All
+            </a>
+          </div>
+
+          {% if orders %}
+          <div class="orders-list mt-3">
+            {% for order in orders %}
+            <div class="order-item">
+              <div class="order-header">
+                <div class="order-meta">
+                  <span class="order-id">#{{ order.id }}</span>
+                  <span class="order-date">{{ order.created_at|date:"d M Y" }}</span>
+                </div>
+                <span class="order-status status-{{ order.status }}">
+                  {{ order.get_status_display }}
+                </span>
+              </div>
+              <div class="order-products">
+                {% for item in order.items.all %}
+                <div class="order-product-row">
+                  <span class="op-title">{{ item.product_title }}</span>
+                  <span class="op-qty">x{{ item.quantity }}</span>
+                  <span class="op-price">₹{{ item.unit_price }}</span>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="order-footer">
+                <span class="order-total">Total: <strong>₹{{ order.total_amount }}</strong></span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="empty-orders">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <p>No orders yet. Start shopping!</p>
+            <a href="{% url 'product' %}" class="btn-save mt-2">Browse Products</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,71 @@
+/* Order Success page — Light / Gold + CMYK Ink-Accent theme */
+.success {
+    margin-top: 200px;
+    padding-top: 50px;
+}
+
+.success .card {
+    background: #ffffff;
+    border: 1px solid rgba(201, 151, 63, 0.25);
+    border-radius: 26px;
+    box-shadow: 0 25px 70px rgba(15, 23, 42, 0.10);
+    position: relative;
+    overflow: hidden;
+}
+
+.success .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--ink-cyan, #06b6d4), var(--ink-magenta, #e0529c), var(--ink-yellow, #eab308), var(--ink-key, #7c3aed));
+}
+
+.success .card p,
+.success .card h2 {
+    color: #0f172a;
+}
+
+.success .card .text-success {
+    color: var(--ink-cyan, #06b6d4) !important;
+    filter: drop-shadow(0 10px 24px rgba(6, 182, 212, 0.25));
+}
+
+.success .btn-primary {
+    background: linear-gradient(135deg, #c9973f, #f5d08a);
+    border: none;
+    box-shadow: 0 8px 24px rgba(201, 151, 63, 0.30);
+    color: #ffffff;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    isolation: isolate;
+}
+
+.success .btn-primary:hover {
+    transform: translateY(-3px);
+    color: #ffffff;
+    box-shadow: 0 14px 34px rgba(201, 151, 63, 0.38);
+}
+
+.success .btn-outline-secondary {
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    color: #0f172a;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.success .btn-outline-secondary:hover {
+    transform: translateY(-3px);
+    color: #0f172a;
+    background: rgba(201, 151, 63, 0.08);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10);
+}

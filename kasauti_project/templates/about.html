@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+<section class="about-page">
+    <!-- Hero -->
+    <div class="about-hero">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <div class="about-hero-content">
+                        <div class="eyebrow">
+                            <span class="dot"></span> Premium DTF Products • Ink • Powder • Rolls
+                        </div>
+                        <h1>
+                            KASAUTI INTERNATIONAL
+                            <span class="accent">About</span>   
+                        </h1>
+                        <p class="importer">
+                            ★ GLOBAL QUALITY. INDIAN TRUST ★
+                        </p>
+                        <p class="lead">
+                            Our goal is to provide high-quality <b>DTF Inks, Powder, and Supplies</b> that deliver outstanding print results at competitive prices.
+                        </p>
+                        <div class="hero-badges">
+                            <div class="badge-3d">Fast Supply</div>
+                            <div class="badge-3d">Quality Checked</div>
+                            <div class="badge-3d">Bulk Support</div>
+                        </div>
+                        <div class="hero-actions">
+                            <a href="{% url 'contact' %}" class="btn-about-primary">
+                                Request Price
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                            <a href="#counters" class="btn-about-secondary">
+                                Our Numbers
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="about-hero-3d-card" aria-hidden="true">
+                        <div class="card-sheen"></div>
+                        <div class="card-inner">
+                            <div class="card-top">
+                                <div class="card-title">
+                                    Ink • Powder • Rolls
+                                </div>
+                            </div>
+                            <div class="card-spec d-flex flex-row gap-2">
+                                <div class="spec-row">
+                                    <i class="fa-solid fa-droplet"></i>
+                                    <span>Rich Color Output</span>
+                                </div>
+                                <div class="spec-row">
+                                    <i class="fa-solid fa-flask"></i>
+                                    <span>Stable & Consistent Mix</span>
+                                </div>
+                                <div class="spec-row">
+                                    <i class="fa-solid fa-box"></i>
+                                    <span>Bulk Ready Packaging</span>
+                                </div>
+                            </div>
+                            <div class="card-photo">
+                                <img src="{% static 'image/all.png' %}" alt="Ink powder" class="img-fluid" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- USP / Why us -->
+    <div class="container py-5">
+        <div class="section-head">
+            <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>WHY KASAUTI</span>
+            <h2>
+                Best pricing + reliable quality
+            </h2>
+            <p>
+                Get a better deal with competitive <b>bulk pricing, fast dispatch, and trusted DTF</b> supplies you can rely on.
+            </p>
+        </div>
+
+        <div class="usp-grid">
+            <div class="usp-card">
+                <div class="usp-icon"><i class="fa-solid fa-tag"></i></div>
+                <h3>Price Comparison</h3>
+                <p>Share your current quotation, and we'll provide a competitive bulk pricing offer.</p>
+            </div>
+            <div class="usp-card">
+                <div class="usp-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                <h3>Quality Assurance</h3>
+                <p>Every product undergoes strict quality and consistency checks before delivery to ensure reliable, stable printing results.</p>
+            </div>
+            <div class="usp-card">
+                <div class="usp-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <h3>Fast Dispatch</h3>
+                <p>Fast turnaround to keep your production running without interruptions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Price / Campaign -->
+    <div class="price-campaign">
+        <div class="container">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-6">
+                    <div class="campaign-sticker">
+                        <div class="sticker-top">
+                            <span class="pulse"></span>
+                            <b>LIMITED BULK DEALS</b>
+                        </div>
+                        <h2>DTF Ink & Powder • Best Rates</h2>
+                        <p>
+                            Compare with other companies and get a better value with reliable supply.
+                        </p>
+
+                        <ul class="campaign-list">
+                            <li><i class="fa-solid fa-circle-check"></i> Bulk quantity discounts</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Quality-backed pricing</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Fast delivery support</li>
+                        </ul>
+
+                        <div class="campaign-cta">
+                            <a class="btn-about-primary" href="{% url 'contact' %}">
+                                Get Campaign Price
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                            <div class="cta-note">Reply within 24 hours</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="campaign-compare" id="price">
+                        <div class="compare-header">
+                            <h3>Other Companies vs KASAUTI</h3>
+                            <p>Simple comparison to help your decision.</p>
+                        </div>
+
+                        <div class="compare-table">
+                            <div class="cmp-row cmp-head">
+                                <div>Feature</div>
+                                <div class="cmp-other">Other Companies</div>
+                                <div class="cmp-us">KASAUTI</div>
+                            </div>
+                            <div class="cmp-row">
+                                <div>Price for Bulk</div>
+                                <div class="cmp-other">Higher</div>
+                                <div class="cmp-us">Competitive</div>
+                            </div>
+                            <div class="cmp-row">
+                                <div>Consistency</div>
+                                <div class="cmp-other">Variable</div>
+                                <div class="cmp-us">Checked</div>
+                            </div>
+                            <div class="cmp-row">
+                                <div>Dispatch Speed</div>
+                                <div class="cmp-other">Delayed</div>
+                                <div class="cmp-us">Fast</div>
+                            </div>
+                            <div class="cmp-row">
+                                <div>Support</div>
+                                <div class="cmp-other">Limited</div>
+                                <div class="cmp-us">Quick Response</div>
+                            </div>
+                        </div>
+
+                        <div class="campaign-photos" aria-hidden="true">
+                            <div class="float-photo p1">
+                                <img src="{% static 'image/powder.jpg' %}" alt="Powder" />
+                            </div>
+                            <div class="float-photo p2">
+                                <img src="{% static 'image/roll.jpg' %}" alt="DTF prints" />
+                            </div>
+                            <div class="float-photo p3">
+                                <img src="{% static 'image/ink.jpg' %}" alt="Ink" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Counters -->
+    <div class="counters" id="counters">
+        <div class="container py-5">
+            <div class="section-head section-head-light">
+                <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>IN NUMBERS</span>
+                <h2>Trusted DTF Supplies</h2>
+            </div>
+
+            <div class="counter-grid">
+                <div class="counter-card">
+                    <div class="counter-value" data-target="2000">0</div>
+                    <div class="counter-label">+</div>
+                    <div class="counter-title">Bulk Orders/Month</div>
+                </div>
+                <div class="counter-card">
+                    <div class="counter-value" data-target="5000">0</div>
+                    <div class="counter-label">+</div>
+                    <div class="counter-title">Inks & Powders Supplied</div>
+                </div>
+                <div class="counter-card">
+                    <div class="counter-value" data-target="99">0</div>
+                    <div class="counter-label">%</div>
+                    <div class="counter-title">Quality Satisfaction</div>
+                </div>
+                <div class="counter-card">
+                    <div class="counter-value" data-target="24">0</div>
+                    <div class="counter-label">h</div>
+                    <div class="counter-title">Fast Response Time</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="container py-5">
+        <div class="section-head">
+            <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>GALLERY</span>
+            <h2>Ink powder • Production • Results</h2>
+            <p>
+                Real production environments—where consistent performance from DTF Ink and Powder matters every day.
+            </p>
+        </div>
+
+        <div class="gallery-grid">
+            <figure class="gallery-item">
+                <img src="{% static 'image/roll.jpg' %}" alt="DTF Prints" />
+                <figcaption>
+                    <span class="cap">DTF Rolls</span>
+                    <span class="sub">Sharp details</span>
+                </figcaption>
+            </figure>
+            <figure class="gallery-item">
+                <img src="{% static 'image/ink.jpg' %}" alt="Ink " />
+                <figcaption>
+                    <span class="cap">Ink </span>
+                    <span class="sub">Stable mix</span>
+                </figcaption>
+            </figure>
+            <figure class="gallery-item">
+                <img src="{% static 'image/powder.jpg' %}" alt="Powder" />
+                <figcaption>
+                    <span class="cap">Powder</span>
+                    <span class="sub">Even coating</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+
+</section>
+
+<script>
+    // Counter animation (no dependency)
+    document.addEventListener('DOMContentLoaded', () => {
+        const counters = document.querySelectorAll('.counter-value');
+        const cards = document.querySelectorAll('.counter-card');
+
+        function animate(el, target) {
+            const duration = 1200;
+            const start = performance.now();
+            const from = 0;
+
+            function step(now) {
+                const t = Math.min(1, (now - start) / duration);
+                const val = Math.floor(from + (target - from) * (t * (2 - t)));
+                el.textContent = val;
+                if (t < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    counters.forEach(c => {
+                        const target = parseInt(c.getAttribute('data-target'), 10) || 0;
+                        if (!c.dataset.done) {
+                            animate(c, target);
+                            c.dataset.done = '1';
+                        }
+                    });
+                    io.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        cards.forEach(card => io.observe(card));
+    });
+</script>
+
+{% endblock %}

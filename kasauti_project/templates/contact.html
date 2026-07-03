@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+
+<section class="contact-page">
+  {% if messages %}
+  <div class="container mt-3">
+    {% for msg in messages %}
+    <div
+      class="alert alert-{% if msg.tags == 'error' %}danger{% else %}{{ msg.tags }}{% endif %} alert-dismissible fade show">
+      {{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class="contact-hero">
+    <div class="contact-hero-bg" aria-hidden="true" style="--contact-bg-photo: url('{% static 'image/s.jpg' %}');"></div>
+
+    <div class="container">
+      <div class="contact-hero-inner">
+        <div class="contact-top">
+          <h1 class="contact-title">Contact Us</h1>
+          <p class="contact-subtitle">Premium DTF Printing Solutions | Fast Response</p>
+        </div>
+
+        <div class="contact-layout row g-4 align-items-stretch">
+          <!-- Left: Company Address -->
+          <div class="col-lg-5">
+            <div class="contact-card contact-card-address">
+              <div class="contact-card-header">
+                <span class="badge-premium">Company Address</span>
+              </div>
+
+              <div class="contact-address">
+                <h3>KASAUTI INTERNATIONAL LLP</h3>
+                <div class="contact-meta">
+                  <div class="meta-row">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>D-350, Sector 63, Noida, Uttar Pradesh, INDIA 201309</span>
+                  </div>
+                  <div class="meta-row">
+                    <i class="fa-solid fa-at"></i>
+                    <span>info@kasautiinternational.com</span>
+                  </div>
+                  <div class="meta-row">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+91 8796560299</span>
+                  </div>
+                  <div class="meta-row">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Monday - Saturday</span>
+                  </div>
+                  <div class="meta-row">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>10:00 AM - 06:00 PM</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-card-footer">
+                <a class="contact-link" href="#contact-form">
+                  <i class="fa-solid fa-paper-plane"></i> Send Inquiry
+                </a>
+              </div>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.877895263548!2d77.38708287554262!3d28.633421475664232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cef0e8d87dbf5%3A0x9814154b18b9f038!2sKasauti%20International%20Global%20Textile%20The%20Golden%20Standard!5e0!3m2!1sen!2sin!4v1782739482516!5m2!1sen!2sin"
+              allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </div>
+
+          <!-- Right: Contact Form -->
+          <div class="col-lg-7">
+            <div class="contact-card contact-card-form" id="contact-form">
+              <div class="contact-card-header">
+                <span class="badge-premium">Inquiry Form</span>
+              </div>
+
+              <form class="contact-form" action="{% url 'contact' %}" method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="name">Name</label>
+                    <div class="field">
+                      <i class="fa-solid fa-user"></i>
+                      <input id="name" name="name" type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label" for="phone">Phone</label>
+                    <div class="field">
+                      <i class="fa-solid fa-phone"></i>
+                      <input id="phone" name="phone" type="tel" class="form-control" placeholder="Phone Number"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label" for="email">Email</label>
+                    <div class="field">
+                      <i class="fa-solid fa-envelope"></i>
+                      <input id="email" name="email" type="email" class="form-control" placeholder="Email Address"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <label class="form-label" for="product">Product</label>
+                    <div class="field">
+                      <i class="fa-solid fa-box"></i>
+                      <input id="product" name="product" type="text" class="form-control" placeholder="DTF Ink / Roll">
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <label class="form-label" for="quantity">Quantity</label>
+                    <div class="field">
+                      <i class="fa-solid fa-layer-group"></i>
+                      <input id="quantity" name="quantity" type="number" class="form-control" placeholder="Qty">
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label" for="message">Message</label>
+                    <div class="field field-textarea">
+                      <i class="fa-solid fa-message"></i>
+                      <textarea id="message" name="message" class="form-control" rows="4"
+                        placeholder="Tell us about your requirement" required></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <button class="btn-premium" type="submit">
+                      <span>Submit Inquiry</span>
+                      <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <p class="form-note">We’ll contact you within 24 hours.</p>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-bar" aria-hidden="true">
+    <div class="marquee-text">
+      KASAUTI INTERNATIONAL LLP • PREMIUM DTF PRODUCTS • BEST IN QUALITY • FAST RESPONSE • FAST DELEVERY • CUSTOMER
+      SATISFACTION
+    </div>
+  </div>
+</section>
+
+{% endblock %}

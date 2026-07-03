@@ -1,0 +1,936 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Sora:wght@500;600;700;800&display=swap');
+
+/* ========================================================
+   KASAUTI INTERNATIONAL — Ink Registration Theme
+   Base palette: warm gold/cream (brand)
+   Signature accent: CMYK ink-dot system
+   (DTF printing runs on Cyan/Magenta/Yellow/Key ink —
+   the dots are literal registration marks from the press)
+   ======================================================== */
+
+:root {
+    --ink-navy: #0f172a;
+    --ink-slate: #475569;
+    --ink-muted: #64748b;
+    --cream: #faf9f6;
+    --gold: #c9973f;
+    --gold-light: #f5d08a;
+    --gold-deep: #8a6a23;
+
+    /* CMYK ink accents */
+    --ink-cyan: #06b6d4;
+    --ink-magenta: #e0529c;
+    --ink-yellow: #eab308;
+    --ink-key: #250053;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--cream);
+    background-image:
+        radial-gradient(900px 600px at 8% 0%, rgba(6, 182, 212, 0.07), transparent 60%),
+        radial-gradient(900px 700px at 95% 18%, rgba(224, 82, 156, 0.07), transparent 60%),
+        radial-gradient(800px 600px at 50% 95%, rgba(234, 179, 8, 0.06), transparent 60%),
+        radial-gradient(700px 500px at 75% 60%, rgba(124, 58, 237, 0.05), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    margin-top: 100px;
+}
+@media (max-width: 995px) {
+    body{
+        margin-top: 0px;
+    }
+}
+
+/* ========================================================
+   Background Geometric Pattern — squares, triangles, diamonds
+   Subtle ink-themed texture sitting behind all content
+   ======================================================== */
+
+h1, h2, h3, h4, h5,
+.logo span,
+.animated-text,
+.core-products-head h2,
+.calc-head h2,
+.reviews-head h2,
+.faq-head h2 {
+    font-family: 'Sora', 'Poppins', sans-serif;
+}
+
+/* ========================================================
+   Ink Registration Dots — signature element
+   Four-dot CMYK cluster, reused as a small mark near
+   kickers/labels throughout the site (see home.css)
+   ======================================================== */
+.ink-dots {
+    display: inline-flex;
+    gap: 3px;
+    align-items: center;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.ink-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.ink-dots span:nth-child(1) { background: var(--ink-cyan); }
+.ink-dots span:nth-child(2) { background: var(--ink-magenta); }
+.ink-dots span:nth-child(3) { background: var(--ink-yellow); }
+.ink-dots span:nth-child(4) { background: var(--ink-key); }
+
+/* Top hairline strip — CMYK registration bar */
+.cmyk-strip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 1100;
+    display: flex;
+}
+
+.cmyk-strip span {
+    flex: 1;
+}
+
+.cmyk-strip span:nth-child(1) { background: var(--ink-cyan); }
+.cmyk-strip span:nth-child(2) { background: var(--ink-magenta); }
+.cmyk-strip span:nth-child(3) { background: var(--ink-yellow); }
+.cmyk-strip span:nth-child(4) { background: var(--ink-key); }
+
+/* ========================================================
+   Navbar
+   ======================================================== */
+.navbar-toggler {
+    background-color: var(--gold);
+}
+
+.custom-navbar {
+    margin: 40px auto 20px;
+    width: 95%;
+    border-radius: 20px;
+    padding: 16px 26px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(201, 151, 63, 0.18);
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    transition: 0.4s ease;
+}
+
+.custom-navbar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.12);
+}
+
+#navbarContent .custom-btn {
+    color: white;
+}
+
+/* Logo */
+.logo img {
+    width: 60px;
+    height: 60px;
+}
+
+.logo span {
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.logo-dots {
+    margin-left: 6px;
+    margin-right: 0;
+    transform: translateY(-1px);
+}
+
+/* Nav Links */
+.navbar-nav .nav-link {
+    color: var(--ink-navy) !important;
+    margin: 0 10px;
+    font-weight: 500;
+    position: relative;
+    transition: 0.4s;
+    padding: 10px 15px !important;
+    border-radius: 12px;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(201, 151, 63, 0.10);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(201, 151, 63, 0.25);
+    color: var(--gold) !important;
+}
+
+.navbar-nav .nav-link.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: white !important;
+    box-shadow: 0 8px 20px rgba(201, 151, 63, 0.3);
+}
+
+/* Underline accent sweeps through CMYK on hover — ink pass effect */
+.navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 6px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--ink-cyan), var(--ink-magenta), var(--ink-yellow), var(--ink-key));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+    opacity: 0.7;
+}
+
+.navbar-nav .nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar-nav .nav-link.active::after {
+    display: none;
+}
+
+/* Button */
+.custom-btn {
+    text-decoration: none;
+    padding: 12px 14px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: white;
+    font-weight: 600;
+    transition: 0.4s ease;
+    box-shadow: 0 8px 20px rgba(201, 151, 63, 0.3);
+    margin-right: 7px;
+    position: relative;
+    isolation: isolate;
+}
+
+.custom-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    color: white;
+    box-shadow: 0 8px 20px rgba(201, 151, 63, 0.4);
+}
+
+.custom-btn.whatsapp {
+    background: linear-gradient(135deg, #25d366, #1ebc59);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+}
+
+.custom-btn.whatsapp:hover {
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.45);
+}
+
+.custom-btn.whatsapp::before {
+    display: none;
+}
+
+#icon {
+    font-size: 20px;
+}
+
+/* ========================================================
+   Two-tier Brand Navbar (logo · brand · signage / links)
+   Light cream-glass look — keeps the existing gold theme
+   ======================================================== */
+.kas-nav-shell {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+/* Top tier: logo (left) · brand text (center) · signage (right) */
+.kas-nav-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+}
+
+.kas-brand-logo {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.kas-brand-logo img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(15, 23, 42, 0.2));
+    transition: transform 0.4s ease, width 0.35s ease, height 0.35s ease;
+}
+
+.kas-brand-logo:hover img {
+    transform: scale(1.06) rotate(-2deg);
+}
+
+.kas-brand-text {
+    justify-self: center;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.1;
+    min-width: 0;
+}
+
+.kas-brand-name {
+    font-family: 'Sora', 'Poppins', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    font-size: clamp(1.3rem, 1.95vw, 2rem);
+    background: linear-gradient(135deg, var(--gold-deep), var(--gold) 45%, var(--gold-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
+    transition: font-size 0.35s ease;
+}
+
+.kas-brand-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: clamp(0.6rem, 0.78vw, 0.72rem);
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-slate);
+    white-space: nowrap;
+    max-height: 28px;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.35s ease;
+}
+
+.kas-brand-tag b {
+    color: var(--gold-deep);
+    font-weight: 800;
+}
+
+.kas-brand-tag .ink-dots {
+    margin: 0;
+}
+
+/* Bottom tier: links + actions */
+.kas-nav-bottom {
+    border-top: 1px solid rgba(201, 151, 63, 0.18);
+    padding-top: 4px;
+}
+
+.kas-nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.kas-toggler {
+    justify-self: end;
+}
+
+/* Desktop: lay links + actions in one row */
+@media (min-width: 992px) {
+    .kas-nav-bottom {
+        display: flex !important;
+        align-items: center;
+    }
+}
+
+/* Scroll-shrink: navbar becomes a little more compact after scrolling */
+.custom-navbar.kas-scrolled {
+    padding: 9px 24px;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+}
+
+.custom-navbar.kas-scrolled .kas-nav-shell {
+    gap: 6px;
+}
+
+.custom-navbar.kas-scrolled .kas-brand-logo img {
+    width: 64px;
+    height: 64px;
+}
+
+.custom-navbar.kas-scrolled .kas-brand-name {
+    font-size: clamp(1.1rem, 1.45vw, 1.5rem);
+}
+
+.custom-navbar.kas-scrolled .kas-brand-tag {
+    opacity: 0;
+    max-height: 0;
+}
+
+.custom-navbar.kas-scrolled .kas-nav-bottom {
+    border-top-color: transparent;
+    padding-top: 0;
+}
+
+.custom-navbar.kas-scrolled .nav-link {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+}
+
+/* Tablet / mobile: show toggler, compact brand */
+@media (max-width: 991px) {
+    .kas-nav-top {
+        gap: 12px;
+    }
+
+    .kas-brand-logo img {
+        width: 66px;
+        height: 66px;
+    }
+
+    .kas-brand-name {
+        font-size: 1.02rem;
+        letter-spacing: 0.04em;
+        white-space: normal;
+    }
+
+    .kas-brand-tag {
+        letter-spacing: 0.16em;
+    }
+
+    .kas-nav-cta {
+        justify-content: center;
+        margin-top: 6px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 575px) {
+    .kas-brand-tag {
+        display: none;
+    }
+
+    .kas-brand-name {
+        font-size: 1rem;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 380px) {
+    .kas-brand-name {
+        font-size: 0.9rem;
+    }
+}
+
+/* ========================================================
+   Floating WhatsApp CTA (mobile/global)
+   ======================================================== */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1200;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25d366, #1ebc59);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 26px;
+    box-shadow: 0 14px 34px rgba(37, 211, 102, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+.floating-whatsapp:hover {
+    transform: scale(1.1) translateY(-3px);
+    color: #fff;
+    box-shadow: 0 18px 42px rgba(37, 211, 102, 0.55);
+}
+
+.floating-whatsapp::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(37, 211, 102, 0.4);
+    animation: pulseRing 2.2s ease-out infinite;
+}
+
+@keyframes pulseRing {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    80% { transform: scale(1.35); opacity: 0; }
+    100% { transform: scale(1.35); opacity: 0; }
+}
+
+/* ========================================================
+   Trust Marquee Strip
+   ======================================================== */
+.trust-strip {
+    position: fixed;
+    top: 4px;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    z-index: 1090;
+    background: var(--ink-navy);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.trust-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: marquee 28s linear infinite;
+    padding-left: 48px;
+}
+
+.trust-track span {
+    color: #f1f5f9;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trust-track span i {
+    color: var(--gold-light);
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trust-track { animation: none; }
+}
+
+/* ========================================================
+   Footer
+   ======================================================== */
+.footer {
+    background: radial-gradient(1200px 500px at 50% -50%, rgba(201, 151, 63, 0.16), transparent 60%),
+        #fffdf8;
+    color: var(--ink-slate);
+    padding: 70px 0 30px;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(201, 151, 63, 0.15);
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(120deg, rgba(201, 151, 63, 0.10), rgba(245, 208, 138, 0.04), rgba(255, 255, 255, 0));
+    pointer-events: none;
+}
+
+.footer-grid {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-col {
+    padding: 18px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: rgba(255, 255, 255, 0.6);
+    transform: translateZ(0);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.footer-col::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: radial-gradient(600px circle at var(--fx, 50%) var(--fy, 0%), rgba(201, 151, 63, 0.18), transparent 55%),
+        linear-gradient(135deg, rgba(201, 151, 63, 0.08), rgba(245, 208, 138, 0.06));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.footer-col:hover {
+    transform: translateY(-8px) rotateX(6deg) rotateY(-10deg);
+    border-color: rgba(201, 151, 63, 0.4);
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.10);
+}
+
+.footer-col:hover::after {
+    opacity: 1;
+}
+
+.footer-col > * {
+    position: relative;
+    z-index: 1;
+}
+
+.footer h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-navy);
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+}
+
+.footer h3::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 3px;
+    border-radius: 3px;
+    margin-right: 8px;
+    background: linear-gradient(90deg, var(--ink-cyan), var(--ink-magenta), var(--ink-yellow), var(--ink-key));
+    vertical-align: middle;
+}
+
+.footer p {
+    color: var(--ink-muted);
+}
+
+.footer a {
+    color: var(--ink-slate);
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px 0;
+    transition: 0.25s ease;
+    padding: 6px;
+    background-color: rgba(201, 151, 63, 0.06);
+    border-radius: 5px;
+}
+
+.footer a:hover {
+    color: var(--ink-navy);
+    background-color: rgba(201, 151, 63, 0.14);
+    transform: translateY(-2px);
+    border-bottom: 3px solid var(--gold);
+    border-radius: 5px;
+}
+
+/* VIP / brand wrap in footer */
+.footer-brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.vip-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #fff;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    box-shadow: 0 8px 20px rgba(201, 151, 63, 0.3);
+}
+
+.vip-star {
+    color: #fff;
+}
+
+.vip-sub {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 600;
+}
+
+.footer-cta-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(201, 151, 63, 0.3);
+    transition: 0.3s ease;
+}
+
+.footer-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(201, 151, 63, 0.4);
+}
+
+.footer-cta-btn.secondary {
+    background: linear-gradient(135deg, #25d366, #1ebc59);
+    box-shadow: 0 10px 24px rgba(37, 211, 102, 0.3);
+}
+
+.footer-cta-btn.secondary:hover {
+    box-shadow: 0 14px 30px rgba(37, 211, 102, 0.4);
+}
+
+.footer-address {
+    border-top: 1px dashed rgba(15, 23, 42, 0.12);
+    padding-top: 14px;
+}
+
+.address-title {
+    font-size: 13px;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-weight: 800;
+}
+
+.address-text {
+    margin-top: 6px;
+    color: var(--ink-slate);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.address-hint {
+    color: var(--ink-muted);
+}
+
+.footer-mini-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.mini-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--ink-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mini-title {
+    font-weight: 800;
+    color: var(--ink-navy);
+    font-size: 13px;
+}
+
+.mini-sub {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+}
+
+.footer-vip-panel {
+    background: #ffffff;
+    border: 1px solid rgba(201, 151, 63, 0.18);
+    border-radius: 18px;
+    padding: 16px;
+}
+
+.vip-panel-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold-deep);
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.vip-list {
+    list-style: none;
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+}
+
+.vip-list li {
+    font-size: 13px;
+    color: var(--ink-slate);
+    font-weight: 600;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vip-list li i {
+    color: var(--ink-magenta);
+}
+
+.vip-list li:nth-child(1) i { color: var(--ink-cyan); }
+.vip-list li:nth-child(2) i { color: var(--ink-magenta); }
+.vip-list li:nth-child(3) i { color: var(--ink-yellow); }
+
+.footer-bottom {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-bottom hr {
+    opacity: 0.18;
+    border-color: var(--ink-navy);
+}
+
+.sc-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sc-links {
+    font-size: 22px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.social-link {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--ink-slate);
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    will-change: transform;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: radial-gradient(220px circle at var(--sx, 50%) var(--sy, 0%), rgba(201, 151, 63, 0.30), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-6px) rotateX(12deg) rotateY(-16deg);
+    background: linear-gradient(135deg, rgba(201, 151, 63, 0.22), rgba(245, 208, 138, 0.10));
+    border-color: rgba(201, 151, 63, 0.45);
+    color: var(--ink-navy);
+    box-shadow: 0 18px 45px rgba(201, 151, 63, 0.20);
+}
+
+.social-link:hover::before {
+    opacity: 1;
+}
+
+/* Each social icon picks up its own ink-accent on hover */
+.social-link:nth-child(1):hover { color: var(--ink-cyan); border-color: var(--ink-cyan); }
+.social-link:nth-child(2):hover { color: #1ebc59; border-color: #1ebc59; }
+.social-link:nth-child(3):hover { color: var(--ink-magenta); border-color: var(--ink-magenta); }
+.social-link:nth-child(4):hover { color: var(--ink-key); border-color: var(--ink-key); }
+
+.policy a {
+    background-color: transparent;
+}
+
+.policy a:hover {
+    background-color: transparent;
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    .footer-col,
+    .social-link,
+    .footer a {
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 991px) {
+    .custom-navbar {
+        padding: 15px;
+        margin-top: 44px;
+    }
+
+    .navbar-nav {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .navbar-nav .nav-link {
+        margin: 10px 0;
+    }
+
+    .custom-btn {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: 45px;
+    }
+
+    .sc-links {
+        margin-top: 10px;
+    }
+
+    .trust-track span {
+        font-size: 11.5px;
+    }
+}
+
+@media (max-width: 575px) {
+    .floating-whatsapp {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        bottom: 18px;
+        right: 18px;
+    }
+}

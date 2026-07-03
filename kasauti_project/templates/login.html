@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+{% if messages %}
+<div class="position-fixed top-0 start-50 translate-middle-x mt-2" style="z-index:9999;min-width:340px;">
+  {% for msg in messages %}
+  <div class="alert alert-{% if 'error' in msg.tags %}danger{% else %}{{ msg.tags }}{% endif %} alert-dismissible fade show shadow" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="login">
+    <div class="login-section">
+        <!-- FIX 1: Use login-container (not container) to avoid Bootstrap .container conflict -->
+        <div class="login-container {% if active_panel == 'register' %}active{% endif %}" id="loginContainer">
+
+            <!-- LOGIN FORM -->
+            <div class="form-box login">
+                <form action="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post" autocomplete="on">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="login">
+                    <h1 class="hadding">Login</h1>
+                    <div class="input-box">
+                        <input type="text" name="username" placeholder="Username"
+                            value="{{ login_form.username.value|default:'' }}" required autocomplete="username"/>
+                        <i class="bx bxs-user"></i>
+                        {% if login_form.username.errors %}
+                          <small class="text-danger">{{ login_form.username.errors|join:", " }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password" placeholder="Password" required autocomplete="current-password"/>
+                        <i class="bx bxs-lock-alt"></i>
+                    </div>
+                    <div class="forgot-link">
+                        <a href="Forget_Password">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <!-- <p class="hadding">or login with social platforms</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bx bxl-google"></i></a>
+                        <a href="#"><i class="bx bxl-facebook"></i></a>
+                    </div> -->
+                </form>
+            </div>
+
+            <!-- REGISTER FORM -->
+            <div class="form-box register">
+                <form action="{% url 'login' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="register">
+                    <h1 class="hadding">Registration</h1>
+                    <div class="input-box">
+                        <input type="text" name="username" placeholder="Username"
+                            value="{{ register_form.username.value|default:'' }}" required autocomplete="username"/>
+                        <i class="bx bxs-user"></i>
+                        {% if register_form.username.errors %}
+                          <small class="text-danger">{{ register_form.username.errors|join:", " }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="input-box">
+                        <input type="email" name="email" placeholder="Email"
+                            value="{{ register_form.email.value|default:'' }}" required autocomplete="email"/>
+                        <i class="bx bxs-envelope"></i>
+                        {% if register_form.email.errors %}
+                          <small class="text-danger">{{ register_form.email.errors|join:", " }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password1" placeholder="Password" required autocomplete="new-password"/>
+                        <i class="bx bxs-lock-alt"></i>
+                        {% if register_form.password1.errors %}
+                          <small class="text-danger">{{ register_form.password1.errors|join:", " }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password2" placeholder="Confirm Password" required autocomplete="new-password"/>
+                        <i class="bx bxs-lock-alt"></i>
+                        {% if register_form.password2.errors %}
+                          <small class="text-danger">{{ register_form.password2.errors|join:", " }}</small>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn">Register</button>
+                    <!-- <p class="hadding">or register with social platforms</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bx bxl-google"></i></a>
+                        <a href="#"><i class="bx bxl-facebook"></i></a>
+                    </div> -->
+                </form>
+            </div>
+
+            <div class="toggle-box">
+                <div class="toggle-panel toggle-left">
+                    <h1>Hello, Welcome!</h1>
+                    <p>Don't have an account?</p>
+                    <button class="btn register-btn" type="button">Register</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Welcome Back!</h1>
+                    <p>Already have an account?</p>
+                    <button class="btn login-btn" type="button">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'includes/forgot_password_modal.html' %}
+
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}"/>
+
+<section class="kas-root">
+    <!-- Left Sidebar -->
+    {% include 'partials/_product_sidebar.html' %}
+
+    <!-- Main content -->
+    <main class="kas-main">
+        <header class="kas-hero" style="--accent: {{ meta.accent }};">
+            <div class="hero-copy">
+                <nav class="crumbs" aria-label="Breadcrumb">
+                    {% for c in crumbs %}
+                        {% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        {% else %}<span>{{ c.label }}</span>{% endif %}
+                    {% endfor %}
+                </nav>
+                <h1>{{ heading }} <span>{{ subheading }}</span></h1>
+                <p>{{ products|length }} product{{ products|length|pluralize }} available — tap any item for full details.</p>
+            </div>
+
+            {% if user_logged_in %}
+            <div class="hero-actions">
+                <button class="btn ghost" id="btnClearCart" type="button" title="Clear cart">Clear Cart</button>
+                <button class="btn cart" id="btnOpenCart" type="button">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+            {% endif %}
+        </header>
+
+        <!-- Product listing grid -->
+        <section class="pl-grid">
+            {% for product in products %}
+            <a class="pl-card" href="{{ product.detail_url }}" style="--accent: {{ meta.accent }};">
+                <span class="pl-stripe" aria-hidden="true"></span>
+                <div class="pl-media{% if not product.in_stock %} is-oos{% endif %}">
+                    <div class="pl-gloss" aria-hidden="true"></div>
+                    {% if product.image %}
+                    <img class="pl-img" src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
+                    {% else %}
+                    <img class="pl-img" src="{% static 'image/hero-img.png' %}" alt="{{ product.title }}" loading="lazy">
+                    {% endif %}
+                    {% if not product.in_stock %}<span class="oos-badge">Out of Stock</span>{% endif %}
+                </div>
+                <div class="pl-body">
+                    <span class="pl-tag">{{ product.tag }}</span>
+                    <h3 class="pl-title">{{ product.title }}</h3>
+                    {% if user_logged_in %}
+                        {% if product.original_price and product.original_price > product.price %}
+                        <div class="pl-price">
+                            <s class="pl-mrp">₹{{ product.original_price|floatformat:0|intcomma }}</s>
+                            <span class="pl-now">₹{{ product.price|floatformat:0|intcomma }}</span>
+                        </div>
+                        {% else %}
+                        <div class="pl-price"><span class="pl-now">₹{{ product.price|floatformat:0|intcomma }}</span></div>
+                        {% endif %}
+                    {% else %}
+                    <div class="pl-lock"><i class="fa-solid fa-lock"></i> Login to see price</div>
+                    {% endif %}
+                    {% if not product.in_stock %}
+                    <span class="pl-cta pl-cta-oos">Out of stock — notify me <i class="fa-solid fa-bell"></i></span>
+                    {% else %}
+                    <span class="pl-cta">View details <i class="fa-solid fa-arrow-right-long"></i></span>
+                    {% endif %}
+                </div>
+            </a>
+            {% empty %}
+            <div class="pl-empty">No products in this category yet. Please check back soon.</div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    {% include 'partials/_cart_drawer.html' %}
+</section>
+
+{% include 'partials/_cart_config.html' %}
+<script src="{% static 'js/product.js' %}"></script>
+{% endblock %}

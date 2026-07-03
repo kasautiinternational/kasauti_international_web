@@ -1,0 +1,240 @@
+{% if user.is_authenticated %}
+<!-- ══════════════════════════════════════════════════════════
+     LOGOUT CONFIRMATION MODAL (same-page popup)
+     Included in base.html just before </body>.
+     Kisi bhi logout link me change ki zaroorat NAHI — ye script
+     har us <a> ko intercept karta hai jo logout URL par point
+     karta hai, aur pehle background fade + modal dikhata hai.
+     ══════════════════════════════════════════════════════════ -->
+
+<style>
+  /* ── Overlay (background fade) ── */
+  .klm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .klm-overlay.klm-show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ── Modal card ── */
+  .klm-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border: 1px solid rgba(201, 151, 63, 0.18);
+    border-radius: 22px;
+    box-shadow: 0 30px 90px rgba(15, 23, 42, 0.30);
+    padding: 40px 32px 32px;
+    text-align: center;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+    transform: translateY(24px) scale(0.94);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+  .klm-overlay.klm-show .klm-card {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  /* CMYK top stripe — site ke baaki cards jaisa */
+  .klm-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg,
+      var(--ink-cyan, #06b6d4) 0 25%,
+      var(--ink-magenta, #e0529c) 25% 50%,
+      #eab308 50% 75%,
+      #7c3aed 75% 100%);
+  }
+
+  .klm-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(201, 151, 63, 0.14), rgba(245, 208, 138, 0.20));
+    border: 1.5px solid rgba(201, 151, 63, 0.35);
+  }
+  .klm-icon i {
+    font-size: 28px;
+    color: #c9973f;
+  }
+
+  .klm-card h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px;
+  }
+  .klm-card p {
+    font-size: 14px;
+    color: #475569;
+    margin: 0;
+    line-height: 1.6;
+  }
+  .klm-card .klm-user {
+    color: #8a6a23;
+    font-weight: 600;
+  }
+
+  .klm-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 26px;
+  }
+  .klm-btn {
+    flex: 1;
+    height: 46px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .klm-btn-cancel {
+    background: #faf9f6;
+    border: 1.5px solid rgba(15, 23, 42, 0.12);
+    color: #0f172a;
+  }
+  .klm-btn-cancel:hover {
+    border-color: rgba(6, 182, 212, 0.45);
+    background: rgba(6, 182, 212, 0.06);
+    color: #0e7490;
+    transform: translateY(-1px);
+  }
+  .klm-btn-logout {
+    background: linear-gradient(135deg, #c9973f, #f5d08a);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 10px 26px rgba(201, 151, 63, 0.28);
+  }
+  .klm-btn-logout:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 14px 32px rgba(201, 151, 63, 0.35);
+  }
+
+  /* Close (X) top-right */
+  .klm-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #94a3b8;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+  .klm-close:hover { color: #0f172a; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .klm-overlay, .klm-card, .klm-btn { transition: none; }
+  }
+  @media screen and (max-width: 380px) {
+    .klm-actions { flex-direction: column; }
+  }
+</style>
+
+<div class="klm-overlay" id="klmOverlay" role="dialog" aria-modal="true" aria-labelledby="klmTitle">
+  <div class="klm-card">
+    <button type="button" class="klm-close" id="klmClose" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="klm-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+
+    <h2 id="klmTitle">Confirm Logout</h2>
+    <p>
+      Are you sure?
+      <span class="klm-user">{{ user.get_full_name|default:user.username }}</span>?<br>
+      You will be logged out of your account.
+    </p>
+
+    <div class="klm-actions">
+      <button type="button" class="klm-btn klm-btn-cancel" id="klmCancel">
+        <i class="fa-solid fa-xmark"></i> Cancel
+      </button>
+
+      <!-- Actual logout — POST via form (CSRF-safe) -->
+      <form method="post" action="{% url 'logout' %}" style="flex:1; margin:0;">
+        {% csrf_token %}
+        <button type="submit" class="klm-btn klm-btn-logout" style="width:100%;">
+          <i class="fa-solid fa-right-from-bracket"></i> Yes, Logout
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var overlay = document.getElementById('klmOverlay');
+  var closeBtn = document.getElementById('klmClose');
+  var cancelBtn = document.getElementById('klmCancel');
+  var logoutPath = "{% url 'logout' %}";
+
+  function openModal() {
+    overlay.classList.add('klm-show');
+    document.body.style.overflow = 'hidden'; // page scroll lock
+  }
+  function closeModal() {
+    overlay.classList.remove('klm-show');
+    document.body.style.overflow = '';
+  }
+
+  // Har logout link ko intercept karo (event delegation —
+  // footer link, profile button, dynamically added links sab cover)
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!href) return;
+
+    var url = new URL(href, window.location.origin);
+    if (url.origin === window.location.origin && url.pathname === logoutPath) {
+      e.preventDefault();
+      openModal();
+    }
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+
+  // Overlay (background) par click -> close
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+
+  // ESC key -> close
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('klm-show')) closeModal();
+  });
+})();
+</script>
+{% endif %}

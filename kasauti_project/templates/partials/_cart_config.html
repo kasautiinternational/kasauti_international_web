@@ -1,0 +1,22 @@
+{# Shared cart config for product.js. Requires `user_logged_in` and `login_url` in context. #}
+{% load static %}
+<script>
+  // Login status from Django (controls price visibility + cart gating)
+  window.KASAUTI_USER_LOGGED_IN = {{ user_logged_in|yesno:"true,false" }};
+  window.KASAUTI_LOGIN_URL = "{{ login_url }}";
+
+  // Django backend cart API endpoints
+  window.KASAUTI_API = {
+    cartAdd:    "{% url 'cart_add' %}",
+    cartRemove: "{% url 'cart_remove' %}",
+    cartUpdate: "{% url 'cart_update' %}",
+    cartClear:  "{% url 'cart_clear' %}",
+    cartDetail: "{% url 'cart_detail' %}",
+    notify:     "{% url 'notify_request' %}",
+    checkout:   "{% url 'checkout' %}",
+    csrfToken:  "{{ csrf_token }}",
+  };
+
+  // Static fallback image for any product without an uploaded image
+  window.KASAUTI_FALLBACK_IMG = "{% static 'image/hero-img.png' %}";
+</script>

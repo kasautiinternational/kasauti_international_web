@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+<section class="checkout-page">
+  <div class="container py-5 mt-5">
+    <h1 class="mb-4">Checkout</h1>
+
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+      <!-- Order Summary -->
+      <div class="col-lg-5 order-lg-2">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Order Summary</div>
+          <div class="card-body p-0">
+            <table class="table mb-0">
+              <thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
+              <tbody>
+                {% for item in cart_items %}
+                <tr>
+                  <td>{{ item.product.title }}{% if item.size %} <span class="text-muted small">({{ item.size }} in)</span>{% endif %}</td>
+                  <td>{{ item.qty }}</td>
+                  <td>₹{{ item.line_total }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr><td colspan="2" class="text-end">Subtotal</td><td>₹{{ subtotal }}</td></tr>
+                <tr><td colspan="2" class="text-end">GST (18%)</td><td>₹{{ gst }}</td></tr>
+                <tr class="fw-bold"><td colspan="2" class="text-end">Total</td><td>₹{{ total }}</td></tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checkout Form -->
+      <div class="col-lg-7 order-lg-1">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Delivery Details</div>
+          <div class="card-body">
+            <form method="post">
+              {% csrf_token %}
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Name *</label>
+                  {{ form.name }}
+                  {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Email *</label>
+                  {{ form.email }}
+                  {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Phone *</label>
+                  {{ form.phone }}
+                  {% if form.phone.errors %}<div class="text-danger small">{{ form.phone.errors }}</div>{% endif %}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Delivery Address *</label>
+                  {{ form.address }}
+                  {% if form.address.errors %}<div class="text-danger small">{{ form.address.errors }}</div>{% endif %}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Notes (optional)</label>
+                  {{ form.notes }}
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary w-100 py-2">
+                    <i class="fa-solid fa-check me-2"></i>Place Order — ₹{{ total }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

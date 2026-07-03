@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/my_orders.css' %}">
+<section class="orders container py-5 ">
+  <h2 class="mb-4">My Orders</h2>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+    {% endfor %}
+  {% endif %}
+
+  {% if orders %}
+    {% for order in orders %}
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span><strong>Order #{{ order.id }}</strong> — {{ order.created_at|date:"d M Y" }}</span>
+        <span class="badge bg-{% if order.status == 'delivered' %}success{% elif order.status == 'cancelled' %}danger{% elif order.status == 'shipped' %}info{% else %}warning text-dark{% endif %}">
+          {{ order.get_status_display }}
+        </span>
+      </div>
+      <div class="card-body">
+        <table class="table table-sm mb-2">
+          <thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+          <tbody>
+            {% for item in order.items.all %}
+            <tr>
+              <td>{{ item.product_title }}{% if item.size %} <span class="text-muted small">({{ item.size }} in)</span>{% endif %}</td>
+              <td>{{ item.quantity }}</td>
+              <td>₹{{ item.unit_price }}</td>
+              <td>₹{{ item.line_total }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="text-end fw-bold">Total: ₹{{ order.total_amount }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="text-center py-5">
+      <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
+      <p>You haven't placed any orders yet.</p>
+      <a href="{% url 'product' %}" class="btn btn-primary">Shop Now</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

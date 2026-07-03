@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/otp.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+{% if messages %}
+<div class="otp-flash">
+  {% for msg in messages %}
+  <div class="otp-alert {% if 'error' in msg.tags %}is-error{% elif 'success' in msg.tags %}is-success{% else %}is-info{% endif %}">
+    {{ msg }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<section class="otp-wrap">
+  <div class="otp-card">
+
+    <!-- CMYK top accent -->
+    <div class="otp-cmyk"><span></span><span></span><span></span><span></span></div>
+
+    {% if success %}
+    <!-- ✅ SUCCESS STATE -->
+    <div class="otp-success">
+      <div class="otp-tick">
+        <svg viewBox="0 0 52 52">
+          <circle cx="26" cy="26" r="24"></circle>
+          <path d="M14 27l7 7 16-16"></path>
+        </svg>
+      </div>
+      <h2 class="otp-title">Registration Successful</h2>
+      <p class="otp-sub">
+        Thank you, <b>{{ reg_username }}</b>! &#127881;<br>
+        Aapka account ban gaya hai aur aap log in ho chuke hain.
+      </p>
+      <div class="otp-success-actions">
+        <a href="{% url 'product' %}" class="otp-btn">Start Shopping</a>
+        <a href="{% url 'profile' %}" class="otp-btn ghost">Go to Profile</a>
+      </div>
+    </div>
+
+    {% else %}
+    <!-- 🔐 OTP INPUT STATE -->
+    <div class="otp-head">
+      <div class="otp-badge"><i class="fa-solid fa-shield-halved"></i></div>
+      <h2 class="otp-title">OTP Verification</h2>
+      <p class="otp-sub">
+        6-digit code bheja gaya hai<br>
+        <span class="otp-email">{{ email_masked }}</span>
+      </p>
+    </div>
+
+    {% if msg %}<p class="otp-error">{{ msg }}</p>{% endif %}
+
+    <form action="{% url 'otp' %}" method="post" id="otpForm">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="verify">
+      <div class="otp-inputs" id="otpInputs">
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-box" autocomplete="one-time-code" autofocus>
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+      </div>
+      <input type="hidden" name="uotp" id="uotp">
+      <button type="submit" class="otp-btn" id="otpVerifyBtn">Verify OTP</button>
+    </form>
+
+    <div class="otp-resend">
+      <span>Didn't receive the code?</span><br>
+      <form action="{% url 'otp' %}" method="post" id="resendForm" class="otp-resend-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="resend">
+        <button type="submit" class="otp-link" id="resendBtn" disabled>
+          Resend OTP <span id="resendTimer">(30s)</span>
+        </button>
+      </form>
+    </div>
+
+    <a href="{% url 'login' %}" class="otp-back"><i class="fa-solid fa-arrow-left-long"></i> Back to Login</a>
+    {% endif %}
+
+  </div>
+</section>
+
+<script src="{% static 'js/otp.js' %}"></script>
+{% endblock %}

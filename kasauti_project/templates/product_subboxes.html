@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}"/>
+
+<section class="kas-root">
+    <!-- Left Sidebar -->
+    {% include 'partials/_product_sidebar.html' %}
+
+    <!-- Main content -->
+    <main class="kas-main">
+        <header class="kas-hero" style="--accent: {{ meta.accent }};">
+            <div class="hero-copy">
+                <nav class="crumbs" aria-label="Breadcrumb">
+                    {% for c in crumbs %}
+                        {% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        {% else %}<span>{{ c.label }}</span>{% endif %}
+                    {% endfor %}
+                </nav>
+                <h1>{{ meta.name }} <span>{{ meta.sub }}</span></h1>
+                <p>Choose a type to see its variants &amp; sizes.</p>
+            </div>
+
+            {% if user_logged_in %}
+            <div class="hero-actions">
+                <button class="btn ghost" id="btnClearCart" type="button" title="Clear cart">Clear Cart</button>
+                <button class="btn cart" id="btnOpenCart" type="button">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+            {% endif %}
+        </header>
+
+        <!-- 2 sub-type boxes -->
+        <section class="cat-grid">
+            {% for s in subs %}
+            <a class="cat-card" href="{% url 'product_level2' s.cat s.slug %}" style="--accent: {{ s.accent }};">
+                <span class="cat-stripe" aria-hidden="true"></span>
+                <div class="cat-media">
+                    <div class="cat-gloss" aria-hidden="true"></div>
+                    <img class="cat-img" src="{% static s.fallback_img %}" alt="{{ s.name }}" loading="lazy">
+                    <span class="cat-icon"><i class="fa-solid {{ s.icon }}"></i></span>
+                </div>
+                <div class="cat-body">
+                    <div class="cat-top">
+                        <span class="cat-sub">{{ s.sub }}</span>
+                        <span class="cat-count">{{ s.count }} item{{ s.count|pluralize }}</span>
+                    </div>
+                    <h2 class="cat-title">{{ s.name }}</h2>
+                    <p class="cat-desc">{{ s.desc }}</p>
+                    <span class="cat-cta">
+                        View {{ s.name }} <i class="fa-solid fa-arrow-right-long"></i>
+                    </span>
+                </div>
+            </a>
+            {% endfor %}
+        </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    {% include 'partials/_cart_drawer.html' %}
+</section>
+
+{% include 'partials/_cart_config.html' %}
+<script src="{% static 'js/product.js' %}"></script>
+{% endblock %}

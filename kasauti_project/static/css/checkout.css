@@ -1,0 +1,110 @@
+/* Checkout page — Light / Gold + CMYK Ink-Accent theme */
+.checkout-page {
+    background:
+        radial-gradient(900px 500px at 10% 0%, rgba(6, 182, 212, .06), transparent 55%),
+        radial-gradient(800px 460px at 90% 10%, rgba(224, 82, 156, .06), transparent 55%),
+        radial-gradient(700px 500px at 50% 100%, rgba(234, 179, 8, .05), transparent 55%),
+        #faf9f6;
+    min-height: 100vh;
+    padding-top: 70px;
+}
+
+.checkout-page h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    background: linear-gradient(120deg, #06b6d4 0%, #c9973f 35%, #e0529c 70%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.checkout-page .card {
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.08);
+}
+
+.checkout-page .card-header {
+    background: linear-gradient(135deg, var(--ink-cyan, #06b6d4), var(--ink-key, #7c3aed));
+    color: #fff;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-bottom: none;
+}
+
+.checkout-page .col-lg-5 .card-header {
+    background: linear-gradient(135deg, var(--ink-magenta, #e0529c), var(--ink-yellow, #eab308));
+}
+
+.checkout-page .card-body {
+    padding: 1.5rem;
+    background: #ffffff;
+    color: #0f172a;
+}
+
+.checkout-page .form-label {
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.checkout-page .form-control {
+    border-radius: 8px;
+    border: 1.5px solid rgba(15, 23, 42, 0.12);
+    padding: 0.6rem 1rem;
+    background: #faf9f6;
+    color: #0f172a;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.checkout-page .form-control:focus {
+    border-color: rgba(201, 151, 63, 0.55);
+    box-shadow: 0 0 0 3px rgba(201, 151, 63, .15);
+    background: #ffffff;
+}
+
+.checkout-page .btn-primary {
+    background: linear-gradient(135deg, #c9973f, #f5d08a);
+    border: none;
+    box-shadow: 0 8px 24px rgba(201, 151, 63, 0.30);
+    color: #ffffff;
+    border-radius: 10px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    transition: transform .2s ease, box-shadow .2s ease;
+    position: relative;
+    isolation: isolate;
+}
+
+.checkout-page .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(201, 151, 63, 0.38);
+}
+
+.checkout-page table {
+    color: #0f172a;
+}
+
+.checkout-page table th {
+    background: rgba(201, 151, 63, 0.08);
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #8a6a23;
+}
+
+.checkout-page tbody td,
+.checkout-page tfoot td {
+    border-color: rgba(15, 23, 42, 0.06);
+}
+
+.checkout-page tfoot td {
+    font-size: .9rem;
+}
+
+.checkout-page tfoot tr.fw-bold td {
+    color: var(--gold, #c9973f);
+    font-size: 1.05rem;
+}

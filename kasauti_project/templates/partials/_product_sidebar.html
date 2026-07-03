@@ -1,0 +1,34 @@
+{% load static %}
+{# Shared products sidebar. Pass `active_slug` = all|ink|rolls|powder|sublimation #}
+<aside class="kas-sidebar" aria-label="Product categories">
+    <div class="sidebar-brand">
+        <div class="orb"></div>
+        <div class="sidebar-title">
+            <div class="t1">KASAUTI</div>
+            <div class="t2">Product's</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a class="items {% if active_slug == 'all' %}active{% endif %}" href="{% url 'product' %}" data-section="all">
+            <span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span>
+            <span class="nav-label">All Products</span>
+        </a>
+        <a class="items {% if active_slug == 'ink' %}active{% endif %}" href="{% url 'product_category' 'ink' %}" data-section="dtf_ink">
+            <span class="nav-icon"><i class="fa-solid fa-droplet"></i></span>
+            <span class="nav-label">DTF Ink</span>
+        </a>
+        <a class="items {% if active_slug == 'rolls' %}active{% endif %}" href="{% url 'product_category' 'rolls' %}" data-section="dtf_rolls">
+            <span class="nav-icon"><i class="fa-solid fa-wind"></i></span>
+            <span class="nav-label">DTF Rolls</span>
+        </a>
+        <a class="items {% if active_slug == 'powder' %}active{% endif %}" href="{% url 'product_category' 'powder' %}" data-section="dtf_powder">
+            <span class="nav-icon"><i class="fa-solid fa-gem"></i></span>
+            <span class="nav-label">DTF Powder</span>
+        </a>
+        <a class="items {% if active_slug == 'sublimation' %}active{% endif %}" href="{% url 'product_category' 'sublimation' %}" data-section="sublimation_paper">
+            <span class="nav-icon"><i class="fa-solid fa-file-lines"></i></span>
+            <span class="nav-label">Sublimation Paper</span>
+        </a>
+    </nav>
+</aside>

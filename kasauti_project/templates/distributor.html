@@ -1,0 +1,547 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/distributor.css' %}">
+
+<section class="distributor-page">
+  <div class="distributor-hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="kicker">
+            <span class="dot"></span>
+            Partner Network
+          </div>
+
+          <h1>
+            Our distributor network is <span class="accent">already running</span> across India
+          </h1>
+
+          <p class="lead">
+            Kasauti International supplies DTF Ink, Powder, Rolls and Sublimation Paper to an established set of partners nationwide. We add new distributors selectively — and only when a region genuinely needs one.
+          </p>
+
+          <div class="status-pill">
+            <span class="live"></span>
+            Network status: <b>Selective — by invitation</b>
+          </div>
+
+          <div class="hero-badges">
+            <div class="badge-3d">Established Network</div>
+            <div class="badge-3d">Selective Onboarding</div>
+            <div class="badge-3d">Pan-India Supply</div>
+          </div>
+
+          <div class="hero-cta">
+            <a class="btn-primary" href="#apply" rel="noopener">
+              Register Interest
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a class="btn-secondary" href="{% url 'contact' %}">
+              Talk to our team
+            </a>
+          </div>
+
+          <div class="hero-facts">
+            <div class="fact">
+              <i class="fa-solid fa-truck-fast"></i>
+              <div>
+                <b>Active across India</b>
+                <span>Partners already supplied in multiple states</span>
+              </div>
+            </div>
+            <div class="fact">
+              <i class="fa-solid fa-shield-heart"></i>
+              <div>
+                <b>Consistent quality</b>
+                <span>The same checked output, order after order</span>
+              </div>
+            </div>
+            <div class="fact">
+              <i class="fa-solid fa-handshake"></i>
+              <div>
+                <b>Limited slots</b>
+                <span>We onboard only where there is real demand</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right" aria-hidden="true">
+          <div class="stage">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+
+            <div class="cube-wrap">
+              <div class="cube">
+                <div class="face face-front"></div>
+                <div class="face face-back"></div>
+                <div class="face face-right"></div>
+                <div class="face face-left"></div>
+                <div class="face face-top"></div>
+                <div class="face face-bottom"></div>
+              </div>
+            </div>
+
+            <div class="stack-card">
+              <div class="stack-top">DTF INK • POWDER • ROLLS • PAPER</div>
+              <div class="stack-mid">
+                <span class="chip">Active</span>
+                <span class="chip">Pan-India</span>
+                <span class="chip">Selective</span>
+              </div>
+              <div class="stack-bottom">Established supply network</div>
+            </div>
+
+            <div class="scanline"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 1) Why partners stay -->
+  <div class="distributor-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>Why partners stay with Kasauti</span>
+        <h2>A network built on reliability, not recruitment</h2>
+        <p>
+          Partners don't stay with us because we chase them. They stay because supply is steady, quality holds, and dispatch is quick — that's what keeps the network strong, and full.
+        </p>
+      </div>
+
+      <div class="cards-grid cards-grid-3">
+        <div class="dcard">
+          <div class="dcard-icon"><i class="fa-solid fa-tag"></i></div>
+          <h3>Dependable Supply</h3>
+          <p>Stock stays ready, so partner orders never stall.</p>
+        </div>
+        <div class="dcard">
+          <div class="dcard-icon"><i class="fa-solid fa-shield-heart"></i></div>
+          <h3>Quality Consistency</h3>
+          <p>A stable, checked mix — reliable results every batch.</p>
+        </div>
+        <div class="dcard">
+          <div class="dcard-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <h3>Fast Dispatch</h3>
+          <p>Prompt supply that keeps partner timelines on track.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2) Inside the network -->
+  <div class="distributor-section distributor-section-alt" id="potential">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>Inside the network</span>
+        <h2>Built for partners who are already busy</h2>
+        <p>
+          This isn't a starter program. It's a working supply line for businesses that already move volume.
+        </p>
+      </div>
+
+      <div class="potential-grid">
+        <div class="potential-left">
+          <div class="potential-card">
+            <div class="potential-title">
+              <i class="fa-solid fa-bolt"></i>
+              What keeps partners ahead
+            </div>
+            <ul class="list-check">
+              <li><i class="fa-solid fa-circle-check"></i> Premium product that sells on value, not price</li>
+              <li><i class="fa-solid fa-circle-check"></i> Customers who come back for consistent performance</li>
+              <li><i class="fa-solid fa-circle-check"></i> Bulk ordering with steady, predictable fulfilment</li>
+            </ul>
+            <div class="potential-mini">
+              <span class="mini-chip"><b>Bulk</b> margin advantage</span>
+              <span class="mini-chip"><b>Fast</b> dispatch cycles</span>
+              <span class="mini-chip"><b>Stable</b> mix quality</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="potential-right">
+          <div class="stat-slab">
+            <div class="stat-slab-header">How the network runs</div>
+            <div class="stat-slab-body">
+              <div class="slab-row">
+                <div class="slab-icon"><i class="fa-solid fa-layer-group"></i></div>
+                <div>
+                  <div class="slab-title">Pack-ready supply</div>
+                  <div class="slab-sub">Bulk stock kept ready for smooth fulfilment</div>
+                </div>
+              </div>
+              <div class="slab-row">
+                <div class="slab-icon"><i class="fa-solid fa-reply"></i></div>
+                <div>
+                  <div class="slab-title">Direct partner line</div>
+                  <div class="slab-sub">Order clarity and usage guidance, no runaround</div>
+                </div>
+              </div>
+              <div class="slab-row">
+                <div class="slab-icon"><i class="fa-solid fa-users"></i></div>
+                <div>
+                  <div class="slab-title">Serious partners only</div>
+                  <div class="slab-sub">Shops, resellers and print teams that move volume</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3) Selective onboarding -->
+  <div class="distributor-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>Selective onboarding</span>
+        <h2>We're not actively expanding the network</h2>
+        <p>
+          Most regions we serve are already covered. We open a new slot only when there's real demand somewhere we're not reaching — and only for a business that fits. If that's you, register your interest and we'll reach out if something opens nearby.
+        </p>
+      </div>
+
+      <div class="eligibility-grid">
+        <div class="elig-card">
+          <h3 class="elig-title">When a slot opens, we consider</h3>
+          <ul class="list-check">
+            <li><i class="fa-solid fa-circle-check"></i> Print shops / studios</li>
+            <li><i class="fa-solid fa-circle-check"></i> Resellers &amp; distributors</li>
+            <li><i class="fa-solid fa-circle-check"></i> Packaging &amp; supply partners</li>
+            <li><i class="fa-solid fa-circle-check"></i> Businesses with repeat customer orders</li>
+          </ul>
+        </div>
+
+        <div class="elig-card elig-card-highlight">
+          <span class="selective-tag"><i class="fa-solid fa-star"></i> By invitation</span>
+          <h3 class="elig-title">Why slots stay limited</h3>
+          <div class="elig-highlights">
+            <div class="elig-point">
+              <div class="elig-ic"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <b>Protected territory</b>
+                <span>We don't crowd a region our partners already serve</span>
+              </div>
+            </div>
+            <div class="elig-point">
+              <div class="elig-ic"><i class="fa-solid fa-truck"></i></div>
+              <div>
+                <b>Service quality</b>
+                <span>A tighter network means faster, cleaner support</span>
+              </div>
+            </div>
+            <div class="elig-point">
+              <div class="elig-ic"><i class="fa-solid fa-comments"></i></div>
+              <div>
+                <b>Right fit only</b>
+                <span>We onboard when the business and demand both line up</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 4) Network at a glance -->
+  <div class="counters" id="counters">
+    <div class="container">
+      <div class="section-head section-head-light">
+        <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>Network at a glance</span>
+        <h2>An established supply network</h2>
+      </div>
+
+      <div class="counter-grid">
+        <div class="counter-card">
+          <div class="counter-value" data-target="75">0</div>
+          <div class="counter-label">+</div>
+          <div class="counter-title">Active distributor partners</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-value" data-target="20">0</div>
+          <div class="counter-label">+</div>
+          <div class="counter-title">Regions covered</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-value" data-target="5000">0</div>
+          <div class="counter-label">+</div>
+          <div class="counter-title">Units supplied to partners</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-value" data-target="92">0</div>
+          <div class="counter-label">%</div>
+          <div class="counter-title">Partner repeat-order rate</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 5) Register interest form -->
+  <div class="distributor-section distributor-form" id="apply">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>Register interest</span>
+        <h2>Think you're a fit? Register your interest</h2>
+        <p>
+          We keep the network selective, so we can't promise a slot. Share your details — if an opening comes up in your region and you fit, our team reaches out. No follow-ups, no pressure.
+        </p>
+      </div>
+
+      {% if messages %}
+      <div class="form-messages">
+        {% for msg in messages %}
+        <div class="alert alert-{% if msg.tags == 'error' %}danger{% else %}{{ msg.tags }}{% endif %} alert-dismissible fade show">
+          {{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="limited-strip">
+        <i class="fa-solid fa-circle-info"></i>
+        Limited slots — we onboard by invitation, only where a region needs a partner.
+      </div>
+
+      <div class="form-card">
+        <form method="post" action="{% url 'distributor' %}#apply" id="distributorForm">
+          {% csrf_token %}
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" class="form-control" placeholder="Your full name"
+                     value="{{ form.name.value|default:'' }}" required>
+            </div>
+
+            <div class="field">
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" class="form-control" placeholder="Your city"
+                     value="{{ form.city.value|default:'' }}" required>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone No.</label>
+              <input id="phone" name="phone" type="tel" class="form-control" inputmode="tel" placeholder="Mobile number"
+                     value="{{ form.phone.value|default:'' }}" required>
+            </div>
+
+            <div class="field">
+              <label for="business_type">Business Type</label>
+              <select id="business_type" class="form-control" name="business_type" required>
+                <option value="">Select</option>
+                <option value="print_shop" {% if form.business_type.value == 'print_shop' %}selected{% endif %}>Print shop</option>
+                <option value="reseller" {% if form.business_type.value == 'reseller' %}selected{% endif %}>Reseller</option>
+                <option value="distributor" {% if form.business_type.value == 'distributor' %}selected{% endif %}>Distributor</option>
+                <option value="studio" {% if form.business_type.value == 'studio' %}selected{% endif %}>Studio</option>
+                <option value="other" {% if form.business_type.value == 'other' %}selected{% endif %}>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-primary" type="submit">
+              Register interest
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            <div class="form-note">
+              We only reach out if a slot opens in your area. Your details stay with our partner team.
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="apply-banner apply-banner-form">
+        <div class="apply-left">
+          <h3>Questions before you register?</h3>
+          <p>
+            Talk to our team on WhatsApp or contact us — happy to explain how the network works.
+          </p>
+        </div>
+        <div class="apply-right">
+          <a class="btn-primary" href="{% url 'contact' %}">
+            Contact Kasauti
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6) FAQ -->
+  <div class="distributor-section distributor-faq">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-kicker"><span class="ink-dots"><span></span><span></span><span></span><span></span></span>Partner FAQ</span>
+        <h2>Questions? We've got answers</h2>
+        <p>
+          How the network works, and what registering actually means.
+        </p>
+      </div>
+
+      <div class="faq-accordion" id="faq">
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>1. Are you currently taking on new distributors?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-a">
+            <p>
+              We keep the network limited. A slot opens only when a region genuinely needs one, so we're selective rather than actively recruiting.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>2. What happens after I register my interest?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-a">
+            <p>
+              Your details go to our partner team. If a slot opens in your area and you're a fit, we reach out. If not, there's no follow-up.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>3. Who do you usually onboard?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-a">
+            <p>
+              Print shops, studios, resellers and businesses that already handle steady orders and serve their local market well.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>4. Does registering guarantee a distributorship?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-a">
+            <p>
+              No. Registering just puts you on our radar. Slots are limited and offered only where there's real regional demand.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>5. Can I request my city or region?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="faq-a">
+            <p>
+              Yes — add your city in the form. If we're under-served there, that works in your favour.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script src="{% static 'js/distributor.js' %}"></script>
+
+<script>
+  // FAQ accordion (no dependencies)
+  document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.faq-item');
+
+    items.forEach(item => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      const icon = q ? q.querySelector('i') : null;
+
+      // Start closed
+      if (a) a.style.maxHeight = '0px';
+
+      q && q.addEventListener('click', () => {
+        const expanded = q.getAttribute('aria-expanded') === 'true';
+        items.forEach(other => {
+          const oq = other.querySelector('.faq-q');
+          const oa = other.querySelector('.faq-a');
+          const oicon = oq ? oq.querySelector('i') : null;
+          if (!oq || !oa) return;
+
+          if (other === item) return;
+          oq.setAttribute('aria-expanded', 'false');
+          oa.style.maxHeight = '0px';
+          if (oicon) {
+            oicon.classList.remove('fa-minus');
+            oicon.classList.add('fa-plus');
+          }
+        });
+
+        q.setAttribute('aria-expanded', String(!expanded));
+
+        if (a) {
+          if (expanded) {
+            a.style.maxHeight = '0px';
+          } else {
+            a.style.maxHeight = a.scrollHeight + 'px';
+          }
+        }
+
+        if (icon) {
+          icon.classList.toggle('fa-plus', expanded);
+          icon.classList.toggle('fa-minus', !expanded);
+        }
+      });
+    });
+  });
+
+  // Counter animation (IntersectionObserver)
+  document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.counter-value');
+    const cards = document.querySelectorAll('.counter-card');
+
+    function animate(el, target) {
+      const duration = 1200;
+      const start = performance.now();
+      const from = 0;
+
+      function step(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const val = Math.floor(from + (target - from) * (t * (2 - t)));
+        el.textContent = val;
+        if (t < 1) requestAnimationFrame(step);
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        counters.forEach(c => {
+          const target = parseInt(c.getAttribute('data-target'), 10) || 0;
+          if (!c.dataset.done) {
+            animate(c, target);
+            c.dataset.done = '1';
+          }
+        });
+        io.disconnect();
+      });
+    }, { threshold: 0.25 });
+
+    cards.forEach(card => io.observe(card));
+  });
+</script>
+
+{% endblock %}
