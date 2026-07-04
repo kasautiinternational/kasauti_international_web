@@ -100,3 +100,5 @@ Before going live, update `settings.py`:
 4. Switch `EMAIL_BACKEND` to SMTP
 5. Run `python manage.py collectstatic`
 6. Use PostgreSQL for production database
+
+Test Auto Deploy done
