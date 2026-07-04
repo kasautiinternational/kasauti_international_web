@@ -18,7 +18,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www/kasauti_international_web
-            git pull origin main
+
+            git fetch origin
+            git reset --hard origin/main
 
             cd kasauti_project
             source venv/bin/activate
