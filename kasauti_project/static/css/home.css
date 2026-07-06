@@ -37,6 +37,7 @@ body::before {
    the coloured swirls read against the cream page background. */
 .hero-cmyk-decor {
     background-image: url('/static/image/bbg.png');
+    background-repeat: no-repeat;
     height: 100%;
     width: 100%;
 }
