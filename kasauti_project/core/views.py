@@ -194,10 +194,9 @@ def _send_password_reset_otp(email, otp_code, username):
     text_body = (
         f"Hi {username},\n\n"
         f"Your OTP to reset your Kasauti International password is: {otp_code}\n\n"
-        f"Yeh code {OTP_VALIDITY_MINUTES} minute ke liye valid hai. "
-        "Ise kisi ke saath share na karein.\n\n"
-        "Agar aapne password reset request nahi kiya to is email ko ignore karein — "
-        "aapka password change nahi hoga.\n\n"
+        f"This code is valid for {OTP_VALIDITY_MINUTES} minutes. "
+        "Do not share it with anyone.\n\n"
+        "If you did not request a password reset, please ignore this email — your password will remain unchanged.\n\n"
         "Regards,\nTeam Kasauti International"
     )
     html_body = f"""
@@ -225,7 +224,7 @@ def _send_password_reset_otp(email, otp_code, username):
         This code is valid for {OTP_VALIDITY_MINUTES} minutes.
       </p>
       <p style="margin:0;font-size:15px;color:#000000;text-align:center;">
-        Agar yeh request aapne nahi ki, to is email ko ignore karein — aapka password safe hai.
+        If you did not request a password reset, please ignore this email — your password will remain unchanged.
       </p>
     </div>
     <p style="text-align:center;margin:20px 0 0;font-size:11px;color:#3d077b;">
@@ -253,7 +252,7 @@ def _send_password_changed_email(email, username):
                 f"Hi {username},\n\n"
                 "This is a confirmation that the password for your Kasauti International "
                 "account was changed successfully just now.\n\n"
-                "Agar yeh change aapne nahi kiya hai, to turant humein contact karein.\n\n"
+                "If you did not make this change, please contact us immediately.\n\n"
                 "Regards,\nTeam Kasauti International"
             ),
             from_email=settings.DEFAULT_FROM_EMAIL,
@@ -278,12 +277,12 @@ def forgot_password_send(request):
 
     email = (data.get('email') or '').strip().lower()
     if not email or not re.match(r'^[^@\s]+@[^@\s]+\.[^@\s]+$', email):
-        return JsonResponse({'ok': False, 'error': 'Kripya ek valid email address daalein.'}, status=400)
+        return JsonResponse({'ok': False, 'error': 'Please enter a valid email address.'}, status=400)
 
     user = User.objects.filter(email__iexact=email).order_by('-id').first()
     if user is None:
         return JsonResponse(
-            {'ok': False, 'error': 'Is email se koi registered account nahi mila.'},
+            {'ok': False, 'error': 'No registered account found with this email address.'},
             status=404,
         )
 
@@ -296,7 +295,7 @@ def forgot_password_send(request):
             if elapsed < RESET_RESEND_COOLDOWN:
                 wait = int(RESET_RESEND_COOLDOWN - elapsed)
                 return JsonResponse(
-                    {'ok': False, 'error': f'Thoda ruk jaiye — {wait}s baad dobara OTP bhej sakte hain.'},
+                    {'ok': False, 'error': f'Please wait — {wait}s before requesting another OTP.'},
                     status=429,
                 )
         except ValueError:
@@ -319,7 +318,7 @@ def forgot_password_send(request):
     except Exception:
         request.session.pop('password_reset', None)
         return JsonResponse(
-            {'ok': False, 'error': 'OTP email bhejne mein dikkat aayi. Thodi der baad try karein.'},
+            {'ok': False, 'error': 'There was an issue sending the OTP email. Please try again later.'},
             status=500,
         )
 
@@ -336,7 +335,7 @@ def forgot_password_verify(request):
     pr = _reset_session(request)
     if not pr:
         return JsonResponse(
-            {'ok': False, 'error': 'Session expire ho gaya. Kripya email se dobara shuru karein.', 'restart': True},
+            {'ok': False, 'error': 'Session expired. Please restart the process.', 'restart': True},
             status=400,
         )
 
@@ -348,14 +347,14 @@ def forgot_password_verify(request):
     if timezone.now() > expires_at:
         request.session.pop('password_reset', None)
         return JsonResponse(
-            {'ok': False, 'error': 'OTP expire ho gaya. Kripya dobara OTP mangwayein.', 'restart': True},
+            {'ok': False, 'error': 'OTP has expired. Please request another OTP.', 'restart': True},
             status=400,
         )
 
     if pr.get('attempts', 0) >= OTP_MAX_ATTEMPTS:
         request.session.pop('password_reset', None)
         return JsonResponse(
-            {'ok': False, 'error': 'Bahut zyada galat attempts. Kripya dobara shuru karein.', 'restart': True},
+            {'ok': False, 'error': 'Too many failed attempts. Please restart the process.', 'restart': True},
             status=400,
         )
 
@@ -388,7 +387,7 @@ def forgot_password_reset(request):
     pr = _reset_session(request)
     if not pr or not pr.get('verified'):
         return JsonResponse(
-            {'ok': False, 'error': 'Session expire ho gaya. Kripya email se dobara shuru karein.', 'restart': True},
+            {'ok': False, 'error': 'Session expired. Please restart the process.', 'restart': True},
             status=400,
         )
 
@@ -401,15 +400,15 @@ def forgot_password_reset(request):
     p2 = data.get('password2') or ''
 
     if not p1 or not p2:
-        return JsonResponse({'ok': False, 'error': 'Dono password fields bharein.'}, status=400)
+        return JsonResponse({'ok': False, 'error': 'Please fill in both password fields.'}, status=400)
     if p1 != p2:
-        return JsonResponse({'ok': False, 'error': 'Dono passwords match nahi kar rahe.'}, status=400)
+        return JsonResponse({'ok': False, 'error': 'The two password fields do not match.'}, status=400)
 
     user = User.objects.filter(pk=pr.get('user_id')).first()
     if user is None:
         request.session.pop('password_reset', None)
         return JsonResponse(
-            {'ok': False, 'error': 'Account nahi mila. Kripya dobara shuru karein.', 'restart': True},
+            {'ok': False, 'error': 'Account not found. Please restart the process.', 'restart': True},
             status=400,
         )
 
@@ -440,7 +439,7 @@ def otp(request):
 
     # No pending signup → back to login/register
     if not pending:
-        messages.info(request, "Pehle registration form bharein.")
+        messages.info(request, "Please fill out the registration form first.")
         return redirect('login')
 
     email_masked = _mask_email(pending.get('email', ''))
@@ -452,7 +451,7 @@ def otp(request):
         expires_at = timezone.now()
     if timezone.now() > expires_at:
         request.session.pop('pending_registration', None)
-        messages.error(request, "OTP expire ho gaya. Kripya dobara registration karein.")
+        messages.error(request, "OTP has expired. Please request another OTP.")
         return redirect('login')
 
     if request.method == 'POST':
@@ -470,15 +469,15 @@ def otp(request):
             request.session.modified = True
             try:
                 _send_registration_otp(pending['email'], new_otp, pending['username'])
-                messages.success(request, "Naya OTP aapki email par bhej diya gaya hai.")
+                messages.success(request, "A new OTP has been sent to your email.")
             except Exception:
-                messages.error(request, "OTP resend nahi ho paaya. Thodi der baad try karein.")
+                messages.error(request, "Failed to resend OTP. Please try again later.")
             return redirect('otp')
 
         # ---- Verify OTP ----
         if pending.get('attempts', 0) >= OTP_MAX_ATTEMPTS:
             request.session.pop('pending_registration', None)
-            messages.error(request, "Bahut zyada galat attempts. Kripya dobara registration karein.")
+            messages.error(request, "Too many failed attempts. Please restart the process.")
             return redirect('login')
 
         entered = (request.POST.get('uotp') or '').strip()
@@ -493,7 +492,7 @@ def otp(request):
                 )
             except Exception:
                 request.session.pop('pending_registration', None)
-                messages.error(request, "Yeh username abhi le liya gaya. Kripya doosra username try karein.")
+                messages.error(request, "That username is already taken. Please try a different username.")
                 return redirect('login')
 
             request.session.pop('pending_registration', None)
@@ -511,7 +510,7 @@ def otp(request):
         request.session.modified = True
         remaining = max(0, OTP_MAX_ATTEMPTS - pending['attempts'])
         return render(request, 'otp.html', {
-            'msg': f"Galat OTP. {remaining} attempt bache hain.",
+            'msg': f"Invalid OTP. {remaining} attempts remaining.",
             'email_masked': email_masked,
         })
 
@@ -987,8 +986,8 @@ def login_view(request):
                     request.session.pop('pending_registration', None)
                     messages.error(
                         request,
-                        "OTP email bhejne mein dikkat aayi. Email address check karein "
-                        "ya thodi der baad try karein."
+                        "Failed to send OTP email. Please check your email address "
+                        "or try again later."
                     )
                     active_panel = 'register'
             else:
