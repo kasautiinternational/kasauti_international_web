@@ -1,4 +1,44 @@
 {% extends 'base.html' %}
+
+{% block title %}{{ product.title }} Price ₹{{ price_display.sell|floatformat:0 }} | Kasauti International{% endblock %}
+
+{% block meta_description %}Buy {{ product.title }} at best wholesale price{% if price_display.sell %} ₹{{ price_display.sell|floatformat:0 }}{% endif %}{% if price_display.mrp %} (MRP ₹{{ price_display.mrp|floatformat:0 }}, {{ price_display.off }}% off){% endif %}. Premium DTF printing supplies from Kasauti International, Noida. Pan-India delivery.{% endblock %}
+
+{% block extra_meta %}
+<!-- Open Graph (WhatsApp/social share card) -->
+<meta property="og:type" content="product">
+<meta property="og:title" content="{{ product.title }} | Kasauti International">
+<meta property="og:description" content="Best wholesale price ₹{{ price_display.sell|floatformat:0 }}. Premium DTF printing supplies, pan-India delivery.">
+{% if gallery_images %}<meta property="og:image" content="https://kasautiinternational.com{{ gallery_images.0.url }}">{% endif %}
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+<!-- Product Schema (Google rich results: price, stock) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ product.title|escapejs }}",
+  {% if gallery_images %}"image": "https://kasautiinternational.com{{ gallery_images.0.url }}",{% endif %}
+  "description": "{{ product.title|escapejs }} - Premium DTF printing supplies from Kasauti International, Noida.",
+  "brand": {
+    "@type": "Brand",
+    "name": "Kasauti International"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ request.build_absolute_uri }}",
+    "priceCurrency": "INR",
+    "price": "{{ price_display.sell|floatformat:2 }}",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Kasauti International LLP"
+    }
+  }
+}
+</script>
+{% endblock %}
+
 {% load static %}
 {% load humanize %}
 
