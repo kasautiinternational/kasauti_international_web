@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KASAUTI INTERNATIONAL LLP</title>
     {% load static %}
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPNM6JYW7S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XPNM6JYW7S');
+    </script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -71,8 +79,8 @@
                 </a>
 
                 <!-- Mobile Toggle -->
-                <button class="navbar-toggler kas-toggler border-0 shadow-none" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-label="Toggle navigation">
+                <button class="navbar-toggler kas-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarContent" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" id="toggle-icon"></span>
                 </button>
             </div>
@@ -89,8 +97,8 @@
                 </ul>
 
                 <div class="kas-nav-cta">
-                    <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}"
-                        target="_blank" class="custom-btn whatsapp">
+                    <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}" target="_blank"
+                        class="custom-btn whatsapp">
                         <i class="fa-brands fa-whatsapp me-1" id="icon"></i>WHATSAPP
                     </a>
 
@@ -141,8 +149,8 @@
                             <i class="fa-solid fa-bolt"></i>
                             <span>Explore DTF Supplies</span>
                         </a>
-                        <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}"
-                            target="_blank" class="footer-cta-btn secondary" aria-label="Get bulk quote on WhatsApp">
+                        <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}" target="_blank"
+                            class="footer-cta-btn secondary" aria-label="Get bulk quote on WhatsApp">
                             <i class="fa-brands fa-whatsapp"></i>
                             <span>Bulk Quote</span>
                         </a>
@@ -205,10 +213,15 @@
                     <a href="{% url 'shipping_policy' %}">Shipping Policy</a>
                 </div>
                 <div class="sc-links" aria-label="Social links">
-                    <a href="#" class="social-link" target="_blank" aria-label="Google"><i class="fa-brands fa-google"></i></a>
-                    <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}" class="social-link" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/kasauti_international?utm_source=qr&igsh=bno1aG0yNGFzMnBp" class="social-link" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="social-link" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="social-link" target="_blank" aria-label="Google"><i
+                            class="fa-brands fa-google"></i></a>
+                    <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}" class="social-link"
+                        target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/kasauti_international?utm_source=qr&igsh=bno1aG0yNGFzMnBp"
+                        class="social-link" target="_blank" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-link" target="_blank" aria-label="Facebook"><i
+                            class="fa-brands fa-facebook"></i></a>
                 </div>
             </div>
         </div>
@@ -218,4 +231,5 @@
     {% endblock %}
     {% include 'includes/logout_modal.html' %}
 </body>
+
 </html>
