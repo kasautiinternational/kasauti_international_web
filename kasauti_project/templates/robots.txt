@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /otp/
+Disallow: /profile/
+Disallow: /checkout/
+Disallow: /order/
+Disallow: /my-orders/
+Disallow: /404-preview/
+Allow: /
+
+Sitemap: https://kasautiinternational.com/sitemap.xml

@@ -2,10 +2,23 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf import settings
 from core.views import serve_media, custom_404
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
+from core.sitemaps import StaticViewSitemap, CategorySitemap, ProductSitemap
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'categories': CategorySitemap,
+    'products': ProductSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(
+        template_name='robots.txt', content_type='text/plain')),
 ]
 
 # Custom 404 page (DEBUG=False par active hota hai)
