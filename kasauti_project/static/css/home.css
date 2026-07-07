@@ -326,6 +326,11 @@ body::before {
 }
 
 /* Tablet & below — stacked columns, natural height */
+@media (min-width: 1290.98px) {
+    .hero-section{
+        margin: 6% 0 0 2.5%;
+    }
+}
 @media (max-width: 991.98px) {
     .hero-section {
         min-height: auto;
