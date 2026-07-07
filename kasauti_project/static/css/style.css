@@ -269,11 +269,16 @@ h1, h2, h3, h4, h5,
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+    flex-shrink: 0;
 }
 
 .kas-brand-logo img {
     width: 100px;
     height: 100px;
+    min-width: 0;
+    max-width: none;
+    /* .img-fluid ka max-width:100% override — grid column
+       collapse hone par logo ko 0px tak shrink hone se rokta hai */
     object-fit: contain;
     filter: drop-shadow(0 6px 16px rgba(15, 23, 42, 0.2));
     transition: transform 0.4s ease, width 0.35s ease, height 0.35s ease;
@@ -394,18 +399,32 @@ h1, h2, h3, h4, h5,
 /* Tablet / mobile: show toggler, compact brand */
 @media (max-width: 991px) {
     .kas-nav-top {
-        gap: 12px;
+        /* FIX: logo & toggler apni natural size rakhte hain (auto),
+           beech wala text bacha hua space leta hai aur shrink ho
+           sakta hai (minmax(0,1fr)). Pehle 1fr auto 1fr tha jisme
+           logo wali column collapse ho jati thi. */
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 10px;
     }
 
     .kas-brand-logo img {
-        width: 66px;
-        height: 66px;
+        width: 62px;
+        height: 62px;
+        min-width: 62px;
     }
 
     .kas-brand-name {
-        font-size: 1.02rem;
+        font-size: clamp(0.86rem, 2.6vw, 1.02rem);
         letter-spacing: 0.04em;
-        white-space: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    .kas-brand-text {
+        min-width: 0;
+        width: 100%;
     }
 
     .kas-brand-tag {
@@ -417,22 +436,47 @@ h1, h2, h3, h4, h5,
         margin-top: 6px;
         flex-wrap: wrap;
     }
+
+    /* Scroll-shrink me bhi logo dikhta rahe */
+    .custom-navbar.kas-scrolled .kas-brand-logo img {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+    }
 }
 
 @media (max-width: 575px) {
+    .custom-navbar {
+        padding: 12px 14px;
+        margin-top: 44px;
+    }
+
     .kas-brand-tag {
         display: none;
     }
 
+    .kas-brand-logo img {
+        width: 54px;
+        height: 54px;
+        min-width: 54px;
+    }
+
     .kas-brand-name {
-        font-size: 1rem;
+        font-size: clamp(0.8rem, 3.8vw, 0.98rem);
         white-space: nowrap;
     }
 }
 
 @media (max-width: 380px) {
+    .kas-brand-logo img {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+    }
+
     .kas-brand-name {
-        font-size: 0.9rem;
+        font-size: clamp(0.72rem, 4vw, 0.88rem);
+        letter-spacing: 0.02em;
     }
 }
 
