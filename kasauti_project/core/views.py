@@ -101,9 +101,9 @@ def _send_registration_otp(email, otp, username):
     text_body = (
         f"Hi {username},\n\n"
         f"Your OTP for Kasauti International registration is: {otp}\n\n"
-        f"Yeh code {OTP_VALIDITY_MINUTES} minute ke liye valid hai. "
-        "Ise kisi ke saath share na karein.\n\n"
-        "Agar aapne registration nahi kiya to is email ko ignore karein.\n\n"
+        f"This code is valid for {OTP_VALIDITY_MINUTES} minutes. "
+        "Do not share this code with anyone.\n\n"
+        "If you did not request this verification, please ignore this email.\n\n"
         "Regards,\nTeam Kasauti International"
     )
     html_body = f"""
@@ -131,7 +131,7 @@ def _send_registration_otp(email, otp, username):
         This verification code is valid for {OTP_VALIDITY_MINUTES} minutes.
       </p>
       <p style="margin:0;font-size:15px;color:#000000;text-align:center;">
-        Ise kisi ke saath share na karein. Agar aapne request nahi kiya to email ignore karein.
+        Please do not share this with anyone. If you did not request this, please ignore this email.
       </p>
     </div>
     <p style="text-align:center;margin:20px 0 0;font-size:11px;color:#3d077b;">
