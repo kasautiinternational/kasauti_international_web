@@ -43,7 +43,7 @@ body::before {
 }
 
 .hero-section {
-    height: 100vh;
+    min-height: 100vh;
     color: #0f172a;
     padding: 20px;
     margin: 4.5% 0 0 2.5%;
@@ -193,11 +193,7 @@ body::before {
     }
 }
 
-@media (max-width: 768px) {
-    .importer {
-        font-size: 17px;
-    }
-}
+
 
 
 .phegraph span {
@@ -313,30 +309,133 @@ body::before {
 }
 
 
-@media (max-width: 550px) {
-    .hero-section {
-        height: auto;
-    }
+/* ========================================================
+   HERO — RESPONSIVE (clean, single source of truth)
+   ======================================================== */
 
-    .hero-content h1 {
-        font-size: 50px;
-    }
+/* Horizontal bleed guard — carousel side-cards & decor kabhi
+   page me horizontal scroll na laayein */
+.hero-outer {
+    overflow-x: clip;
+}
 
-    .welcome-text {
-        margin-top: 30%;
+@supports not (overflow-x: clip) {
+    .hero-outer {
+        overflow-x: hidden;
     }
 }
 
-@media (max-width: 995px) {
+/* Tablet & below — stacked columns, natural height */
+@media (max-width: 991.98px) {
+    .hero-section {
+        min-height: auto;
+        margin: 0;
+        padding: 90px 8px 10px;
+        /* top = fixed navbar clearance */
+    }
+
     .hero-img {
         width: 100%;
         height: auto;
     }
 
     .animated-text {
-        font-size: 35px;
-        font-weight: 600;
-        min-width: 280px;
+        font-size: 34px;
+        font-weight: 700;
+        min-width: 0;
+    }
+
+    .animated-text .animation {
+        font-size: 31px;
+    }
+
+    .importer {
+        font-size: 22px;
+        letter-spacing: 1.5px;
+    }
+
+    .welcome-text span {
+        font-size: 22px;
+    }
+
+    /* Carousel aur niche wale section ke beech saans lene ki jagah */
+    .hero-carousel {
+        margin-bottom: 28px;
+    }
+
+    .why-section {
+        padding-top: 20px;
+    }
+}
+
+/* Phones */
+@media (max-width: 575.98px) {
+    .hero-section {
+        padding: 84px 6px 6px;
+    }
+
+    .welcome-text {
+        margin-top: 0;
+    }
+
+    .welcome-text span {
+        font-size: 18px;
+        display: inline-block;
+    }
+
+    .animated-text {
+        font-size: 27px;
+        line-height: 1.25;
+    }
+
+    .animated-text .animation {
+        font-size: 24px;
+    }
+
+    .importer {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .hero-content .phegraph {
+        font-size: 14.5px;
+    }
+
+    .items {
+        gap: 8px !important;
+    }
+
+    .items li {
+        font-size: 12.5px;
+        padding: 8px 11px;
+        border-radius: 12px;
+    }
+
+    .hero-buttons {
+        margin-top: 24px;
+        flex-wrap: wrap;
+    }
+
+    .hero-buttons a {
+        flex: 1 1 46%;
+        padding: 11px 10px;
+        margin-right: 0;
+        text-align: center;
+    }
+}
+
+/* Very small phones (<= 360px) */
+@media (max-width: 360px) {
+    .animated-text {
+        font-size: 23px;
+    }
+
+    .animated-text .animation {
+        font-size: 21px;
+    }
+
+    .hero-buttons a {
+        flex: 1 1 100%;
     }
 }
 
