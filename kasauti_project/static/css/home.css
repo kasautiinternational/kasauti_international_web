@@ -23,7 +23,7 @@ body::before {
     opacity: 0.55;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='152' viewBox='0 0 88 152'%3E%3Cpath d='M44 0 L88 25 L88 76 L44 101 L0 76 L0 25 Z' fill='none' stroke='%23c9973f' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M44 50 L88 75 L88 126 L44 151 L0 126 L0 75 Z' fill='none' stroke='%23c9973f' stroke-width='1' opacity='0.5'/%3E%3C/svg%3E");
     background-size: 88px 152px;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     mask-image: radial-gradient(ellipse 85% 70% at 50% 0%, transparent, rgb(0, 0, 0) 380px);
 }
 
