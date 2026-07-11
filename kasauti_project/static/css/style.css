@@ -978,3 +978,27 @@ h1, h2, h3, h4, h5,
         right: 18px;
     }
 }
+
+/* ===== Scroll Reveal Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Left/right se aane wale variants (optional) */
+.reveal-left  { transform: translateX(-50px); }
+.reveal-right { transform: translateX(50px); }
+.reveal-left.reveal-visible,
+.reveal-right.reveal-visible { transform: translateX(0); }
+
+/* Accessibility: jo log animation off rakhte hain */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

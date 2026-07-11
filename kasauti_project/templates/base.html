@@ -55,6 +55,50 @@
         crossorigin="anonymous"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // SIRF manually lagayi hui .reveal classes target hongi
+            // ('section' hata diya — wahi pura page hide kar raha tha)
+            const elements = document.querySelectorAll('.reveal');
+
+            // Fallback: purane browser ya koi issue ho toh sab dikhao
+            if (!('IntersectionObserver' in window)) {
+                elements.forEach(el => el.classList.add('reveal-visible'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0,                      // thoda sa bhi dikhe = reveal (safe)
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            elements.forEach(el => {
+                // Safety: agar element viewport se bada hai, seedha dikha do
+                if (el.offsetHeight > window.innerHeight * 0.9) {
+                    el.classList.add('reveal-visible');
+                } else {
+                    observer.observe(el);
+                }
+            });
+
+            // Stagger: grid children ek-ek karke
+            document.querySelectorAll('.stagger-group').forEach(group => {
+                group.querySelectorAll('.reveal').forEach((child, i) => {
+                    child.style.transitionDelay = (i * 0.12) + 's';
+                });
+            });
+
+        });
+    </script>
 </head>
 
 <body>

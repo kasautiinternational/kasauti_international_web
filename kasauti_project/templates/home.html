@@ -94,23 +94,23 @@
          ===================================================== -->
     <section class="why-section" aria-label="Why choose Kasauti International">
         <div class="container">
-            <div class="why-grid">
-                <div class="why-card why-cyan">
+            <div class="why-grid stagger-group">
+                <div class="why-card why-cyan reveal">
                     <div class="why-icon"><i class="fa-solid fa-tags"></i></div>
                     <h4>Factory-Direct Pricing</h4>
                     <p>No middlemen. Sold directly so margin stays in your business, not lost to markups.</p>
                 </div>
-                <div class="why-card why-magenta">
+                <div class="why-card why-magenta reveal">
                     <div class="why-icon"><i class="fa-solid fa-flask-vial"></i></div>
                     <h4>QC Tested Every Batch</h4>
                     <p>Viscosity, colour density &amp; wash-fastness verified before any order leaves our facility.</p>
                 </div>
-                <div class="why-card why-yellow">
+                <div class="why-card why-yellow reveal">
                     <div class="why-icon"><i class="fa-solid fa-truck-fast"></i></div>
                     <h4>24-Hour Dispatch</h4>
                     <p>Orders confirmed before 4pm dispatch the same business day from our Noida warehouse.</p>
                 </div>
-                <div class="why-card why-violet">
+                <div class="why-card why-violet reveal">
                     <div class="why-icon"><i class="fa-solid fa-file-invoice"></i></div>
                     <h4>Full GST Invoicing</h4>
                     <p>Proper tax invoices on every order — claim your input credit, run a clean business.</p>
@@ -124,7 +124,7 @@
          ===================================================== -->
     <section class="core-products-section" aria-label="3 Core Products">
         <div class="container">
-            <div class="core-products-head">
+            <div class="core-products-head reveal">
                 <span class="core-products-kicker"><span
                         class="ink-dots"><span></span><span></span><span></span><span></span></span>3 Core
                     Products</span>
@@ -132,8 +132,8 @@
                 <p>Best-selling supplies with exclusive 3D hover cards.</p>
             </div>
 
-            <div class="core-products-grid">
-                <a href="{% url 'product' %}" class="core-product-card" data-accent="cyan"
+            <div class="core-products-grid stagger-group">
+                <a href="{% url 'product' %}" class="core-product-card reveal" data-accent="cyan"
                     style="--accent: #06b6d4; --accent-soft: rgba(6,182,212,0.12);">
                     <div class="cp-sheen"></div>
                     <span class="cp-badge">Best Seller</span>
@@ -150,7 +150,7 @@
                     </div>
                 </a>
 
-                <a href="{% url 'product' %}" class="core-product-card" data-accent="magenta"
+                <a href="{% url 'product' %}" class="core-product-card reveal" data-accent="magenta"
                     style="--accent: #e0529c; --accent-soft: rgba(224,82,156,0.12);">
                     <div class="cp-sheen"></div>
                     <span class="cp-badge cp-badge-magenta">High Volume</span>
@@ -167,7 +167,7 @@
                     </div>
                 </a>
 
-                <a href="{% url 'product' %}" class="core-product-card" data-accent="yellow"
+                <a href="{% url 'product' %}" class="core-product-card reveal" data-accent="yellow"
                     style="--accent: #eab308; --accent-soft: rgba(234,179,8,0.12);">
                     <div class="cp-sheen"></div>
                     <span class="cp-badge cp-badge-yellow">Pro Grade</span>
@@ -192,7 +192,7 @@
          ===================================================== -->
     <section class="calc-section" aria-label="Interactive savings calculator">
         <div class="container">
-            <div class="calc-head">
+            <div class="calc-head reveal">
                 <span class="calc-kicker"><span
                         class="ink-dots"><span></span><span></span><span></span><span></span></span>Interactive
                     Calculator</span>
@@ -204,10 +204,10 @@
             <div class="calc3-wrap">
 
                 <!-- Three product-wise savings calculators -->
-                <div class="calc3-grid">
+                <div class="calc3-grid stagger-group">
 
                     <!-- DTF ROLLS -->
-                    <div class="calc3-card" data-calc="rolls" style="--c-accent:#e0529c;">
+                    <div class="calc3-card reveal" data-calc="rolls" style="--c-accent:#e0529c;">
                         <div class="calc3-head">
                             <span class="calc3-icon"><i class="fa-solid fa-wind"></i></span>
                             <div class="calc3-headtext">
@@ -235,7 +235,7 @@
                     </div>
 
                     <!-- DTF INK -->
-                    <div class="calc3-card" data-calc="ink" style="--c-accent:#06b6d4;">
+                    <div class="calc3-card reveal" data-calc="ink" style="--c-accent:#06b6d4;">
                         <div class="calc3-head">
                             <span class="calc3-icon"><i class="fa-solid fa-droplet"></i></span>
                             <div class="calc3-headtext">
@@ -263,7 +263,7 @@
                     </div>
 
                     <!-- DTF POWDER -->
-                    <div class="calc3-card" data-calc="powder" style="--c-accent:#eab308;">
+                    <div class="calc3-card reveal" data-calc="powder" style="--c-accent:#eab308;">
                         <div class="calc3-head">
                             <span class="calc3-icon"><i class="fa-solid fa-gem"></i></span>
                             <div class="calc3-headtext">
@@ -293,13 +293,13 @@
                 </div>
 
                 <!-- Combined total -->
-                <div class="calc3-total">
+                <div class="calc3-total reveal">
                     <span><i class="fa-solid fa-piggy-bank"></i> Total estimated monthly savings with Kasauti</span>
                     <b id="calcTotal">₹0</b>
                 </div>
 
                 <!-- WhatsApp catalog request -->
-                <div class="calc3-wa">
+                <div class="calc3-wa reveal">
                     <div class="wa-text">
                         <h3><i class="fa-brands fa-whatsapp"></i> Want more details &amp; catalogs?</h3>
                         <p>If you need more information, product catalogs, or pricing details, simply share your WhatsApp number. Our team will send you the latest product catalog, price list, and complete product information directly to your WhatsApp for quick and easy access.</p>
@@ -335,26 +335,26 @@
          ===================================================== -->
     <section class="stats-section" aria-label="Company statistics">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card stat-cyan">
+            <div class="stats-grid stagger-group">
+                <div class="stat-card stat-cyan reveal">
                     <div class="stat-icon"><i class="fa-solid fa-droplet"></i></div>
                     <div class="stat-number" data-count="3000">0</div>
                     <div class="stat-suffix">+</div>
                     <div class="stat-label">Bulk Orders Dispatched</div>
                 </div>
-                <div class="stat-card stat-magenta">
+                <div class="stat-card stat-magenta reveal">
                     <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
                     <div class="stat-number" data-count="250">0</div>
                     <div class="stat-suffix">+</div>
                     <div class="stat-label">Print Businesses Served</div>
                 </div>
-                <div class="stat-card stat-yellow">
+                <div class="stat-card stat-yellow reveal">
                     <div class="stat-icon"><i class="fa-solid fa-industry"></i></div>
                     <div class="stat-number" data-count="20">0</div>
                     <div class="stat-suffix">+</div>
                     <div class="stat-label">States Covered Pan-India</div>
                 </div>
-                <div class="stat-card stat-violet">
+                <div class="stat-card stat-violet reveal">
                     <div class="stat-icon"><i class="fa-solid fa-shield-heart"></i></div>
                     <div class="stat-number" data-count="99">0</div>
                     <div class="stat-suffix">%</div>
@@ -369,7 +369,7 @@
          ===================================================== -->
     <section class="compare-section" aria-label="Kasauti versus typical supplier comparison">
         <div class="container">
-            <div class="compare-head">
+            <div class="compare-head reveal">
                 <span class="compare-kicker"><span
                         class="ink-dots"><span></span><span></span><span></span><span></span></span>Kasauti vs Typical
                     Supplier</span>
@@ -377,7 +377,7 @@
                 <p>See the difference side by side. We created this after seeing how inconsistent supplies affected print quality, productivity, and business growth for many printers.</p>
             </div>
 
-            <div class="compare-table-wrap">
+            <div class="compare-table-wrap reveal">
                 <table class="compare-table">
                     <thead>
                         <tr>
@@ -421,7 +421,7 @@
                 </table>
             </div>
 
-            <div class="compare-cta">
+            <div class="compare-cta reveal">
                 <a class="btn btn-primary" href="{% url 'contact' %}">Switch to Kasauti</a>
             </div>
         </div>
@@ -432,30 +432,30 @@
          ===================================================== -->
     <section class="process-section" aria-label="How DTF printing works">
         <div class="container">
-            <div class="process-head">
+            <div class="process-head reveal">
                 <span class="process-kicker"><span
                         class="ink-dots"><span></span><span></span><span></span><span></span></span>How DTF Works</span>
                 <h2>The 4-Step Process Behind Every Print</h2>
                 <p>DTF (Direct to Film) enables high-quality printing on almost any fabric, in any color. At the heart of every successful print are these three essential raw materials.</p>
             </div>
 
-            <div class="process-grid">
-                <div class="process-step process-cyan">
+            <div class="process-grid stagger-group">
+                <div class="process-step process-cyan reveal">
                     <div class="process-num">1</div>
                     <h4>Print</h4>
                     <p>Your design is printed on DTF Roll Film using premium DTF Ink (CMYK + White) for vibrant, high-quality results.</p>
                 </div>
-                <div class="process-step process-magenta">
+                <div class="process-step process-magenta reveal">
                     <div class="process-num">2</div>
                     <h4>Apply</h4>
                     <p>Apply an even layer of DTF Powder to the wet ink before the ink dries.</p>
                 </div>
-                <div class="process-step process-yellow">
+                <div class="process-step process-yellow reveal">
                     <div class="process-num">3</div>
                     <h4>Cure</h4>
                     <p>Pass the film through an industrial DTF oven, where the powder bonds securely with the ink layer.</p>
                 </div>
-                <div class="process-step process-violet">
+                <div class="process-step process-violet reveal">
                     <div class="process-num">4</div>
                     <h4>Heat Press</h4>
                     <p>Heat press the transfer onto the fabric, peel off the film, and your vibrant, wash-resistant print is ready.</p>
@@ -469,7 +469,7 @@
          ===================================================== -->
     <section class="reviews-section" aria-label="Verified Reviews">
         <div class="container">
-            <div class="reviews-head">
+            <div class="reviews-head reveal">
                 <span class="reviews-kicker"><span
                         class="ink-dots"><span></span><span></span><span></span><span></span></span>Verified
                     Reviews</span>
@@ -477,7 +477,7 @@
                 <p>Real businesses, real results — Our Customers, In Their Own Words.</p>
             </div>
 
-            <div class="reviews-carousel" id="reviewsCarousel">
+            <div class="reviews-carousel reveal" id="reviewsCarousel">
                 <button class="rc-nav prev" type="button" aria-label="previous review">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
@@ -541,13 +541,13 @@
 
 
     <div class="container">
-        <div class="reels-head">
+        <div class="reels-head reveal">
             <span class="reels-kicker"><span class="kicker-dash"></span>DTF IN ACTION</span>
             <h2>Real Print Lines & Real Customer's<br><span>Real Results</span></h2>
             <p>Hear directly from our customers and watch how Kasauti DTF supplies perform on real production floors across India. Real feedback, real printing results, and real business experiences.</p>
         </div>
 
-        <div class="reels-carousel" id="reelsCarousel">
+        <div class="reels-carousel reveal" id="reelsCarousel">
             <button class="reels-arrow reels-arrow-left" id="reelsPrev" type="button" aria-label="Previous video">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
@@ -640,7 +640,7 @@
          ===================================================== -->
     <section class="faq-section" aria-label="Frequently Asked Questions">
         <div class="container">
-            <div class="faq-head">
+            <div class="faq-head reveal">
                 <span class="faq-kicker"><span
                         class="ink-dots"><span></span><span></span><span></span><span></span></span>Frequently
                     Asked</span>
@@ -649,8 +649,8 @@
             </div>
 
             <div class="faq-grid">
-                <div class="faq-panel" aria-label="FAQ Accordion">
-                    <div class="faq-item" data-qa="q1">
+                <div class="faq-panel stagger-group" aria-label="FAQ Accordion">
+                    <div class="faq-item reveal" data-qa="q1">
                         <button class="faq-question" type="button" aria-expanded="false">
                             <span>1) What is the primary use of DTF Ink?</span>
                             <i class="fa-solid fa-plus"></i>
@@ -662,7 +662,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item" data-qa="q2">
+                    <div class="faq-item reveal" data-qa="q2">
                         <button class="faq-question" type="button" aria-expanded="false">
                             <span>2) What is the role of TPU Melt Powder?</span>
                             <i class="fa-solid fa-plus"></i>
@@ -674,7 +674,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item" data-qa="q3">
+                    <div class="faq-item reveal" data-qa="q3">
                         <button class="faq-question" type="button" aria-expanded="false">
                             <span>3) Does the choice of DTF Film/Roll affect print quality?</span>
                             <i class="fa-solid fa-plus"></i>
@@ -686,7 +686,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item" data-qa="q4">
+                    <div class="faq-item reveal" data-qa="q4">
                         <button class="faq-question" type="button" aria-expanded="false">
                             <span>4) How do you maintain consistency in bulk supply?</span>
                             <i class="fa-solid fa-plus"></i>
@@ -698,7 +698,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item" data-qa="q5">
+                    <div class="faq-item reveal" data-qa="q5">
                         <button class="faq-question" type="button" aria-expanded="false">
                             <span>5) How should DTF Ink, Powder, and Film be stored?</span>
                             <i class="fa-solid fa-plus"></i>
@@ -710,7 +710,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item" data-qa="q6">
+                    <div class="faq-item reveal" data-qa="q6">
                         <button class="faq-question" type="button" aria-expanded="false">
                             <span>6) Will I receive guidance if I'm using DTF products for the first time?</span>
                             <i class="fa-solid fa-plus"></i>
@@ -724,7 +724,7 @@
                 </div>
 
                 <div class="faq-side" aria-label="Ask your question">
-                    <div class="faq-side-card">
+                    <div class="faq-side-card reveal">
                         <div class="faq-side-icon"><i class="fa-solid fa-message"></i></div>
                         <h3>Have more questions?</h3>
                         <p>Whether you have questions about DTF Ink, Powder, Film, or bulk supply, we're here to assist. Tell us your requirements, and we'll recommend the most suitable solution.</p>
@@ -740,7 +740,7 @@
          ===================================================== -->
     <section class="final-cta-section" aria-label="Get your bulk quote">
         <div class="container">
-            <div class="final-cta-card">
+            <div class="final-cta-card reveal">
                 <div class="final-cta-glow"></div>
                 <span class="final-cta-kicker"><span
                         class="ink-dots"><span></span><span></span><span></span><span></span></span>Ready When You
