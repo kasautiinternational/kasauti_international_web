@@ -56,6 +56,23 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
+
+    <style>
+        #smooth-wrapper {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        #smooth-content {
+            overflow: visible;
+            width: 100%;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -148,121 +165,133 @@
     </nav>
     <!-- Navbar End -->
 
-    {% block content %}{% endblock %}
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
 
-    <!-- FOOTER -->
-    {% block footer %}
+            {% block content %}{% endblock %}
 
-    <footer class="footer kas-footer">
-        <div class="container">
-            <div class="footer-grid row g-4">
-                <div class="col-md-5 footer-col">
-                    <div class="footer-brand-wrap">
-                        <img src="{% static 'image/logo.png' %}"
-                            alt="Kasauti International logo used in footer branding" class="bg-white rounded p-2 mb-3"
-                            height="48">
-                        <div class="footer-vip">
-                            <div class="vip-badge" aria-label="Kasauti VIP">
-                                <span class="vip-star">★</span>
-                                <span class="vip-text">KASAUTI VIP</span>
+            <!-- FOOTER -->
+            {% block footer %}
+
+            <footer class="footer kas-footer">
+                <div class="container">
+                    <div class="footer-grid row g-4">
+                        <div class="col-md-5 footer-col">
+                            <div class="footer-brand-wrap">
+                                <img src="{% static 'image/logo.png' %}"
+                                    alt="Kasauti International logo used in footer branding"
+                                    class="bg-white rounded p-2 mb-3" height="48">
+                                <div class="footer-vip">
+                                    <div class="vip-badge" aria-label="Kasauti VIP">
+                                        <span class="vip-star">★</span>
+                                        <span class="vip-text">KASAUTI VIP</span>
+                                    </div>
+                                    <p class="vip-sub">Priority supply • Premium guidance • Bulk-ready pricing</p>
+                                </div>
                             </div>
-                            <p class="vip-sub">Priority supply • Premium guidance • Bulk-ready pricing</p>
+
+                            <p class="mt-3">Premium DTF products — <b>DTF Ink</b>, <b>Powder</b>, and <b>Roll</b> — for
+                                serious
+                                print businesses.</p>
+
+                            <div class="footer-cta-row mt-3">
+                                <a href="{% url 'product' %}" class="footer-cta-btn" aria-label="Explore DTF supplies">
+                                    <i class="fa-solid fa-bolt"></i>
+                                    <span>Explore DTF Supplies</span>
+                                </a>
+                                <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}"
+                                    target="_blank" class="footer-cta-btn secondary"
+                                    aria-label="Get bulk quote on WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                    <span>Bulk Quote</span>
+                                </a>
+                            </div>
+
+                            <div class="footer-address mt-3">
+                                <h4 class="address-title">Address</h4>
+                                <p class="address-text">Kasauti International LLP • India
+                                    <br><span class="address-hint">
+                                        D-350, Sector 63, Noida, Uttar Pradesh, INDIA 201309</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 footer-col">
+                            <h3>Pages</h3>
+                            <a href="{% url 'about' %}">About</a><br>
+                            <a href="{% url 'product' %}">Products</a><br>
+                            <a href="{% url 'distributor' %}">Distributors</a><br>
+                            <a href="{% url 'contact' %}">Contact</a>
+
+                            <div class="footer-mini-card mt-4">
+                                <div class="mini-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                                <div>
+                                    <div class="mini-title">Assured Quality</div>
+                                    <div class="mini-sub">Batch checks for consistent output</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 footer-col">
+                            <h3>Account</h3>
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}">My Profile</a><br>
+                            <a href="{% url 'my_orders' %}">My Orders</a><br>
+                            <a href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                            <a href="{% url 'login' %}">Login</a><br>
+                            {% endif %}
+                            <p class="mt-3">WhatsApp support available from the navbar button.</p>
+
+                            <div class="footer-vip-panel mt-3">
+                                <div class="vip-panel-top">
+                                    <i class="fa-solid fa-gem"></i>
+                                    <span>Benefits</span>
+                                </div>
+                                <ul class="vip-list">
+                                    <li><i class="fa-solid fa-circle-check"></i> Priority bulk dispatch</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Setup guidance</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Repeat-order support</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-
-                    <p class="mt-3">Premium DTF products — <b>DTF Ink</b>, <b>Powder</b>, and <b>Roll</b> — for serious
-                        print businesses.</p>
-
-                    <div class="footer-cta-row mt-3">
-                        <a href="{% url 'product' %}" class="footer-cta-btn" aria-label="Explore DTF supplies">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span>Explore DTF Supplies</span>
-                        </a>
-                        <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}" target="_blank"
-                            class="footer-cta-btn secondary" aria-label="Get bulk quote on WhatsApp">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            <span>Bulk Quote</span>
-                        </a>
-                    </div>
-
-                    <div class="footer-address mt-3">
-                        <h4 class="address-title">Address</h4>
-                        <p class="address-text">Kasauti International LLP • India
-                            <br><span class="address-hint">
-                                D-350, Sector 63, Noida, Uttar Pradesh, INDIA 201309</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-3 footer-col">
-                    <h3>Pages</h3>
-                    <a href="{% url 'about' %}">About</a><br>
-                    <a href="{% url 'product' %}">Products</a><br>
-                    <a href="{% url 'distributor' %}">Distributors</a><br>
-                    <a href="{% url 'contact' %}">Contact</a>
-
-                    <div class="footer-mini-card mt-4">
-                        <div class="mini-icon"><i class="fa-solid fa-shield-heart"></i></div>
-                        <div>
-                            <div class="mini-title">Assured Quality</div>
-                            <div class="mini-sub">Batch checks for consistent output</div>
+                    <hr>
+                    <div class="sc-container footer-bottom">
+                        <p class="mb-0 small">© 2026 Kasauti International. All rights reserved.</p>
+                        <div class="policy">
+                            <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                            <a href="{% url 'terms_condition' %}">Terms & Conditions</a>
+                            <a href="{% url 'refund_return' %}">Refund & Return Policy</a>
+                            <a href="{% url 'shipping_policy' %}">Shipping Policy</a>
+                        </div>
+                        <div class="sc-links" aria-label="Social links">
+                            <a href="https://www.google.com/search?q=Kasauti+International+dtf+product+in+noida&sca_esv=33702fdac940e66f&rlz=1C1ONGR_enIN1081IN1081&biw=1536&bih=776&sxsrf=APpeQnssND9BG_CkPP4FXQKj9XFVGSDasg%3A1783419900061&ei=_NNMaqymA52XnesPqdKimQI&ved=0ahUKEwislIPtrMCVAxWdS2cHHSmpKCMQ4dUDCBA&uact=5&oq=Kasauti+International+dtf+product+in+noida&gs_lp=Egxnd3Mtd2l6LXNlcnAiKkthc2F1dGkgSW50ZXJuYXRpb25hbCBkdGYgcHJvZHVjdCBpbiBub2lkYTIHECEYChigAUjNUVCyAlivS3ABeACQAQGYAbIFoAGgK6oBCjAuMS4yMC41LTG4AQPIAQD4AQGYAhWgAsslwgIHECMYsAMYJ8ICCBAAGIAEGLADwgIIEAAY7wUYsAPCAgsQABiABBiiBBiwA8ICBBAjGCfCAgYQABgWGB7CAgIQJsICBRAAGO8FwgIIEAAYgAQYogTCAgUQIRifBcICCBAAGIkFGKIEwgIFECEYoAGYAwCIBgGQBgaSBwYxLjAuMjCgB5dKsgcEMi0yMLgHySXCBwYwLjEzLjjIBziACAE&sclient=gws-wiz-serp"
+                                class="social-link" target="_blank" aria-label="Google">
+                                <i class="fa-brands fa-google"></i></a>
+                            <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}"
+                                class="social-link" target="_blank" aria-label="WhatsApp"><i
+                                    class="fa-brands fa-whatsapp"></i></a>
+                            <a href="https://www.instagram.com/kasauti_international?utm_source=qr&igsh=bno1aG0yNGFzMnBp"
+                                class="social-link" target="_blank" aria-label="Instagram"><i
+                                    class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="social-link" target="_blank" aria-label="Facebook"><i
+                                    class="fa-brands fa-facebook"></i></a>
+                            <a href="https://www.linkedin.com/in/kasauti-international-a016a7420/?skipRedirect=true"
+                                class="social-link" target="_blank" aria-label="LinkedIn"><i
+                                    class="fa-brands fa-linkedin"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 footer-col">
-                    <h3>Account</h3>
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}">My Profile</a><br>
-                    <a href="{% url 'my_orders' %}">My Orders</a><br>
-                    <a href="{% url 'logout' %}">Logout</a>
-                    {% else %}
-                    <a href="{% url 'login' %}">Login</a><br>
-                    {% endif %}
-                    <p class="mt-3">WhatsApp support available from the navbar button.</p>
+            </footer>
 
-                    <div class="footer-vip-panel mt-3">
-                        <div class="vip-panel-top">
-                            <i class="fa-solid fa-gem"></i>
-                            <span>Benefits</span>
-                        </div>
-                        <ul class="vip-list">
-                            <li><i class="fa-solid fa-circle-check"></i> Priority bulk dispatch</li>
-                            <li><i class="fa-solid fa-circle-check"></i> Setup guidance</li>
-                            <li><i class="fa-solid fa-circle-check"></i> Repeat-order support</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="sc-container footer-bottom">
-                <p class="mb-0 small">© 2026 Kasauti International. All rights reserved.</p>
-                <div class="policy">
-                    <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
-                    <a href="{% url 'terms_condition' %}">Terms & Conditions</a>
-                    <a href="{% url 'refund_return' %}">Refund & Return Policy</a>
-                    <a href="{% url 'shipping_policy' %}">Shipping Policy</a>
-                </div>
-                <div class="sc-links" aria-label="Social links">
-                    <a href="https://www.google.com/search?q=Kasauti+International+dtf+product+in+noida&sca_esv=33702fdac940e66f&rlz=1C1ONGR_enIN1081IN1081&biw=1536&bih=776&sxsrf=APpeQnssND9BG_CkPP4FXQKj9XFVGSDasg%3A1783419900061&ei=_NNMaqymA52XnesPqdKimQI&ved=0ahUKEwislIPtrMCVAxWdS2cHHSmpKCMQ4dUDCBA&uact=5&oq=Kasauti+International+dtf+product+in+noida&gs_lp=Egxnd3Mtd2l6LXNlcnAiKkthc2F1dGkgSW50ZXJuYXRpb25hbCBkdGYgcHJvZHVjdCBpbiBub2lkYTIHECEYChigAUjNUVCyAlivS3ABeACQAQGYAbIFoAGgK6oBCjAuMS4yMC41LTG4AQPIAQD4AQGYAhWgAsslwgIHECMYsAMYJ8ICCBAAGIAEGLADwgIIEAAY7wUYsAPCAgsQABiABBiiBBiwA8ICBBAjGCfCAgYQABgWGB7CAgIQJsICBRAAGO8FwgIIEAAYgAQYogTCAgUQIRifBcICCBAAGIkFGKIEwgIFECEYoAGYAwCIBgGQBgaSBwYxLjAuMjCgB5dKsgcEMi0yMLgHySXCBwYwLjEzLjjIBziACAE&sclient=gws-wiz-serp"
-                        class="social-link" target="_blank" aria-label="Google">
-                        <i class="fa-brands fa-google"></i></a>
-                    <a href="https://wa.me/918796560299?text={{ whatsapp_message|urlencode }}" class="social-link"
-                        target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/kasauti_international?utm_source=qr&igsh=bno1aG0yNGFzMnBp"
-                        class="social-link" target="_blank" aria-label="Instagram"><i
-                            class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="social-link" target="_blank" aria-label="Facebook"><i
-                            class="fa-brands fa-facebook"></i></a>
-                    <a href="https://www.linkedin.com/in/kasauti-international-a016a7420/?skipRedirect=true"
-                        class="social-link" target="_blank" aria-label="LinkedIn"><i
-                            class="fa-brands fa-linkedin"></i></a>
-                </div>
-            </div>
+            <script src="{% static 'js/script.js' %}"></script>
+            {% endblock %}
+            {% include 'includes/logout_modal.html' %}
         </div>
-    </footer>
-
-    <script src="{% static 'js/script.js' %}"></script>
-    {% endblock %}
-    {% include 'includes/logout_modal.html' %}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollSmoother.min.js"></script>
+    <script src="{% static 'js/kasauti-scroll.js' %}"></script>
 </body>
 
 </html>
