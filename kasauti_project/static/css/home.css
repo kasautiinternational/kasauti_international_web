@@ -335,7 +335,7 @@ body::before {
     .hero-section {
         min-height: auto;
         margin-top: 20%;
-        padding: 90px 8px 10px;
+        padding: 90px 25px 10px 6px;
         /* top = fixed navbar clearance */
     }
 
@@ -376,7 +376,7 @@ body::before {
 /* Phones */
 @media (max-width: 575.98px) {
     .hero-section {
-        padding: 84px 6px 6px;
+        padding: 84px 20px 6px 6px;
     }
 
     .welcome-text {
