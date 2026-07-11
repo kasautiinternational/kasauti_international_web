@@ -553,7 +553,7 @@ CATEGORY_META = {
         'desc': 'Fine hot-melt adhesive powder for strong wash-durable bonding.',
         'icon': 'fa-gem',
         'accent': '#eab308',
-        'img': 'image/powder.jpg',
+        'img': 'image/25KG_POWDER.png',
     },
     'sublimation': {
         'name': 'Sublimation Paper',
