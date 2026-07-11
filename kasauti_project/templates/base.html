@@ -55,50 +55,6 @@
         crossorigin="anonymous"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            // In elements pe automatic reveal lagega — apne hisaab se selectors add/remove karo
-            const autoSelectors = [
-                'section',
-                '.product-card',
-                '.card',
-                '.feature-box',
-                '.category-card',
-                'h2.section-title',
-                '.reveal'  // manually lagaya hua bhi
-            ];
-
-            const elements = document.querySelectorAll(autoSelectors.join(','));
-
-            elements.forEach(el => el.classList.add('reveal'));
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('reveal-visible');
-                        observer.unobserve(entry.target); // ek baar dikha, dobara animate nahi
-                    }
-                });
-            }, {
-                threshold: 0.15,        // element ka 15% dikhte hi trigger
-                rootMargin: '0px 0px -60px 0px'  // thoda pehle trigger, smooth feel
-            });
-
-            elements.forEach(el => observer.observe(el));
-
-            // ===== Step-wise STAGGER: grid/list ke children ek-ek karke aayenge =====
-            document.querySelectorAll('.stagger-group').forEach(group => {
-                const children = group.querySelectorAll('.reveal');
-                children.forEach((child, i) => {
-                    child.style.transitionDelay = (i * 0.12) + 's';  // har item 120ms baad
-                });
-            });
-
-        });
-    </script>
 </head>
 
 <body>
