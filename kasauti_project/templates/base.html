@@ -56,14 +56,67 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
+
+    <style>
+        /* ===== Premium Scroll Reveal ===== */
+        html.lenis,
+        html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px) scale(0.97);
+            transition:
+                opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.reveal-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
+
+    <!-- Lenis: buttery smooth scrolling -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.13/lenis.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            // SIRF manually lagayi hui .reveal classes target hongi
-            // ('section' hata diya — wahi pura page hide kar raha tha)
+            /* ===== 1) SMOOTH SCROLL — yehi asli "feel" hai ===== */
+            if (typeof Lenis !== 'undefined' &&
+                !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const lenis = new Lenis({
+                    duration: 1.35,               // glide kitna lamba (1.2–1.6 sweet spot)
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
+                    touchMultiplier: 1.6
+                });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            }
+
+            /* ===== 2) SCROLL REVEAL ===== */
             const elements = document.querySelectorAll('.reveal');
 
-            // Fallback: purane browser ya koi issue ho toh sab dikhao
             if (!('IntersectionObserver' in window)) {
                 elements.forEach(el => el.classList.add('reveal-visible'));
                 return;
@@ -77,12 +130,11 @@
                     }
                 });
             }, {
-                threshold: 0,                      // thoda sa bhi dikhe = reveal (safe)
-                rootMargin: '0px 0px -40px 0px'
+                threshold: 0,
+                rootMargin: '0px 0px -12% 0px'   // element thoda upar aane pe reveal — natural timing
             });
 
             elements.forEach(el => {
-                // Safety: agar element viewport se bada hai, seedha dikha do
                 if (el.offsetHeight > window.innerHeight * 0.9) {
                     el.classList.add('reveal-visible');
                 } else {
@@ -90,10 +142,10 @@
                 }
             });
 
-            // Stagger: grid children ek-ek karke
+            /* ===== 3) STAGGER — flowing wave effect ===== */
             document.querySelectorAll('.stagger-group').forEach(group => {
                 group.querySelectorAll('.reveal').forEach((child, i) => {
-                    child.style.transitionDelay = (i * 0.09) + 's';
+                    child.style.transitionDelay = (i * 0.1) + 's';
                 });
             });
 
