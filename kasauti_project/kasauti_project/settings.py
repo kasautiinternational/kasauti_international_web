@@ -64,7 +64,14 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kasautiinternational@gmail.com'               
-EMAIL_HOST_PASSWORD = 'olanpncbswqunmza'           
+EMAIL_HOST_PASSWORD = 'olanpncbswqunmza'      
+
+# NEW: naya order aate hi in email addresses pe alert jayega (comma se aur bhi add kar sakte ho)
+ORDER_ALERT_EMAILS = ['kasautiinternational@gmail.com']
+
+# NEW: WhatsApp alert (CallMeBot) — apna number aur API key yahan daalo
+WHATSAPP_ALERT_PHONE = '+918796560299'   # apna WhatsApp number, +91 ke saath
+WHATSAPP_ALERT_APIKEY = '123456'         # CallMeBot se mila API key yahan
 
 DEFAULT_FROM_EMAIL = 'Kasauti International <kasautiinternational@gmail.com>'
 
