@@ -1,17 +1,21 @@
 from django.contrib import admin
+from django.utils import timezone
 from django.utils.html import format_html
 from django.http import JsonResponse
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from .models import (
     Product, ProductImage, ProductSize, ContactInquiry, CartItem, Order, OrderItem,
     CustomerReview, ReelVideo, DistributorInquiry, StockNotification, CatalogRequest,
+    AdminSeen,
 )
 
 
 # ─────────────────────────────────────────
 # NEW: Admin sidebar notification badges
-# Naya order / inquiry / notify-me / catalog request aate hi
-# admin sidebar me us model ke aage red count badge dikhega.
+# Naya order / inquiry / notify-me / catalog request / user registration
+# aate hi admin sidebar me us model ke aage red count badge dikhega.
 # List open karte hi sab 'seen' mark ho jata hai aur badge clear.
 # ─────────────────────────────────────────
 
@@ -44,6 +48,14 @@ class NewBadgeAdminMixin:
         return response
 
 
+def _users_seen_until():
+    """Kab tak ke users admin dekh chuka hai — tracker se timestamp lao."""
+    tracker, _ = AdminSeen.objects.get_or_create(
+        key='auth_user', defaults={'seen_until': timezone.now()}
+    )
+    return tracker
+
+
 @staff_member_required
 def admin_new_counts(request):
     """JSON endpoint — base_site.html ka JS isse counts uthata hai."""
@@ -53,7 +65,45 @@ def admin_new_counts(request):
         if count:
             url = "/admin/{}/{}/".format(model._meta.app_label, model._meta.model_name)
             data[url] = count
+
+    # NEW: naye registered users ka badge (built-in User model me field
+    # add nahi kar sakte, isliye date_joined + tracker se count karte hain)
+    tracker = _users_seen_until()
+    new_users = User.objects.filter(date_joined__gt=tracker.seen_until).count()
+    if new_users:
+        data['/admin/auth/user/'] = new_users
+
     return JsonResponse(data)
+
+
+# ─────────────────────────────────────────
+# NEW: Users list pe bhi badge — default UserAdmin ko replace karke
+# ─────────────────────────────────────────
+
+class BadgedUserAdmin(DjangoUserAdmin):
+    """Django ka normal Users admin hi hai, bas list kholte hi
+    'naye users' ka tracker update ho jata hai (badge clear)."""
+
+    def changelist_view(self, request, extra_context=None):
+        response = super().changelist_view(request, extra_context)
+
+        def mark_seen(resp):
+            AdminSeen.objects.update_or_create(
+                key='auth_user', defaults={'seen_until': timezone.now()}
+            )
+            return resp
+
+        if hasattr(response, 'add_post_render_callback'):
+            response.add_post_render_callback(mark_seen)
+        else:
+            AdminSeen.objects.update_or_create(
+                key='auth_user', defaults={'seen_until': timezone.now()}
+            )
+        return response
+
+
+admin.site.unregister(User)
+admin.site.register(User, BadgedUserAdmin)
 
 
 class ProductImageInline(admin.TabularInline):

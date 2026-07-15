@@ -452,3 +452,13 @@ class CatalogRequest(models.Model):
 
     def __str__(self):
         return f"{self.whatsapp_number} ({self.get_status_display()})"
+    
+class AdminSeen(models.Model):
+    """NEW: Admin badge tracker for models jinme hum field add nahi kar sakte
+    (jaise Django ka built-in User). Har key ke liye yaad rakhta hai ki admin
+    ne last kab list dekhi thi — uske baad ke naye records badge me count hote hain."""
+    key = models.CharField(max_length=50, unique=True)
+    seen_until = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.key} — seen until {self.seen_until}"
