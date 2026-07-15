@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:"Django site admin" }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:"Django administration" }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .new-count-badge {
+        display: inline-block;
+        min-width: 18px;
+        height: 18px;
+        line-height: 18px;
+        padding: 0 5px;
+        margin-left: 8px;
+        border-radius: 10px;
+        background: #e53935;
+        color: #fff !important;
+        font-size: 11px;
+        font-weight: 700;
+        text-align: center;
+        vertical-align: middle;
+        animation: badgePulse 1.6s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+    }
+</style>
+<script>
+    function kasautiUpdateBadges() {
+        fetch('/admin/new-counts/', { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                // Purane badges hatao
+                document.querySelectorAll('.new-count-badge').forEach(function (b) { b.remove(); });
+                // Naye lagao — sidebar + index page dono ke links pe
+                Object.keys(data).forEach(function (url) {
+                    document.querySelectorAll('a[href="' + url + '"]').forEach(function (link) {
+                        var badge = document.createElement('span');
+                        badge.className = 'new-count-badge';
+                        badge.textContent = data[url] > 99 ? '99+' : data[url];
+                        link.appendChild(badge);
+                    });
+                });
+            })
+            .catch(function () { /* network issue — ignore */ });
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        kasautiUpdateBadges();
+        setInterval(kasautiUpdateBadges, 30000); // har 30 sec auto-refresh
+    });
+</script>
+{% endblock %}

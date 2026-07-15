@@ -1,9 +1,59 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import (
     Product, ProductImage, ProductSize, ContactInquiry, CartItem, Order, OrderItem,
     CustomerReview, ReelVideo, DistributorInquiry, StockNotification, CatalogRequest,
 )
+
+
+# ─────────────────────────────────────────
+# NEW: Admin sidebar notification badges
+# Naya order / inquiry / notify-me / catalog request aate hi
+# admin sidebar me us model ke aage red count badge dikhega.
+# List open karte hi sab 'seen' mark ho jata hai aur badge clear.
+# ─────────────────────────────────────────
+
+BADGE_MODELS = [
+    Order,
+    ContactInquiry,
+    DistributorInquiry,
+    StockNotification,
+    CatalogRequest,
+]
+
+
+class NewBadgeAdminMixin:
+    """Jaise hi admin is model ki list kholta hai, saare unseen
+    records 'seen' mark ho jate hain (badge clear)."""
+
+    def changelist_view(self, request, extra_context=None):
+        response = super().changelist_view(request, extra_context)
+
+        def mark_seen(resp):
+            self.model.objects.filter(is_seen=False).update(is_seen=True)
+            return resp
+
+        # Page render hone ke BAAD seen mark karo, taki list me
+        # 'new' wale rows pehli baar highlight/filter ho saken.
+        if hasattr(response, 'add_post_render_callback'):
+            response.add_post_render_callback(mark_seen)
+        else:
+            self.model.objects.filter(is_seen=False).update(is_seen=True)
+        return response
+
+
+@staff_member_required
+def admin_new_counts(request):
+    """JSON endpoint — base_site.html ka JS isse counts uthata hai."""
+    data = {}
+    for model in BADGE_MODELS:
+        count = model.objects.filter(is_seen=False).count()
+        if count:
+            url = "/admin/{}/{}/".format(model._meta.app_label, model._meta.model_name)
+            data[url] = count
+    return JsonResponse(data)
 
 
 class ProductImageInline(admin.TabularInline):
@@ -51,7 +101,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 @admin.register(ContactInquiry)
-class ContactInquiryAdmin(admin.ModelAdmin):
+class ContactInquiryAdmin(NewBadgeAdminMixin, admin.ModelAdmin):
     list_display = ['name', 'email', 'phone', 'product', 'quantity', 'status', 'submitted_at']
     list_filter = ['status', 'submitted_at']
     search_fields = ['name', 'email', 'phone', 'message']
@@ -77,7 +127,7 @@ class OrderItemInline(admin.TabularInline):
 
 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(NewBadgeAdminMixin, admin.ModelAdmin):
     list_display = ['id', 'name', 'email', 'phone', 'display_total', 'status', 'created_at']
     list_filter = ['status', 'created_at']
     search_fields = ['name', 'email', 'phone']
@@ -165,7 +215,7 @@ class ReelVideoAdmin(admin.ModelAdmin):
 # ─────────────────────────────────────────
 
 @admin.register(DistributorInquiry)
-class DistributorInquiryAdmin(admin.ModelAdmin):
+class DistributorInquiryAdmin(NewBadgeAdminMixin, admin.ModelAdmin):
     list_display = ['name', 'city', 'phone', 'business_type', 'status', 'submitted_at']
     list_filter = ['status', 'business_type', 'submitted_at']
     search_fields = ['name', 'city', 'phone']
@@ -183,7 +233,7 @@ class DistributorInquiryAdmin(admin.ModelAdmin):
 # ─────────────────────────────────────────
 
 @admin.register(StockNotification)
-class StockNotificationAdmin(admin.ModelAdmin):
+class StockNotificationAdmin(NewBadgeAdminMixin, admin.ModelAdmin):
     list_display = ['product', 'user', 'email', 'status', 'created_at']
     list_filter = ['status', 'created_at', 'product']
     search_fields = ['product__title', 'user__username', 'email', 'name']
@@ -197,7 +247,7 @@ class StockNotificationAdmin(admin.ModelAdmin):
 # ─────────────────────────────────────────
 
 @admin.register(CatalogRequest)
-class CatalogRequestAdmin(admin.ModelAdmin):
+class CatalogRequestAdmin(NewBadgeAdminMixin, admin.ModelAdmin):
     list_display = ['whatsapp_number', 'note', 'status', 'created_at']
     list_filter = ['status', 'created_at']
     search_fields = ['whatsapp_number', 'note']

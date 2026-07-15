@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf import settings
 from core.views import serve_media, custom_404
+from core.admin import admin_new_counts  # NEW: admin badge counts (JSON)
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 from core.sitemaps import StaticViewSitemap, CategorySitemap, ProductSitemap
@@ -13,6 +14,8 @@ sitemaps = {
 }
 
 urlpatterns = [
+    # NEW: admin sidebar badge counts — admin/ se PEHLE hona zaroori hai
+    path('admin/new-counts/', admin_new_counts, name='admin_new_counts'),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},

@@ -145,6 +145,7 @@ class StockNotification(models.Model):
     email = models.EmailField(blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     created_at = models.DateTimeField(auto_now_add=True)
+    is_seen = models.BooleanField(default=False, editable=False)  # NEW: admin badge ke liye
 
     class Meta:
         ordering = ['-created_at']
@@ -170,6 +171,7 @@ class ContactInquiry(models.Model):
     message = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     submitted_at = models.DateTimeField(auto_now_add=True)
+    is_seen = models.BooleanField(default=False, editable=False)  # NEW: admin badge ke liye
 
     class Meta:
         ordering = ['-submitted_at']
@@ -230,6 +232,7 @@ class Order(models.Model):
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_seen = models.BooleanField(default=False, editable=False)  # NEW: admin badge ke liye
 
     class Meta:
         ordering = ['-created_at']
@@ -413,6 +416,7 @@ class DistributorInquiry(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     notes = models.TextField(blank=True, help_text="Internal notes (not shown to the applicant).")
     submitted_at = models.DateTimeField(auto_now_add=True)
+    is_seen = models.BooleanField(default=False, editable=False)  # NEW: admin badge ke liye
 
     class Meta:
         ordering = ['-submitted_at']
@@ -439,6 +443,7 @@ class CatalogRequest(models.Model):
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     created_at = models.DateTimeField(auto_now_add=True)
+    is_seen = models.BooleanField(default=False, editable=False)  # NEW: admin badge ke liye
 
     class Meta:
         ordering = ['-created_at']
