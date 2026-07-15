@@ -81,10 +81,19 @@ def admin_new_counts(request):
 # ─────────────────────────────────────────
 
 class BadgedUserAdmin(DjangoUserAdmin):
-    """Django ka normal Users admin hi hai, bas list kholte hi
-    'naye users' ka tracker update ho jata hai (badge clear)."""
+    """Django ka normal Users admin hi hai, plus:
+    - Naye (unseen) users ke aage red NEW tag
+    - 'Joined' column — kitna time pehle register hua
+    - Newest users sabse upar
+    - List kholte hi tracker update (sidebar badge clear)"""
+
+    list_display = ['username', 'email', 'first_name', 'last_name',
+                    'is_staff', 'new_tag', 'joined_ago', 'date_joined']
+    ordering = ['-date_joined']
 
     def changelist_view(self, request, extra_context=None):
+        # NEW tags render hone tak purana tracker chahiye, isliye pehle cache karo
+        self._seen_until = _users_seen_until().seen_until
         response = super().changelist_view(request, extra_context)
 
         def mark_seen(resp):
@@ -101,7 +110,44 @@ class BadgedUserAdmin(DjangoUserAdmin):
             )
         return response
 
+    def new_tag(self, obj):
+        """Red NEW pill — sirf un users pe jo last dekhe jane ke baad aaye."""
+        seen = getattr(self, '_seen_until', None)
+        if seen is None:
+            seen = _users_seen_until().seen_until
+        if obj.date_joined and obj.date_joined > seen:
+            return format_html(
+                '<span style="background:#e53935;color:#fff;font-size:10px;'
+                'font-weight:700;padding:2px 8px;border-radius:10px;">NEW</span>'
+            )
+        return ''
+    new_tag.short_description = ''
 
+    def joined_ago(self, obj):
+        """Kitna time pehle join kiya — e.g. '2 days ago', 'Just now'."""
+        if not obj.date_joined:
+            return '—'
+        delta = timezone.now() - obj.date_joined
+        secs = int(delta.total_seconds())
+        if secs < 60:
+            return 'Just now'
+        mins = secs // 60
+        if mins < 60:
+            return f'{mins} min ago'
+        hours = mins // 60
+        if hours < 24:
+            return f'{hours} hr ago' if hours == 1 else f'{hours} hrs ago'
+        days = hours // 24
+        if days < 30:
+            return f'{days} day ago' if days == 1 else f'{days} days ago'
+        months = days // 30
+        if months < 12:
+            return f'{months} month ago' if months == 1 else f'{months} months ago'
+        years = days // 365
+        return f'{years} year ago' if years == 1 else f'{years} years ago'
+    joined_ago.short_description = 'Joined'
+    joined_ago.admin_order_field = 'date_joined'
+    
 admin.site.unregister(User)
 admin.site.register(User, BadgedUserAdmin)
 
