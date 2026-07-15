@@ -2399,6 +2399,10 @@ body::before {
     background: #0f172a;
 }
 
+.reel-video {
+    cursor: pointer;
+}
+
 .reel-poster {
     background-size: cover;
     background-position: center;
@@ -2723,6 +2727,15 @@ body::before {
 
 .reel-playing .reel-shimmer {
     animation-duration: 1.6s;
+}
+
+/* Sound button — touch devices (mobile) pe hover nahi hota,
+   isliye wahan button hamesha visible rahega */
+@media (hover: none) {
+    .reel-play {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 /* Caption overlay */

@@ -560,6 +560,9 @@
                             {% if reel.media_kind == 'file' %}
                             <video class="reel-video" src="{{ reel.video_file.url }}" muted loop autoplay playsinline preload="auto"
                                 {% if reel.poster %}poster="{{ reel.poster.url }}"{% endif %}></video>
+                            <button class="reel-play reel-sound-btn" type="button" aria-label="Play with sound">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
                             {% elif reel.media_kind == 'youtube' or reel.media_kind == 'instagram' %}
                             <iframe class="reel-embed" src="{{ reel.embed_url }}"
                                 allow="autoplay; encrypted-media; fullscreen" allowfullscreen loading="lazy"></iframe>

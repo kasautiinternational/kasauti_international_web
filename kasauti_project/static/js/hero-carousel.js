@@ -131,149 +131,217 @@
 })();
 
 // =====================
-// Reels Carousel (arrows + dots + swipe). Videos auto-play (muted),
-// no play/pause controls — just a sliding strip of video reels.
+// Reels Carousel (arrows + dots + swipe). Videos auto-play (muted).
+// Play btn = sound ON (baaki sab mute). Pause btn = sound OFF,
+// video muted autoplay me chalti rehti hai.
 // =====================
 
 
 (function () {
-  function initReels() {
-    var carousel = document.getElementById('reelsCarousel');
-    if (!carousel || carousel.dataset.reelsReady === '1') return;
+    function initReels() {
+        var carousel = document.getElementById('reelsCarousel');
+        if (!carousel || carousel.dataset.reelsReady === '1') return;
 
-    var track = document.getElementById('reelsTrack');
-    var wrap  = carousel.querySelector('.reels-track-wrap');
-    if (!track || !wrap) return;
-    carousel.dataset.reelsReady = '1';
+        var track = document.getElementById('reelsTrack');
+        var wrap = carousel.querySelector('.reels-track-wrap');
+        if (!track || !wrap) return;
+        carousel.dataset.reelsReady = '1';
 
-    // Replace arrow buttons with clean clones to strip any stale/broken click handlers.
-    function fresh(el){ if(!el || !el.parentNode) return el; var c = el.cloneNode(true); el.parentNode.replaceChild(c, el); return c; }
-    var prev = fresh(document.getElementById('reelsPrev'));
-    var next = fresh(document.getElementById('reelsNext'));
-    var dotsWrap = document.getElementById('reelsDots');
+        // Replace arrow buttons with clean clones to strip any stale/broken click handlers.
+        function fresh(el) { if (!el || !el.parentNode) return el; var c = el.cloneNode(true); el.parentNode.replaceChild(c, el); return c; }
+        var prev = fresh(document.getElementById('reelsPrev'));
+        var next = fresh(document.getElementById('reelsNext'));
+        var dotsWrap = document.getElementById('reelsDots');
 
-    var cards = Array.prototype.slice.call(track.querySelectorAll('.reel-card'));
-    if (!cards.length) return;
+        var cards = Array.prototype.slice.call(track.querySelectorAll('.reel-card'));
+        if (!cards.length) return;
 
-    // One "card step" = distance from card 0 to card 1 (includes the gap).
-    function step(){
-      if (cards.length > 1){
-        var d = Math.abs(cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left);
-        if (d > 0) return d;
-      }
-      return cards[0].offsetWidth + 16;
-    }
-    function maxScroll(){ return wrap.scrollWidth - wrap.clientWidth; }
-    function canScroll(){ return maxScroll() > 2; }
-
-    if (next) next.addEventListener('click', function(e){ e.preventDefault(); wrap.scrollBy({ left:  step(), behavior:'smooth' }); bump(); });
-    if (prev) prev.addEventListener('click', function(e){ e.preventDefault(); wrap.scrollBy({ left: -step(), behavior:'smooth' }); bump(); });
-
-    // Drag / swipe — pointer events cover both mouse and touch.
-    var down = false, startX = 0, startScroll = 0, moved = false;
-    wrap.addEventListener('pointerdown', function(e){
-      down = true; moved = false; dragging = true;
-      startX = e.clientX; startScroll = wrap.scrollLeft;
-      wrap.classList.add('is-dragging');
-    });
-    window.addEventListener('pointermove', function(e){
-      if (!down) return;
-      var dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) moved = true;
-      wrap.scrollLeft = startScroll - dx;
-    });
-    function endDrag(){ if (!down) return; down = false; dragging = false; wrap.classList.remove('is-dragging'); bump(); }
-    window.addEventListener('pointerup', endDrag);
-    window.addEventListener('pointercancel', endDrag);
-    // Swallow the click that ends a drag so a card doesn't navigate mid-swipe.
-    track.addEventListener('click', function(e){ if (moved){ e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
-
-    // Build the pagination dots.
-    if (dotsWrap){
-      dotsWrap.innerHTML = '';
-      var dots = cards.map(function(_, i){
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'reels-dot';
-        b.setAttribute('aria-label', 'Go to video ' + (i + 1));
-        b.addEventListener('click', function(){ wrap.scrollTo({ left: step() * i, behavior:'smooth' }); bump(); });
-        dotsWrap.appendChild(b);
-        return b;
-      });
-      var sync = function(){
-        var idx = Math.round(wrap.scrollLeft / step());
-        if (idx < 0) idx = 0;
-        if (idx > dots.length - 1) idx = dots.length - 1;
-        dots.forEach(function(d, i){ d.classList.toggle('is-active', i === idx); });
-      };
-      var raf;
-      wrap.addEventListener('scroll', function(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); });
-      sync();
-    }
-
-    /* ---------- Auto-scroll ---------- */
-    var AUTOPLAY_MS = 3500;                 // gap between auto-advances (ms)
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var timer = null, hovering = false, dragging = false, hidden = false;
-
-    function isPaused(){ return hovering || dragging || hidden || reduceMotion; }
-    function autoNext(){
-      if (!canScroll()) return;
-      if (wrap.scrollLeft >= maxScroll() - 2){          // reached the end -> loop back to start
-        wrap.scrollTo({ left: 0, behavior:'smooth' });
-      } else {
-        wrap.scrollBy({ left: step(), behavior:'smooth' });
-      }
-    }
-    function start(){ stop(); if (reduceMotion) return; timer = window.setInterval(function(){ if (!isPaused()) autoNext(); }, AUTOPLAY_MS); }
-    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
-    function bump(){ if (timer) start(); }              // restart the countdown after any manual action
-
-    carousel.addEventListener('mouseenter', function(){ hovering = true; });   // pause on hover (desktop)
-    carousel.addEventListener('mouseleave', function(){ hovering = false; });
-    document.addEventListener('visibilitychange', function(){ hidden = document.hidden; }); // pause when tab hidden
-
-    start();
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initReels);
-  else initReels();
-})();
-
- // Stats Counter — runs once when section enters viewport
-    (function () {
-        var statNumbers = document.querySelectorAll('.stat-number');
-        if (!statNumbers.length) return;
-
-        function animateCount(el) {
-            var target = parseInt(el.getAttribute('data-count'), 10) || 0;
-            var duration = 1400;
-            var start = null;
-
-            function step(timestamp) {
-                if (!start) start = timestamp;
-                var progress = Math.min((timestamp - start) / duration, 1);
-                el.textContent = Math.floor(progress * target);
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                } else {
-                    el.textContent = target;
-                }
+        // One "card step" = distance from card 0 to card 1 (includes the gap).
+        function step() {
+            if (cards.length > 1) {
+                var d = Math.abs(cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left);
+                if (d > 0) return d;
             }
-            requestAnimationFrame(step);
+            return cards[0].offsetWidth + 16;
+        }
+        function maxScroll() { return wrap.scrollWidth - wrap.clientWidth; }
+        function canScroll() { return maxScroll() > 2; }
+
+        if (next) next.addEventListener('click', function (e) { e.preventDefault(); wrap.scrollBy({ left: step(), behavior: 'smooth' }); bump(); });
+        if (prev) prev.addEventListener('click', function (e) { e.preventDefault(); wrap.scrollBy({ left: -step(), behavior: 'smooth' }); bump(); });
+
+        // Drag / swipe — pointer events cover both mouse and touch.
+        var down = false, startX = 0, startScroll = 0, moved = false;
+        wrap.addEventListener('pointerdown', function (e) {
+            down = true; moved = false; dragging = true;
+            startX = e.clientX; startScroll = wrap.scrollLeft;
+            wrap.classList.add('is-dragging');
+        });
+        window.addEventListener('pointermove', function (e) {
+            if (!down) return;
+            var dx = e.clientX - startX;
+            if (Math.abs(dx) > 4) moved = true;
+            wrap.scrollLeft = startScroll - dx;
+        });
+        function endDrag() { if (!down) return; down = false; dragging = false; wrap.classList.remove('is-dragging'); bump(); }
+        window.addEventListener('pointerup', endDrag);
+        window.addEventListener('pointercancel', endDrag);
+        // Swallow the click that ends a drag so a card doesn't navigate mid-swipe.
+        track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+        // Build the pagination dots.
+        if (dotsWrap) {
+            dotsWrap.innerHTML = '';
+            var dots = cards.map(function (_, i) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'reels-dot';
+                b.setAttribute('aria-label', 'Go to video ' + (i + 1));
+                b.addEventListener('click', function () { wrap.scrollTo({ left: step() * i, behavior: 'smooth' }); bump(); });
+                dotsWrap.appendChild(b);
+                return b;
+            });
+            var sync = function () {
+                var idx = Math.round(wrap.scrollLeft / step());
+                if (idx < 0) idx = 0;
+                if (idx > dots.length - 1) idx = dots.length - 1;
+                dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+            };
+            var raf;
+            wrap.addEventListener('scroll', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); });
+            sync();
         }
 
-        var statsSection = document.querySelector('.stats-section');
-        if (!statsSection) return;
+        /* ---------- Auto-scroll ---------- */
+        var AUTOPLAY_MS = 3500;                 // gap between auto-advances (ms)
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var timer = null, hovering = false, dragging = false, hidden = false;
 
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    statNumbers.forEach(animateCount);
-                    observer.disconnect();
-                }
+        // NOTE: jab kisi reel ka sound ON hai (has-sound class), auto-scroll pause rahega
+        function isPaused() { return hovering || dragging || hidden || reduceMotion || carousel.classList.contains('has-sound'); }
+        function autoNext() {
+            if (!canScroll()) return;
+            if (wrap.scrollLeft >= maxScroll() - 2) {          // reached the end -> loop back to start
+                wrap.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                wrap.scrollBy({ left: step(), behavior: 'smooth' });
+            }
+        }
+        function start() { stop(); if (reduceMotion) return; timer = window.setInterval(function () { if (!isPaused()) autoNext(); }, AUTOPLAY_MS); }
+        function stop() { if (timer) { clearInterval(timer); timer = null; } }
+        function bump() { if (timer) start(); }              // restart the countdown after any manual action
+
+        carousel.addEventListener('mouseenter', function () { hovering = true; });   // pause on hover (desktop)
+        carousel.addEventListener('mouseleave', function () { hovering = false; });
+        document.addEventListener('visibilitychange', function () { hidden = document.hidden; }); // pause when tab hidden
+
+        start();
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initReels);
+    else initReels();
+})();
+
+
+// =====================
+// Reel Sound Toggle — videos hamesha muted autoplay chalti rahengi.
+// Play btn click = sound ON (baaki sab reels mute ho jayengi).
+// Pause btn click = sound OFF, video muted autoplay me chalti rahegi.
+// =====================
+(function () {
+    function initReelSound() {
+        var carousel = document.getElementById('reelsCarousel');
+        if (!carousel || carousel.dataset.soundReady === '1') return;
+        carousel.dataset.soundReady = '1';
+
+        var cards = carousel.querySelectorAll('.reel-card');
+
+        function muteAll() {
+            cards.forEach(function (c) {
+                var v = c.querySelector('.reel-video');
+                if (!v) return;
+                v.muted = true;
+                v.play().catch(function () { });
+                c.classList.remove('reel-playing');
             });
-        }, { threshold: 0.3 });
+            carousel.classList.remove('has-sound');
+        }
 
-        observer.observe(statsSection);
-    })();
+        cards.forEach(function (card) {
+            var video = card.querySelector('.reel-video');
+            var btn = card.querySelector('.reel-sound-btn');
+            if (!video || !btn) return;
+
+            function toggleSound(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (video.muted) {
+                    // Sound ON — pehle baaki sab mute karo
+                    muteAll();
+                    video.muted = false;
+                    video.currentTime = 0; // shuru se sound ke saath; wahi se continue chahiye to ye line hata do
+                    video.play().catch(function () { });
+                    card.classList.add('reel-playing');
+                    carousel.classList.add('has-sound');
+                } else {
+                    // Sound OFF — video muted autoplay me chalti rahegi
+                    video.muted = true;
+                    video.play().catch(function () { });
+                    card.classList.remove('reel-playing');
+                    carousel.classList.remove('has-sound');
+                }
+            }
+
+            btn.addEventListener('click', toggleSound);
+            video.addEventListener('click', toggleSound); // video pe direct click bhi kaam kare
+        });
+
+        // Tab hide/switch hone pe sound band ho jaye
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) muteAll();
+        });
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initReelSound);
+    else initReelSound();
+})();
+
+
+// Stats Counter — runs once when section enters viewport
+(function () {
+    var statNumbers = document.querySelectorAll('.stat-number');
+    if (!statNumbers.length) return;
+
+    function animateCount(el) {
+        var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        var duration = 1400;
+        var start = null;
+
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            var progress = Math.min((timestamp - start) / duration, 1);
+            el.textContent = Math.floor(progress * target);
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                el.textContent = target;
+            }
+        }
+        requestAnimationFrame(step);
+    }
+
+    var statsSection = document.querySelector('.stats-section');
+    if (!statsSection) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                statNumbers.forEach(animateCount);
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.3 });
+
+    observer.observe(statsSection);
+})();
