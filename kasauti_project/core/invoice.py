@@ -175,7 +175,7 @@ def build_invoice_pdf(order):
     # ── Invoice meta + Bill To ──
     top = H - 48 * mm
     c.setFillColor(CREAM)
-    c.roundRect(M, top - 30 * mm, W - 2 * M, 30 * mm, 3 * mm, fill=1, stroke=0)
+    c.roundRect(M, top - 36 * mm, W - 2 * M, 36 * mm, 3 * mm, fill=1, stroke=0)
 
     c.setFillColor(GREY)
     c.setFont(FONT_BOLD, 8)
@@ -201,7 +201,9 @@ def build_invoice_pdf(order):
     for ln in lines[:2]:
         c.drawString(M + 6 * mm, yy, ln)
         yy -= 4.2 * mm
-    c.drawString(M + 6 * mm, yy, f"Phone: {order.phone} \n  Email: {order.email}")
+    c.drawString(M + 6 * mm, yy, f"Phone: {order.phone}")
+    yy -= 4.2 * mm
+    c.drawString(M + 6 * mm, yy, f"Email: {order.email}")
 
     c.setFillColor(GREY)
     c.setFont(FONT_BOLD, 8)
@@ -217,7 +219,7 @@ def build_invoice_pdf(order):
     c.drawRightString(W - M - 6 * mm, top - 25 * mm, f"#{order.id}")
 
     # ── Items table ──
-    ty = top - 40 * mm
+    ty = top - 46 * mm
     col_sno = M
     col_desc = M + 12 * mm
     col_qty = W - M - 70 * mm
