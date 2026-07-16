@@ -201,7 +201,7 @@ def build_invoice_pdf(order):
     for ln in lines[:2]:
         c.drawString(M + 6 * mm, yy, ln)
         yy -= 4.2 * mm
-    c.drawString(M + 6 * mm, yy, f"Phone: {order.phone}   Email: {order.email}")
+    c.drawString(M + 6 * mm, yy, f"Phone: {order.phone} \n  Email: {order.email}")
 
     c.setFillColor(GREY)
     c.setFont(FONT_BOLD, 8)
