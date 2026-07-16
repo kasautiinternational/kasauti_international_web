@@ -1,12 +1,10 @@
 # =====================================================
-# NEW: Owner alerts — naya order aate hi tumhe email + WhatsApp milega.
+# NEW: Owner alerts — naya order aate hi tumhe email milega.
 # Signal-based hai, isliye order chahe checkout se bane ya
 # Razorpay flow se — alert har jagah se fire hoga.
 # =====================================================
 import threading
 import time
-import urllib.request
-import urllib.parse
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -20,7 +18,7 @@ def _send_order_alert(order_id):
     """Background thread me chalta hai:
     - Thoda wait karta hai taki OrderItems DB me save ho jayein
       (order pehle save hota hai, items uske baad)
-    - Fir owner ko HTML email + WhatsApp bhejta hai with full order details.
+    - Fir owner ko HTML email bhejta hai with full order details.
     Customer ke checkout page ko ye bilkul slow nahi karta."""
     time.sleep(8)  # items save hone ka time — mat hatana
 
@@ -111,60 +109,20 @@ def _send_order_alert(order_id):
     text_lines.append(f"Admin: https://kasautiinternational.com/admin/core/order/{order.id}/change/")
 
     recipients = getattr(settings, 'ORDER_ALERT_EMAILS', [])
-    if recipients:
-        try:
-            msg = EmailMultiAlternatives(
-                subject=f"🛒 New Order #{order.id} — ₹{order.total_amount:,.0f} — {order.name}",
-                body="\n".join(text_lines),
-                from_email=settings.EMAIL_HOST_USER,
-                to=recipients,
-            )
-            msg.attach_alternative(html, "text/html")
-            msg.send(fail_silently=True)
-        except Exception:
-            # Email fail ho jaye to bhi customer ka order kabhi affect nahi hoga
-            pass
-
-    # ----- WhatsApp alert (CallMeBot) -----
-    _send_whatsapp_alert(order, items)
-
-
-def _send_whatsapp_alert(order, items):
-    """Owner ke WhatsApp pe alert — CallMeBot free API se.
-    Settings me WHATSAPP_ALERT_PHONE + WHATSAPP_ALERT_APIKEY hone chahiye;
-    nahi hain to chupchaap skip ho jata hai."""
-    phone = getattr(settings, 'WHATSAPP_ALERT_PHONE', '')
-    apikey = getattr(settings, 'WHATSAPP_ALERT_APIKEY', '')
-    if not phone or not apikey or 'X' in phone:
+    if not recipients:
         return
 
-    lines = [
-        f"🛒 *NEW ORDER #{order.id}* — Kasauti International",
-        "",
-        f"👤 {order.name}",
-        f"📞 {order.phone}",
-        f"💰 Total: ₹{order.total_amount:,.2f} (GST incl.)",
-        "",
-        "📦 Items:",
-    ]
-    for it in items:
-        size = f" [{it.size} in]" if it.size else ""
-        lines.append(f"• {it.product_title}{size} x{it.quantity}")
-    lines.append("")
-    lines.append(f"Admin: https://kasautiinternational.com/admin/core/order/{order.id}/change/")
-
     try:
-        url = (
-            "https://api.callmebot.com/whatsapp.php?"
-            + urllib.parse.urlencode({
-                "phone": phone,
-                "text": "\n".join(lines),
-                "apikey": apikey,
-            })
+        msg = EmailMultiAlternatives(
+            subject=f"🛒 New Order #{order.id} — ₹{order.total_amount:,.0f} — {order.name}",
+            body="\n".join(text_lines),
+            from_email=settings.EMAIL_HOST_USER,
+            to=recipients,
         )
-        urllib.request.urlopen(url, timeout=15)
+        msg.attach_alternative(html, "text/html")
+        msg.send(fail_silently=True)
     except Exception:
-        # WhatsApp fail ho jaye to bhi order/email pe koi asar nahi
+        # Email fail ho jaye to bhi customer ka order kabhi affect nahi hoga
         pass
 
 
