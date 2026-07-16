@@ -135,3 +135,46 @@ def order_created_alert(sender, instance, created, **kwargs):
     threading.Thread(
         target=_send_order_alert, args=(instance.id,), daemon=True
     ).start()
+
+
+    # =====================================================
+# NEW: Status change → customer email
+# Admin me status badalte hi (Confirmed/Shipped/Delivered/Cancelled)
+# customer ko branded email jata hai. Background thread me bhejte
+# hain taki admin ka Save button instant rahe.
+# =====================================================
+from django.db.models.signals import pre_save  # noqa: E402
+
+from .emails import send_order_status_email  # noqa: E402
+
+
+@receiver(pre_save, sender=Order, dispatch_uid="order_status_track")
+def track_status_change(sender, instance, **kwargs):
+    """Save hone se PEHLE database ka purana status check karo."""
+    if not instance.pk:
+        instance._status_changed = False  # naya order — ye owner-alert handle karega
+        return
+    try:
+        old = Order.objects.only('status').get(pk=instance.pk)
+        instance._status_changed = (old.status != instance.status)
+    except Order.DoesNotExist:
+        instance._status_changed = False
+
+
+def _send_status_email_bg(order_id):
+    """Background me fresh order fetch karke email bhejo."""
+    try:
+        order = Order.objects.prefetch_related('items').get(id=order_id)
+    except Order.DoesNotExist:
+        return
+    send_order_status_email(order)
+
+
+@receiver(post_save, sender=Order, dispatch_uid="order_status_email")
+def status_changed_email(sender, instance, created, **kwargs):
+    """Status change hua ho to hi customer ko email — create pe nahi."""
+    if created or not getattr(instance, '_status_changed', False):
+        return
+    threading.Thread(
+        target=_send_status_email_bg, args=(instance.id,), daemon=True
+    ).start()
