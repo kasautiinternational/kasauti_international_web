@@ -57,7 +57,7 @@ def _send_order_alert(order_id):
           <tr><td style="padding:4px 0;color:#64748b;width:130px;">Customer</td><td><b>{order.name}</b></td></tr>
           <tr><td style="padding:4px 0;color:#64748b;">Phone</td>
               <td><a href="tel:{order.phone}">{order.phone}</a> &nbsp;|&nbsp;
-                  <a href="https://wa.me/91{order.phone.lstrip('+').lstrip('91 8796560299')}">WhatsApp karo</a></td></tr>
+                  <a href="https://wa.me/91{order.phone.lstrip('+').lstrip('91')}">WhatsApp karo</a></td></tr>
           <tr><td style="padding:4px 0;color:#64748b;">Email</td><td>{order.email}</td></tr>
           <tr><td style="padding:4px 0;color:#64748b;vertical-align:top;">Address</td><td>{order.address}</td></tr>
         </table>
