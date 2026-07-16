@@ -1412,3 +1412,26 @@ def serve_media(request, path):
     resp['Accept-Ranges'] = 'bytes'
     resp['Content-Length'] = str(file_size)
     return resp
+
+
+
+# ─────────────────────────────────────────
+# NEW: Customer invoice download
+# Sirf apna hi order ka invoice download kar sakta hai —
+# dusre ka order_id daalega to 404 milega.
+# ─────────────────────────────────────────
+
+@login_required
+def download_invoice(request, order_id):
+    from .invoice import build_invoice_pdf
+    order = get_object_or_404(
+        Order.objects.prefetch_related('items'),
+        id=order_id,
+        user=request.user,  # SECURITY: apna order hi milega
+    )
+    pdf_bytes = build_invoice_pdf(order)
+    response = HttpResponse(pdf_bytes, content_type='application/pdf')
+    response['Content-Disposition'] = (
+        f'attachment; filename="Invoice-KI-{order.id:05d}.pdf"'
+    )
+    return response

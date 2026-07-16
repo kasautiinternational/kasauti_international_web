@@ -52,4 +52,7 @@ urlpatterns = [
 
     # 404 preview (DEBUG=True me test karne ke liye)
     path('404-preview/', views.preview_404, name='preview_404'),
+
+    # NEW: Customer invoice PDF download
+    path('order/<int:order_id>/invoice/', views.download_invoice, name='download_invoice'),
 ]

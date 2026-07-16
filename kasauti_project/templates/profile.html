@@ -108,6 +108,11 @@
                 {% endfor %}
               </div>
               <div class="order-footer">
+                <a href="{% url 'download_invoice' order.id %}"
+                   style="display:inline-block;background:#c9973f;color:#0f172a;font-weight:bold;
+                          padding:5px 14px;border-radius:6px;font-size:0.85rem;text-decoration:none;">
+                  <i class="fa-solid fa-file-invoice"></i> Invoice
+                </a>
                 <span class="order-total">Total: <strong>₹{{ order.total_amount }}</strong></span>
               </div>
             </div>

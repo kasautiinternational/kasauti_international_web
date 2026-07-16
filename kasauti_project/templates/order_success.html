@@ -20,6 +20,10 @@
         <div class="d-flex gap-3 justify-content-center flex-wrap">
           <a href="{% url 'product' %}" class="btn btn-primary">Continue Shopping</a>
           {% if user.is_authenticated %}
+          <a href="{% url 'download_invoice' order.id %}" class="btn btn-primary"
+             style="background:#c9973f;border-color:#c9973f;color:#0f172a;font-weight:bold;">
+            <i class="fa-solid fa-file-invoice"></i> Download Invoice
+          </a>
           <a href="{% url 'my_orders' %}" class="btn btn-outline-secondary">My Orders</a>
           {% endif %}
           <a href="{% url 'home' %}" class="btn btn-outline-secondary">Home</a>
