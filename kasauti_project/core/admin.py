@@ -224,13 +224,14 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(NewBadgeAdminMixin, admin.ModelAdmin):
-    list_display = ['id', 'name', 'email', 'phone', 'display_total', 'status', 'created_at']
+    list_display = ['id', 'name', 'email', 'phone', 'display_total', 'status', 'created_at', 'invoice_button']
     list_filter = ['status', 'created_at']
     search_fields = ['name', 'email', 'phone']
     list_editable = ['status']
     readonly_fields = ['created_at', 'updated_at', 'total_amount', 'gst_amount', 'user']
     inlines = [OrderItemInline]
     ordering = ['-created_at']
+    change_form_template = 'admin/core/order/change_form.html'  # NEW: Download Invoice button
 
     def display_total(self, obj):
         if obj.total_amount is not None:
@@ -238,6 +239,43 @@ class OrderAdmin(NewBadgeAdminMixin, admin.ModelAdmin):
         return "—"
     display_total.short_description = 'Total'
     display_total.admin_order_field = 'total_amount'
+
+    # ─── NEW: Invoice PDF download ───
+    def invoice_button(self, obj):
+        return format_html(
+            '<a class="button" style="background:#c9973f;color:#0f172a;'
+            'font-weight:bold;padding:4px 10px;border-radius:4px;" '
+            'href="{}">Invoice</a>',
+            f'{obj.id}/invoice/'
+        )
+    invoice_button.short_description = 'Invoice'
+
+    def get_urls(self):
+        from django.urls import path
+        urls = super().get_urls()
+        custom = [
+            path(
+                '<int:order_id>/invoice/',
+                self.admin_site.admin_view(self.download_invoice),
+                name='core_order_invoice',
+            ),
+        ]
+        return custom + urls
+
+    def download_invoice(self, request, order_id):
+        from django.http import HttpResponse
+        from django.shortcuts import get_object_or_404
+        from .invoice import build_invoice_pdf
+
+        order = get_object_or_404(
+            Order.objects.prefetch_related('items'), id=order_id
+        )
+        pdf_bytes = build_invoice_pdf(order)
+        response = HttpResponse(pdf_bytes, content_type='application/pdf')
+        response['Content-Disposition'] = (
+            f'attachment; filename="Invoice-KI-{order.id:05d}.pdf"'
+        )
+        return response
 
 
 @admin.register(CartItem)

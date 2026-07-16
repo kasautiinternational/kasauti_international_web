@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools-items %}
+  {% if original %}
+  <li>
+    <a href="invoice/" class="button"
+       style="background:#c9973f;color:#0f172a;font-weight:bold;">
+      &#8681; Download Invoice
+    </a>
+  </li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}
